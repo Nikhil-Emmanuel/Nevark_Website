@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nevark • About Us</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+    </style>
+    <style>
+        @font-face {
+            font-family: 'Angora';
+            src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .nav-font {
+            font-family: 'Angora', sans-serif;
+        }
+
+        body {
+            font-family: 'Angora';
+            src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Angora';
+            src: url('./assets/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .angora-font {
+            font-family: 'Angora', sans-serif;
+        }
+
+        /* Scrollbar for WebKit browsers (Chrome, Edge, Safari) */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111827;
+            /* dark background */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #6366f1, #8b5cf6);
+            /* indigo to purple */
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #a78bfa, #c084fc);
+            /* lighter purple on hover */
+        }
+    </style>
+</head>
+
+<body class="bg-zinc-950">
+    <canvas id="canvas"></canvas>
+    <nav
+        class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-white/5 border border-white/10 rounded-full px-10 py-4 shadow-xl backdrop-blur-md">
+        <div class="flex items-center">
+            <!-- Links with increased spacing -->
+            <div
+                class="hidden md:flex items-center space-x-14 text-gray-300 text-sm font-medium tracking-wide nav-font">
+                <a href="home.html" class="hover:text-white transition-colors">Home</a>
+                <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
+                <a href="about.html" class="hover:text-white transition-colors">About</a>
+                <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
+            </div>
+        </div>
+    </nav>
+
+    <a href="home.html">
+        <div class="absolute top-8 left-16 text-white text-2xl tracking-widest angora-font z-10">
+            NEVARK
+        </div>
+    </a>
+
+    <!-- Glow -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        <div class="w-96 h-96 bg-indigo-600/20 blur-[120px] rounded-full absolute -top-20 -left-24"></div>
+        <div class="w-72 h-72 bg-purple-500/20 blur-[100px] rounded-full absolute bottom-10 -right-16"></div>
+    </div>
+
+    <div class="relative z-10 pointer-events-none">
+        <section class="h-screen flex items-center justify-center px-8">
+            <div class="max-w-7xl pointer-events-auto">
+                <h1
+                    class="text-8xl md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
+                    WE ARE<br>READY TO COLLAB</h1>
+                <p
+                    class="text-2xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
+                    Experience Projects with most creativity. We are ready to collab with "You" for a Dynamic and Heart
+                    Warming Projects</p>
+            </div>
+        </section>
+
+        <div class="h-96 flex items-center justify-center px-8">
+            <p
+                class="text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 text-zinc-400 italic font-medium">
+                "Coming Together is a Beginning. Staying Togeather is success and Working Togeather is Success"</p>
+        </div>
+
+        <section class="h-screen flex items-center justify-center px-8">
+            <div class="max-w-7xl pointer-events-auto">
+                <h1
+                    class="text-8xl md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
+                    Outlined<br>Dimensions</h1>
+                <p
+                    class="text-2xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
+                    Let's Create Projects with Overwhelming creativity which succeeds the Creativity Dimentions</p>
+            </div>
+        </section>
+
+        <div class="h-96 flex items-center justify-center px-8">
+            <p
+                class="text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 text-zinc-400 italic font-medium">
+                "If people like you they will listen to you. If people trust you they will do Bussiness with you!"</p>
+        </div>
+
+        <section class="h-screen flex items-center justify-center px-8">
+            <div class="max-w-7xl pointer-events-auto">
+                <h1
+                    class="text-8xl md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
+                    Company<br>Experts</h1>
+                <p
+                    class="text-2xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
+                    Book a Meeting with aout experts and Get your Dream Project a Life and bring it to reality.</p>
+            </div>
+        </section>
+
+        <div class="h-96 flex items-center justify-center px-8">
+            <p
+                class="text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 text-zinc-400 italic font-medium">
+                "Let's Start the Journey Here!"</p>
+        </div>
+
+        <section class="h-screen flex items-center justify-center px-8">
+            <div class="max-w-7xl pointer-events-auto">
+                <h1
+                    class="text-8xl md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
+                    Book<br>Now</h1>
+                <p
+                    class="text-2xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
+                    Book a Meeting now and Get responses. @ Bookings Page!!</p>
+            </div>
+        </section>
+    </div>
+
+    <script type="module">
+        import * as THREE from "https://esm.sh/three@0.160.0";
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas'), alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x0a0a0a, 1);
+
+        // Camera position
+        camera.position.z = 15;
+
+        // Parallax groups for different layer speeds
+        const parallaxGroups = [
+            new THREE.Group(), // Foreground - fastest
+            new THREE.Group(), // Mid-ground
+            new THREE.Group(), // Background - slowest
+        ];
+
+        parallaxGroups.forEach(group => scene.add(group));
+
+        // Materials - bright wireframes for dark mode
+        const brightMaterial = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.9
+        });
+
+        const accentMaterial = new THREE.MeshBasicMaterial({
+            color: 0x60a5fa,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.8
+        });
+
+        const dustMaterial = new THREE.MeshBasicMaterial({
+            color: 0x71717a,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.5
+        });
+
+        const highlightMaterial = new THREE.MeshBasicMaterial({
+            color: 0xfbbf24,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.7
+        });
+
+        // Create geometric shapes
+        function createGeometry(type, size, material) {
+            let geometry;
+            switch (type) {
+                case 'sphere':
+                    geometry = new THREE.SphereGeometry(size, 16, 16);
+                    break;
+                case 'box':
+                    geometry = new THREE.BoxGeometry(size, size, size);
+                    break;
+                case 'octahedron':
+                    geometry = new THREE.OctahedronGeometry(size);
+                    break;
+                case 'tetrahedron':
+                    geometry = new THREE.TetrahedronGeometry(size);
+                    break;
+                case 'torus':
+                    geometry = new THREE.TorusGeometry(size, size * 0.3, 8, 16);
+                    break;
+                default:
+                    geometry = new THREE.SphereGeometry(size, 12, 12);
+            }
+            return new THREE.Mesh(geometry, material);
+        }
+
+        // Populate parallax layers
+        const shapes = [];
+        const shapeTypes = ['sphere', 'box', 'octahedron', 'tetrahedron', 'torus'];
+        const materials = [brightMaterial, accentMaterial, highlightMaterial];
+
+        // Layer 1 - Foreground (fastest parallax)
+        for (let i = 0; i < 20; i++) {
+            const type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+            const material = materials[Math.floor(Math.random() * materials.length)];
+            const shape = createGeometry(type, Math.random() * 1.2 + 0.6, material);
+
+            shape.position.set(
+                (Math.random() - 0.5) * 50,
+                (Math.random() - 0.5) * 35,
+                Math.random() * 10 + 5
+            );
+
+            shape.rotation.set(
+                Math.random() * Math.PI,
+                Math.random() * Math.PI,
+                Math.random() * Math.PI
+            );
+
+            parallaxGroups[0].add(shape);
+            shapes.push({
+                mesh: shape,
+                layer: 0,
+                speed: Math.random() * 0.6 + 0.9,
+                rotationSpeed: (Math.random() - 0.5) * 0.025,
+                initialY: shape.position.y
+            });
+        }
+
+        // Layer 2 - Mid-ground
+        for (let i = 0; i < 30; i++) {
+            const type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+            const shape = createGeometry(type, Math.random() * 1.5 + 0.8, brightMaterial);
+
+            shape.position.set(
+                (Math.random() - 0.5) * 70,
+                (Math.random() - 0.5) * 45,
+                Math.random() * 15 - 5
+            );
+
+            shape.rotation.set(
+                Math.random() * Math.PI,
+                Math.random() * Math.PI,
+                Math.random() * Math.PI
+            );
+
+            parallaxGroups[1].add(shape);
+            shapes.push({
+                mesh: shape,
+                layer: 1,
+                speed: Math.random() * 0.4 + 0.5,
+                rotationSpeed: (Math.random() - 0.5) * 0.018,
+                initialY: shape.position.y
+            });
+        }
+
+        // Layer 3 - Background (slowest parallax)
+        for (let i = 0; i < 40; i++) {
+            const type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+            const shape = createGeometry(type, Math.random() * 2.0 + 0.5, dustMaterial);
+
+            shape.position.set(
+                (Math.random() - 0.5) * 90,
+                (Math.random() - 0.5) * 60,
+                Math.random() * 20 - 20
+            );
+
+            shape.rotation.set(
+                Math.random() * Math.PI,
+                Math.random() * Math.PI,
+                Math.random() * Math.PI
+            );
+
+            parallaxGroups[2].add(shape);
+            shapes.push({
+                mesh: shape,
+                layer: 2,
+                speed: Math.random() * 0.25 + 0.15,
+                rotationSpeed: (Math.random() - 0.5) * 0.012,
+                initialY: shape.position.y
+            });
+        }
+
+        // Scroll variables
+        let scrollY = 0;
+        let mouseX = 0;
+        let mouseY = 0;
+
+        // Mouse movement
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        // Scroll tracking
+        ScrollTrigger.create({
+            trigger: "body",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: true,
+            onUpdate: (self) => {
+                scrollY = self.progress;
+            }
+        });
+
+        // GSAP text animations
+        const sections = document.querySelectorAll("section");
+        const quotes = document.querySelectorAll("p[class*='italic']");
+
+        sections.forEach((section) => {
+            const title = section.querySelector("h1");
+            const description = section.querySelector("p");
+
+            ScrollTrigger.create({
+                trigger: section,
+                start: "top 80%",
+                onEnter: () => {
+                    gsap.to(title, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" });
+                    gsap.to(description, { opacity: 1, y: 0, duration: 0.9, delay: 0.25, ease: "power3.out" });
+                },
+                onLeaveBack: () => {
+                    gsap.to([title, description], { opacity: 0, y: 48, duration: 0.6 });
+                }
+            });
+        });
+
+        quotes.forEach((quote) => {
+            ScrollTrigger.create({
+                trigger: quote,
+                start: "top 80%",
+                onEnter: () => gsap.to(quote, { opacity: 1, y: 0, duration: 1.3, ease: "power2.out" }),
+                onLeaveBack: () => gsap.to(quote, { opacity: 0, y: 32, duration: 0.6 })
+            });
+        });
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Parallax movement based on scroll
+            parallaxGroups[0].position.y = scrollY * 25; // Fastest
+            parallaxGroups[1].position.y = scrollY * 15; // Medium
+            parallaxGroups[2].position.y = scrollY * 8;  // Slowest
+
+            // Mouse parallax
+            parallaxGroups[0].rotation.x = mouseY * 0.12;
+            parallaxGroups[0].rotation.y = mouseX * 0.12;
+            parallaxGroups[1].rotation.x = mouseY * 0.06;
+            parallaxGroups[1].rotation.y = mouseX * 0.06;
+            parallaxGroups[2].rotation.x = mouseY * 0.03;
+            parallaxGroups[2].rotation.y = mouseX * 0.03;
+
+            // Individual shape animations
+            shapes.forEach((shapeData) => {
+                const { mesh, speed, rotationSpeed } = shapeData;
+
+                // Rotation
+                mesh.rotation.x += rotationSpeed;
+                mesh.rotation.y += rotationSpeed * 0.8;
+                mesh.rotation.z += rotationSpeed * 0.5;
+
+                // Floating motion
+                mesh.position.y += Math.sin(Date.now() * 0.001 + mesh.position.x) * 0.015;
+
+                // Wrap around effect for continuous scrolling
+                if (mesh.position.y < -40) {
+                    mesh.position.y = 40;
+                } else if (mesh.position.y > 40) {
+                    mesh.position.y = -40;
+                }
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+    <!-- Footer Divider -->
+    <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-800/70 to-transparent my-0"></div>
+
+    <footer
+        class="pt-14 pb-8 px-4 sm:px-8 lg:px-16 relative bg-gradient-to-t from-gray-950 via-gray-900/80 to-transparent z-20">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12">
+
+            <!-- Brand & Newsletter -->
+            <div class="flex-1 min-w-[240px] max-w-md mb-8 lg:mb-0">
+                <a href="#"
+                    class="inline-flex items-center gap-2 text-2xl font-semibold tracking-tight font-satoshi text-white hover:text-brand-400 transition-colors duration-300 mb-5">
+                    <i data-lucide="layers" class="w-7 h-7 text-brand-500"></i>
+                    Nevark
+                </a>
+                <p class="mt-3 text-gray-400 text-base leading-relaxed mb-7">
+                    Accelerate your team’s workflow. Seamlessly connect, automate, and monitor your workspace tools from
+                    one
+                    powerful hub.
+                </p>
+                <form class="flex flex-col sm:flex-row gap-3 animate-fade-in-up animate-delay-200">
+                    <div class="relative w-full">
+                        <i data-lucide="mail"
+                            class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none"></i>
+                        <input type="email" required placeholder="Your email"
+                            class="w-full py-2.5 pr-4 pl-11 rounded-lg border border-gray-700/60 bg-gray-900/60 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-all text-sm">
+                    </div>
+                    <button type="submit"
+                        class="px-4 py-2.5 bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 hover:to-purple-700 rounded-lg font-semibold text-white text-sm flex items-center gap-1 transition duration-300 hover:scale-105 hover:-translate-y-0.5 shadow-lg group">
+                        <span>Subscribe</span>
+                        <i data-lucide="arrow-right"
+                            class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"></i>
+                    </button>
+                </form>
+                <span class="block mt-2 text-xs text-gray-500">No spam. Unsubscribe anytime.</span>
+            </div>
+
+            <!-- Footer Navigation -->
+            <div class="flex-1 flex flex-col sm:flex-row gap-10 lg:gap-16 justify-between">
+
+                <!-- Product Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4 tracking-tight text-base flex items-center gap-1">
+                        <i data-lucide="grid" class="w-4 h-4 text-brand-400"></i>
+                        Product
+                    </h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li>
+                            <a href="#"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="zap" class="w-4 h-4 text-brand-400"></i>
+                                Automation Hub
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="layers" class="w-4 h-4 text-blue-400"></i>
+                                Integrations
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="bar-chart" class="w-4 h-4 text-purple-400"></i>
+                                Analytics
+                            </a>
+                        </li>
+                        <li>
+                            <a href="privacy.html"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="shield" class="w-4 h-4 text-green-400"></i>
+                                Security
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Resources Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4 tracking-tight text-base flex items-center gap-1">
+                        <i data-lucide="book-open" class="w-4 h-4 text-blue-400"></i>
+                        Resources
+                    </h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li>
+                            <a href="documentaion.html"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="file-text" class="w-4 h-4"></i>
+                                Documentation
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="help-circle" class="w-4 h-4"></i>
+                                Help Center
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="mail" class="w-4 h-4"></i>
+                                Contact Support
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="megaphone" class="w-4 h-4"></i>
+                                Blog
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Company Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4 tracking-tight text-base flex items-center gap-1">
+                        <i data-lucide="building-2" class="w-4 h-4 text-purple-400"></i>
+                        Company
+                    </h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li>
+                            <a href="about.html"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="users" class="w-4 h-4"></i>
+                                About Us
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="briefcase" class="w-4 h-4"></i>
+                                Careers
+                            </a>
+                        </li>
+                        <li>
+                            <a href="Testimonals.html"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="award" class="w-4 h-4"></i>
+                                Testimonals
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="credit-card" class="w-4 h-4"></i>
+                                Pricing
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="mt-12 mb-8 w-full h-px bg-gradient-to-r from-transparent via-gray-800/60 to-transparent"></div>
+
+        <!-- Bottom Bar -->
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 px-1">
+            <div class="flex items-center gap-2 text-xs text-gray-500">
+                <span>&copy; <span id="year"></span> Nevark </span>
+                <span class="hidden sm:inline">&bull;</span>
+                <a href="privacy.html" class="hover:underline hover:text-gray-300">Privacy Policy</a>
+                <span class="hidden sm:inline">&bull;</span>
+                <a href="terms-condition.html" class="hover:underline hover:text-gray-300">Terms of Service</a>
+                <span class="hidden sm:inline">&bull;</span>
+                <a href="#" class="hover:underline hover:text-gray-300">Status</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="p-2 rounded-lg bg-gray-800/60 hover:bg-brand-600 group transition duration-300"
+                    aria-label="Twitter">
+                    <i data-lucide="twitter" class="w-4 h-4 text-gray-400 group-hover:text-white"></i>
+                </a>
+                <a href="#" class="p-2 rounded-lg bg-gray-800/60 hover:bg-blue-600 group transition duration-300"
+                    aria-label="GitHub">
+                    <i data-lucide="github" class="w-4 h-4 text-gray-400 group-hover:text-white"></i>
+                </a>
+                <a href="#" class="p-2 rounded-lg bg-gray-800/60 hover:bg-green-600 group transition duration-300"
+                    aria-label="Slack">
+                    <i data-lucide="slack" class="w-4 h-4 text-gray-400 group-hover:text-white"></i>
+                </a>
+                <a href="#" class="p-2 rounded-lg bg-gray-800/60 hover:bg-purple-600 group transition duration-300"
+                    aria-label="LinkedIn">
+                    <i data-lucide="linkedin" class="w-4 h-4 text-gray-400 group-hover:text-white"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

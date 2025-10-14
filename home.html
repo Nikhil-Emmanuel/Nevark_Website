@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nevark Technologies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#000000',
+                        light: '#ffffff',
+                        subtle: 'rgba(255,255,255,0.06)'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+
+    <style>
+        @font-face {
+            font-family: 'Angora';
+            src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .nav-font {
+            font-family: 'Angora', sans-serif;
+        }
+
+        body {
+            font-family: 'Angora';
+            src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Angora';
+            src: url('./assets/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .angora-font {
+            font-family: 'Angora', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Scrollbar for WebKit browsers (Chrome, Edge, Safari) */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111827;
+            /* dark background */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #6366f1, #8b5cf6);
+            /* indigo to purple */
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #a78bfa, #c084fc);
+            /* lighter purple on hover */
+        }
+    </style>
+
+
+
+</head>
+
+<body class="bg-dark text-light font-sans antialiased">
+    <!-- 3D / video or spline background -->
+    <div class="fixed inset-0 -z-10">
+        <iframe src="https://my.spline.design/thresholddarkambientui-v0gkZCfi6zXm69kE0wccy70f/" frameborder="0"
+            width="100%" height="100%"></iframe>
+    </div>
+
+    <!-- Glass Nav -->
+    <nav
+        class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-white/5 border border-white/10 rounded-full px-10 py-4 shadow-xl backdrop-blur-md">
+        <div class="flex items-center">
+            <!-- Links with increased spacing -->
+            <div
+                class="hidden md:flex items-center space-x-14 text-gray-300 text-sm font-medium tracking-wide nav-font">
+                <a href="home.html" class="hover:text-white transition-colors">Home</a>
+                <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
+                <a href="about.html" class="hover:text-white transition-colors">About</a>
+                <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Hero -->
+    <section class="relative flex flex-col items-center justify-center text-center min-h-screen px-6 pt-32 md:pt-40">
+
+        <!-- Floating Background Blob -->
+        <div
+            class="absolute top-1/2 left-1/2 w-[600px] h-[600px] -translate-x-1/2 -translate-y-1/2 bg-white opacity-5 blur-[100px] rounded-full pointer-events-none">
+        </div>
+
+        <!-- NEVARK top-right -->
+        <a href="home.html">
+            <div class="absolute top-8 left-16 text-white text-2xl tracking-widest angora-font z-10">
+                NEVARK
+            </div>
+        </a>
+
+        <!-- Subtitle -->
+        <span
+            class="mb-8 px-3 py-1 text-xs font-medium bg-white/10 border border-white/20 rounded-full backdrop-blur-sm">
+            Strategy & Innovation Consultancy
+        </span>
+
+        <!-- Main Heading -->
+        <h1 class="text-6xl md:text-8xl font-normal tracking-[0.8em] leading-tight inline-block translate-x-6"
+            style="font-family: 'Angora', sans-serif;">
+            NEVARK
+        </h1>
+
+
+        <!-- CTA Buttons -->
+        <div class="mt-12 flex flex-col sm:flex-row gap-4">
+            <a href="#services"
+                class="px-8 py-3 bg-white text-black font-medium rounded-full hover:bg-gray-200 transition shadow-lg hover:shadow-xl">
+                Our Services
+            </a>
+
+            <a href="bookMeeting.html"
+                class="px-8 py-3 bg-white/10 border border-white/20 text-white font-medium rounded-full backdrop-blur-sm hover:bg-white/20 transition">
+                Book a Consultation
+            </a>
+        </div>
+
+        <!-- Scroll Down Icon -->
+        <svg class="w-6 h-6 mt-24 animate-bounce text-white/50" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+            <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+    </section>
+
+
+    <!-- Services -->
+    <section id="services" class="relative py-24 px-6">
+    <div class="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-transparent pointer-events-none"></div>
+    <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-center mb-16">What we do</h2>
+
+    <div class="max-w-5xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- Modern Frontend -->
+        <div
+            class="group border border-white/10 rounded-2xl p-8 bg-white/5 hover:bg-white/10 transition backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-cyan-400">
+            <div
+                class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-cyan-400 text-xl">
+                <i class="fa-solid fa-laptop-code"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Modern Frontend</h3>
+            <p class="text-sm text-neutral-300">Dynamic user interfaces built with React.</p>
+        </div>
+
+        <!-- Backend & APIs -->
+        <div
+            class="group border border-white/10 rounded-2xl p-8 bg-white/5 hover:bg-white/10 transition backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-green-400">
+            <div
+                class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-green-400 text-xl">
+                <i class="fa-solid fa-server"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Backend & APIs</h3>
+            <p class="text-sm text-neutral-300">Scalable server-side logic with Node.js.</p>
+        </div>
+
+        <!-- Machine Learning -->
+        <div
+            class="group border border-white/10 rounded-2xl p-8 bg-white/5 hover:bg-white/10 transition backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-pink-400">
+            <div
+                class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-pink-400 text-xl">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Machine Learning</h3>
+            <p class="text-sm text-neutral-300">Intelligent models with TensorFlow & Python.</p>
+        </div>
+
+        <!-- Cloud Services -->
+        <div
+            class="group border border-white/10 rounded-2xl p-8 bg-white/5 hover:bg-white/10 transition backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-blue-400">
+            <div
+                class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-blue-400 text-xl">
+                <i class="fa-brands fa-microsoft"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Cloud Services</h3>
+            <p class="text-sm text-neutral-300">Robust infrastructure on Azure.</p>
+        </div>
+
+        <!-- AI Engineering -->
+        <div
+            class="group border border-white/10 rounded-2xl p-8 bg-white/5 hover:bg-white/10 transition backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-yellow-400">
+            <div
+                class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-yellow-400 text-xl">
+                <i class="fa-solid fa-brain"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">AI Engineering</h3>
+            <p class="text-sm text-neutral-300">Custom AI solutions to fit your needs.</p>
+        </div>
+
+        <!-- App Hosting -->
+        <div
+            class="group border border-white/10 rounded-2xl p-8 bg-white/5 hover:bg-white/10 transition backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-red-400">
+            <div
+                class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-red-400 text-xl">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">App Hosting</h3>
+            <p class="text-sm text-neutral-300">Fast and secure deployment with Firebase.</p>
+        </div>
+
+    </div>
+</section>
+
+    <!-- Impact Partner (Logo Only with Ripple Effect and Title) -->
+    <section id="industries" class="py-24 px-6 border-t border-white/10">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-center mb-16">
+            Our Clients
+        </h2>
+        <div class="max-w-6xl mx-auto flex justify-center items-center">
+            <div class="relative group">
+                <!-- Ripple Galaxy Effect (hover only) -->
+                <div
+                    class="absolute inset-0 w-full h-full rounded-full bg-gradient-to-r from-purple-500 via-indigo-600 to-blue-500 opacity-0 group-hover:opacity-40 blur-3xl scale-110 transition-all duration-500 pointer-events-none z-0">
+                </div>
+
+                <!-- Logo -->
+                <img src="assests/Ashok_Leyland-Logo.wine.png" alt="Ashok Leyland Logo"
+                    class="relative z-10 w-60 md:w-72 max-w-full object-contain transition-transform duration-500 group-hover:scale-105" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Metrics Section -->
+    <section class="relative overflow-hidden w-full font-geist">
+
+        <!-- Animated Wave Background -->
+        <canvas id="bgWave" class="absolute inset-0 w-full h-full"></canvas>
+
+        <!-- Content -->
+        <div class="relative z-10 flex items-center justify-center p-6 min-h-screen">
+            <div class="w-full max-w-md animate-float">
+                <div class="glass gradient-border rounded-3xl overflow-hidden shadow-xl backdrop-blur-2xl bg-white/5">
+                    <!-- Header -->
+                    <div class="p-8 text-center">
+                        <h2 class="text-3xl md:text-4xl tracking-tight font-semibold text-white">
+                            Turn your vision into your Dreams
+                        </h2>
+                        <p class="text-sm text-white/70 mt-4 max-w-xs mx-auto">
+                            We transform groundbreaking ideas into delightful experiences,
+                            backed by rock-solid metrics.
+                        </p>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+
+                    <!-- Metrics -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 p-8">
+                        <!-- Years in AI Market -->
+                        <div class="flex flex-col items-center" data-target="2">
+                            <div
+                                class="w-12 h-12 flex items-center justify-center rounded-full glass border border-indigo-400/30">
+                                <i data-lucide="brain-circuit" class="w-5 h-5 text-indigo-300"></i>
+                            </div>
+                            <span class="mt-4 text-2xl font-semibold text-white tracking-tight" data-count>0</span>
+                            <span class="text-xs text-white/60 mt-1">Years in AI Market</span>
+                        </div>
+
+                        <!-- Business Partners -->
+                        <div class="flex flex-col items-center" data-target="1">
+                            <div
+                                class="w-12 h-12 flex items-center justify-center rounded-full glass border border-indigo-400/30">
+                                <i data-lucide="handshake" class="w-5 h-5 text-indigo-300"></i>
+                            </div>
+                            <span class="mt-4 text-2xl font-semibold text-white tracking-tight" data-count>0</span>
+                            <span class="text-xs text-white/60 mt-1">Business Partners</span>
+                        </div>
+
+                        <!-- Products Installed -->
+                        <div class="flex flex-col items-center" data-target="150">
+                            <div
+                                class="w-12 h-12 flex items-center justify-center rounded-full glass border border-indigo-400/30">
+                                <i data-lucide="package" class="w-5 h-5 text-indigo-300"></i>
+                            </div>
+                            <span class="mt-4 text-2xl font-semibold text-white tracking-tight" data-count>0</span>
+                            <span class="text-xs text-white/60 mt-1">Products Installed+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <script>
+            lucide.createIcons();
+
+            // Counter Animation
+            const counters = document.querySelectorAll('[data-count]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const span = entry.target;
+                        const parent = span.parentElement;
+                        const target = +parent.getAttribute('data-target');
+                        let count = 0;
+                        const duration = 1000;
+                        const step = Math.ceil(target / (duration / 16));
+
+                        function update() {
+                            count += step;
+                            if (count > target) count = target;
+                            span.textContent = count + (target === 150 ? '+' : '');
+                            if (count < target) requestAnimationFrame(update);
+                        }
+                        requestAnimationFrame(update);
+                        observer.unobserve(span);
+                    }
+                });
+            }, { threshold: 0.6 });
+            counters.forEach((c) => observer.observe(c));
+
+            // Wave Background
+            const canvas = document.getElementById('bgWave');
+            const ctx = canvas.getContext('2d');
+            let t = 0;
+            const waves = [...Array(8)].map(() => ({
+                val: Math.random() * 0.5 + 0.2,
+                tgt: Math.random() * 0.5 + 0.2,
+                spd: Math.random() * 0.01 + 0.005,
+            }));
+
+            function resize() {
+                canvas.width = innerWidth;
+                canvas.height = innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            function updateWave() {
+                waves.forEach((w) => {
+                    if (Math.random() < 0.02) w.tgt = Math.random() * 0.6 + 0.2;
+                    w.val += (w.tgt - w.val) * w.spd;
+                });
+            }
+
+            function drawWave() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < waves.length; i++) {
+                    const f = waves[i].val * 7;
+                    ctx.beginPath();
+                    for (let x = 0; x <= canvas.width; x++) {
+                        const nx = (x / canvas.width) * 2 - 1;
+                        const y = Math.sin((nx + i * 0.05 + t) * 6) * Math.cos((nx + t) * 3) * f * 8 + canvas.height / 2;
+                        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                    }
+                    const r = 79 + f * 60, g = 70 + f * 100, b = 229;
+                    ctx.strokeStyle = `rgba(${r},${g},${b},0.5)`;
+                    ctx.lineWidth = 1 + i * 0.25;
+                    ctx.stroke();
+                }
+            }
+
+            function animate() {
+                t += 0.003; // slowed increment for smoother, calmer animation
+                updateWave();
+                drawWave();
+                requestAnimationFrame(animate);
+            }
+            animate();
+        </script>
+
+        <style>
+            .glass {
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(18px);
+                -webkit-backdrop-filter: blur(18px);
+            }
+
+            .gradient-border {
+                position: relative;
+            }
+
+            .gradient-border::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                padding: 2px;
+                background: linear-gradient(135deg, #4f46e5, #3b82f6, #8b5cf6, #f59e0b);
+                border-radius: inherit;
+                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                mask-composite: xor;
+                -webkit-mask-composite: xor;
+            }
+        </style>
+    </section>
+
+
+
+    <!-- Testimonials -->
+    <section class="py-24 px-6">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-center mb-16">Voices of impact</h2>
+        <div class="max-w-4xl mx-auto space-y-12">
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-10 backdrop-blur-lg">
+                <p class="text-lg md:text-xl text-neutral-200 italic">
+                    “Strong Relationship is built on trust, respect and understanding”
+                </p>
+                <div class="mt-6 flex items-center space-x-3">
+                    <img src="assests/sudha-murthy.jpeg" alt="Sudha Murthy"
+                        class="w-10 h-10 rounded-full object-cover" />
+                    <div>
+                        <p class="text-sm font-semibold">Sudha Murthy</p>
+                        <p class="text-xs text-neutral-400">Founder‑Chairperson, Infosys Foundation</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-10 backdrop-blur-lg">
+                <p class="text-lg md:text-xl text-neutral-200 italic">
+                    “It doesn't make sense to hire smart people and tell them what to do; we hire smart people so they
+                    can tell us what to do.”
+                </p>
+                <div class="mt-6 flex items-center space-x-3">
+                    <img src="assests/steave-jobs.jpg" alt="Steve Jobs" class="w-10 h-10 rounded-full object-cover" />
+                    <div>
+                        <p class="text-sm font-semibold">Steve Jobs</p>
+                        <p class="text-xs text-neutral-400">Co-founder, Apple Inc.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="relative py-24 px-6">
+        <div
+            class="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-20 rounded-2xl blur-3xl pointer-events-none">
+        </div>
+        <div class="max-w-4xl mx-auto text-center relative">
+            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-6">Ready to accelerate your vision?</h2>
+            <p class="text-neutral-200 mb-10 max-w-2xl mx-auto">Let’s create value together. Book a complimentary
+                strategy session with our leadership team.</p>
+            <a href="bookMeeting.html"
+                class="px-8 py-3 bg-white text-black font-medium rounded-full hover:bg-gray-200 transition shadow-lg hover:shadow-xl">Schedule
+                now</a>
+        </div>
+    </section>
+
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        // Icons
+        lucide.createIcons();
+
+        // Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Chart
+        const ctx1 = document.getElementById('roiChart');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Kick-off', 'Month 1', 'Month 2', 'Month 3', 'Month 4', 'Month 5', 'Month 6'],
+                datasets: [{
+                    label: 'Revenue Uplift %',
+                    data: [0, 3, 7, 11, 14, 17, 21],
+                    borderColor: '#ffffff',
+                    backgroundColor: 'rgba(255,255,255,0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#d1d5db' } },
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#d1d5db' } }
+                }
+            }
+        });
+    </script>
+    <!-- Footer Divider -->
+    <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-800/70 to-transparent my-0"></div>
+
+    <footer
+        class="pt-14 pb-8 px-4 sm:px-8 lg:px-16 relative bg-gradient-to-t from-gray-950 via-gray-900/80 to-transparent z-20">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12">
+
+            <!-- Brand & Newsletter -->
+            <div class="flex-1 min-w-[240px] max-w-md mb-8 lg:mb-0">
+                <a href="#"
+                    class="inline-flex items-center gap-2 text-2xl font-semibold tracking-tight font-satoshi text-white hover:text-brand-400 transition-colors duration-300 mb-5">
+                    <i data-lucide="layers" class="w-7 h-7 text-brand-500"></i>
+                    Nevark
+                </a>
+                <p class="mt-3 text-gray-400 text-base leading-relaxed mb-7">
+                    Accelerate your team’s workflow. Seamlessly connect, automate, and monitor your workspace tools from
+                    one powerful hub.
+                </p>
+                <form class="flex flex-col sm:flex-row gap-3 animate-fade-in-up animate-delay-200">
+                    <div class="relative w-full">
+                        <i data-lucide="mail"
+                            class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none"></i>
+                        <input type="email" required placeholder="Your email"
+                            class="w-full py-2.5 pr-4 pl-11 rounded-lg border border-gray-700/60 bg-gray-900/60 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-all text-sm">
+                    </div>
+                    <button type="submit"
+                        class="px-4 py-2.5 bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 hover:to-purple-700 rounded-lg font-semibold text-white text-sm flex items-center gap-1 transition duration-300 hover:scale-105 hover:-translate-y-0.5 shadow-lg group">
+                        <span>Subscribe</span>
+                        <i data-lucide="arrow-right"
+                            class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"></i>
+                    </button>
+                </form>
+                <span class="block mt-2 text-xs text-gray-500">No spam. Unsubscribe anytime.</span>
+            </div>
+
+            <!-- Footer Navigation -->
+            <div class="flex-1 flex flex-col sm:flex-row gap-10 lg:gap-16 justify-between">
+
+                <!-- Product Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4 tracking-tight text-base flex items-center gap-1">
+                        <i data-lucide="grid" class="w-4 h-4 text-brand-400"></i>
+                        Product
+                    </h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li>
+                            <a href="#"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="zap" class="w-4 h-4 text-brand-400"></i>
+                                Automation Hub
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="layers" class="w-4 h-4 text-blue-400"></i>
+                                Integrations
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="bar-chart" class="w-4 h-4 text-purple-400"></i>
+                                Analytics
+                            </a>
+                        </li>
+                        <li>
+                            <a href="privacy.html"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="shield" class="w-4 h-4 text-green-400"></i>
+                                Security
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Resources Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4 tracking-tight text-base flex items-center gap-1">
+                        <i data-lucide="book-open" class="w-4 h-4 text-blue-400"></i>
+                        Resources
+                    </h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li>
+                            <a href="documentaion.html"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="file-text" class="w-4 h-4"></i>
+                                Documentation
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="help-circle" class="w-4 h-4"></i>
+                                Help Center
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="mail" class="w-4 h-4"></i>
+                                Contact Support
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="megaphone" class="w-4 h-4"></i>
+                                Blog
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Company Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4 tracking-tight text-base flex items-center gap-1">
+                        <i data-lucide="building-2" class="w-4 h-4 text-purple-400"></i>
+                        Company
+                    </h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li>
+                            <a href="about.html"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="users" class="w-4 h-4"></i>
+                                About Us
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="briefcase" class="w-4 h-4"></i>
+                                Careers
+                            </a>
+                        </li>
+                        <li>
+                            <a href="Testimonals.html"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="award" class="w-4 h-4"></i>
+                                Testimonials
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                                <i data-lucide="credit-card" class="w-4 h-4"></i>
+                                Pricing
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="mt-12 mb-8 w-full h-px bg-gradient-to-r from-transparent via-gray-800/60 to-transparent"></div>
+
+        <!-- Bottom Bar -->
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 px-1">
+            <div class="flex items-center gap-2 text-xs text-gray-500">
+                <span>&copy; <span id="year"></span> Nevark </span>
+                <span class="hidden sm:inline">&bull;</span>
+                <a href="privacy.html" class="hover:underline hover:text-gray-300">Privacy Policy</a>
+                <span class="hidden sm:inline">&bull;</span>
+                <a href="terms-condition.html" class="hover:underline hover:text-gray-300">Terms of Service</a>
+                <span class="hidden sm:inline">&bull;</span>
+                <a href="#" class="hover:underline hover:text-gray-300">Status</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="p-2 rounded-lg bg-gray-800/60 hover:bg-brand-600 group transition duration-300"
+                    aria-label="Twitter">
+                    <i data-lucide="twitter" class="w-4 h-4 text-gray-400 group-hover:text-white"></i>
+                </a>
+                <a href="#" class="p-2 rounded-lg bg-gray-800/60 hover:bg-blue-600 group transition duration-300"
+                    aria-label="GitHub">
+                    <i data-lucide="github" class="w-4 h-4 text-gray-400 group-hover:text-white"></i>
+                </a>
+                <a href="#" class="p-2 rounded-lg bg-gray-800/60 hover:bg-green-600 group transition duration-300"
+                    aria-label="Slack">
+                    <i data-lucide="slack" class="w-4 h-4 text-gray-400 group-hover:text-white"></i>
+                </a>
+                <a href="#" class="p-2 rounded-lg bg-gray-800/60 hover:bg-purple-600 group transition duration-300"
+                    aria-label="LinkedIn">
+                    <i data-lucide="linkedin" class="w-4 h-4 text-gray-400 group-hover:text-white"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        document.getElementById('year').textContent = new Date().getFullYear();
+        // Fade-in animation
+        document.querySelectorAll('[class*="animate-fade-in"]').forEach(el => {
+            el.style.opacity = 1;
+            el.style.transition = 'opacity 0.8s cubic-bezier(.4,0,.2,1)';
+        });
+    </script>
+</body>
+
+</html>

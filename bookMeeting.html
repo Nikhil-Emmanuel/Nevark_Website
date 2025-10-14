@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nevark • Book a Meeting</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @font-face {
+      font-family: 'Angora';
+      src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    .nav-font {
+      font-family: 'Angora', sans-serif;
+    }
+
+    body {
+      font-family: 'Angora';
+      src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Angora';
+      src: url('./assets/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    .angora-font {
+      font-family: 'Angora', sans-serif;
+    }
+
+    /* Scrollbar for WebKit browsers (Chrome, Edge, Safari) */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #111827;
+      /* dark background */
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #6366f1, #8b5cf6);
+      /* indigo to purple */
+      border-radius: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #a78bfa, #c084fc);
+      /* lighter purple on hover */
+    }
+  </style>
+</head>
+
+<body class="bg-black text-white font-sans min-h-screen flex flex-col">
+  <!-- 3D ambience -->
+  <div class="fixed inset-0 -z-10">
+    <iframe src="https://my.spline.design/thresholddarkambientui-v0gkZCfi6zXm69kE0wccy70f/" frameborder="0" width="100%"
+      height="100%" class="w-full h-full"></iframe>
+  </div>
+
+  <!-- Nav -->
+  <nav
+    class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-white/5 border border-white/10 rounded-full px-10 py-4 shadow-xl backdrop-blur-md">
+    <div class="flex items-center">
+      <!-- Links with increased spacing -->
+      <div class="hidden md:flex items-center space-x-14 text-gray-300 text-sm font-medium tracking-wide nav-font">
+        <a href="home.html" class="hover:text-white transition-colors">Home</a>
+        <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
+        <a href="about.html" class="hover:text-white transition-colors">About</a>
+        <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
+      </div>
+    </div>
+  </nav>
+
+  <a href="home.html">
+    <div class="absolute top-8 left-16 text-white text-2xl tracking-widest angora-font z-10">
+      NEVARK
+    </div>
+  </a>
+
+  <!-- Hero & Form -->
+  <section class="flex-1 flex items-center justify-center px-4 md:px-8 pt-32 pb-24">
+    <div class="relative max-w-4xl w-full">
+      <!-- radial glow -->
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div class="w-[580px] h-[580px] rounded-full bg-white opacity-5 blur-[120px]"></div>
+      </div>
+
+      <!-- card -->
+      <div class="relative bg-black/40 backdrop-blur-lg border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
+        <div class="p-10 md:px-16 md:py-14">
+          <span
+            class="inline-block text-xs font-medium bg-white/10 border border-white/20 rounded-full px-3 py-1 backdrop-blur-sm mb-6">
+            Early Access
+          </span>
+
+          <h1 class="text-4xl md:text-5xl font-medium tracking-tight mb-4">
+            Connect With Us
+          </h1>
+          <p class="text-lg text-gray-300 mb-10 max-w-xl">
+            Let’s discuss how we can accelerate your workflow. Tell us a bit about you, and we’ll find the perfect time.
+          </p>
+
+          <!-- form -->
+          <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Name -->
+            <div class="col-span-1">
+              <label class="block text-sm mb-2" for="name">Full Name</label>
+              <div class="relative">
+                <input id="name" type="text" placeholder="Jane Doe" required
+                  class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-white/30 placeholder-gray-400 backdrop-blur-md" />
+                <i data-lucide="user" class="w-4 h-4 absolute right-3 top-3 text-gray-400"></i>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="col-span-1">
+              <label class="block text-sm mb-2" for="email">Email</label>
+              <div class="relative">
+                <input id="email" type="email" placeholder="jane@domain.com" required
+                  class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-white/30 placeholder-gray-400 backdrop-blur-md" />
+                <i data-lucide="mail" class="w-4 h-4 absolute right-3 top-3 text-gray-400"></i>
+              </div>
+            </div>
+
+            <!-- Company -->
+            <div class="col-span-1">
+              <label class="block text-sm mb-2" for="company">Company (Optional)</label>
+              <div class="relative">
+                <input id="company" type="text" placeholder="Acme Inc."
+                  class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-white/30 placeholder-gray-400 backdrop-blur-md" />
+                <i data-lucide="briefcase" class="w-4 h-4 absolute right-3 top-3 text-gray-400"></i>
+              </div>
+            </div>
+
+            <!-- Contact -->
+            <div class="col-span-1">
+              <label class="block text-sm mb-2" for="company">Contact Number </label>
+              <div class="relative">
+                <input id="contact" type="text" placeholder="+91 86609 16819"
+                  class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-white/30 placeholder-gray-400 backdrop-blur-md" />
+                <i data-lucide="briefcase" class="w-4 h-4 absolute right-3 top-3 text-gray-400"></i>
+              </div>
+            </div>
+
+
+            <!-- Message -->
+            <div class="col-span-1 md:col-span-2">
+              <label class="block text-sm mb-2" for="message">Message</label>
+              <textarea id="message" rows="4" placeholder="Kindly let us know how we can assist you." required
+                class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-white/30 placeholder-gray-400 backdrop-blur-md resize-none"></textarea>
+            </div>
+
+            <!-- Submit -->
+            <div class="col-span-1 md:col-span-2 flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+                  <i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
+                </div>
+                <p class="text-xs text-gray-400">
+                  Your data is encrypted end-to-end.
+                </p>
+              </div>
+              <button type="submit"
+                class="group relative overflow-hidden bg-white text-black px-10 py-3 rounded-full font-medium shadow-lg">
+                <span class="relative z-10">Book Meeting</span>
+                <span class="absolute inset-0 bg-black/10 group-hover:opacity-0 transition-opacity duration-300"></span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- subtle divider -->
+        <div class="border-t border-white/10"></div>
+
+        <!-- footer stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 text-center text-xs">
+          <div class="py-5 backdrop-blur-lg">
+            <p class="text-gray-300 mb-1">Wait Time</p>
+            <p class="text-base font-medium"> &lt; 24h</p>
+          </div>
+          <div class="py-5 backdrop-blur-lg">
+            <p class="text-gray-300 mb-1">Avg. Call</p>
+            <p class="text-base font-medium">30 min</p>
+          </div>
+          <div class="py-5 backdrop-blur-lg">
+            <p class="text-gray-300 mb-1">Timezone</p>
+            <p class="text-base font-medium">Global</p>
+          </div>
+          <div class="py-5 backdrop-blur-lg">
+            <p class="text-gray-300 mb-1">Support Score</p>
+            <p class="text-base font-medium">4.97/5</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    lucide.createIcons();
+  </script>
+  <!-- Footer Divider -->
+  <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-800/70 to-transparent my-0"></div>
+
+  <footer
+    class="pt-14 pb-8 px-4 sm:px-8 lg:px-16 relative bg-gradient-to-t from-gray-950 via-gray-900/80 to-transparent z-20">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12">
+
+      <!-- Brand & Newsletter -->
+      <div class="flex-1 min-w-[240px] max-w-md mb-8 lg:mb-0">
+        <a href="#"
+          class="inline-flex items-center gap-2 text-2xl font-semibold tracking-tight font-satoshi text-white hover:text-brand-400 transition-colors duration-300 mb-5">
+          <i data-lucide="layers" class="w-7 h-7 text-brand-500"></i>
+          Nevark
+        </a>
+        <p class="mt-3 text-gray-400 text-base leading-relaxed mb-7">
+          Accelerate your team’s workflow. Seamlessly connect, automate, and monitor your workspace tools from one
+          powerful hub.
+        </p>
+        <form class="flex flex-col sm:flex-row gap-3 animate-fade-in-up animate-delay-200">
+          <div class="relative w-full">
+            <i data-lucide="mail"
+              class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none"></i>
+            <input type="email" required placeholder="Your email"
+              class="w-full py-2.5 pr-4 pl-11 rounded-lg border border-gray-700/60 bg-gray-900/60 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-all text-sm">
+          </div>
+          <button type="submit"
+            class="px-4 py-2.5 bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 hover:to-purple-700 rounded-lg font-semibold text-white text-sm flex items-center gap-1 transition duration-300 hover:scale-105 hover:-translate-y-0.5 shadow-lg group">
+            <span>Subscribe</span>
+            <i data-lucide="arrow-right"
+              class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"></i>
+          </button>
+        </form>
+        <span class="block mt-2 text-xs text-gray-500">No spam. Unsubscribe anytime.</span>
+      </div>
+
+      <!-- Footer Navigation -->
+      <div class="flex-1 flex flex-col sm:flex-row gap-10 lg:gap-16 justify-between">
+
+        <!-- Product Links -->
+        <div>
+          <h4 class="text-white font-semibold mb-4 tracking-tight text-base flex items-center gap-1">
+            <i data-lucide="grid" class="w-4 h-4 text-brand-400"></i>
+            Product
+          </h4>
+          <ul class="space-y-3 text-gray-400 text-sm">
+            <li>
+              <a href="#" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                <i data-lucide="zap" class="w-4 h-4 text-brand-400"></i>
+                Automation Hub
+              </a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                <i data-lucide="layers" class="w-4 h-4 text-blue-400"></i>
+                Integrations
+              </a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                <i data-lucide="bar-chart" class="w-4 h-4 text-purple-400"></i>
+                Analytics
+              </a>
+            </li>
+            <li>
+              <a href="privacy.html" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                <i data-lucide="shield" class="w-4 h-4 text-green-400"></i>
+                Security
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Resources Links -->
+        <div>
+          <h4 class="text-white font-semibold mb-4 tracking-tight text-base flex items-center gap-1">
+            <i data-lucide="book-open" class="w-4 h-4 text-blue-400"></i>
+            Resources
+          </h4>
+          <ul class="space-y-3 text-gray-400 text-sm">
+            <li>
+              <a href="documentaion.html"
+                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                <i data-lucide="file-text" class="w-4 h-4"></i>
+                Documentation
+              </a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                <i data-lucide="help-circle" class="w-4 h-4"></i>
+                Help Center
+              </a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                <i data-lucide="mail" class="w-4 h-4"></i>
+                Contact Support
+              </a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                <i data-lucide="megaphone" class="w-4 h-4"></i>
+                Blog
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Company Links -->
+        <div>
+          <h4 class="text-white font-semibold mb-4 tracking-tight text-base flex items-center gap-1">
+            <i data-lucide="building-2" class="w-4 h-4 text-purple-400"></i>
+            Company
+          </h4>
+          <ul class="space-y-3 text-gray-400 text-sm">
+            <li>
+              <a href="about.html" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                <i data-lucide="users" class="w-4 h-4"></i>
+                About Us
+              </a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                <i data-lucide="briefcase" class="w-4 h-4"></i>
+                Careers
+              </a>
+            </li>
+            <li>
+              <a href="Testimonals.html"
+                class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                <i data-lucide="award" class="w-4 h-4"></i>
+                Testimonals
+              </a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                <i data-lucide="credit-card" class="w-4 h-4"></i>
+                Pricing
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="mt-12 mb-8 w-full h-px bg-gradient-to-r from-transparent via-gray-800/60 to-transparent"></div>
+
+    <!-- Bottom Bar -->
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 px-1">
+      <div class="flex items-center gap-2 text-xs text-gray-500">
+        <span>&copy; <span id="year"></span> Nevark </span>
+        <span class="hidden sm:inline">&bull;</span>
+        <a href="privacy.html" class="hover:underline hover:text-gray-300">Privacy Policy</a>
+        <span class="hidden sm:inline">&bull;</span>
+        <a href="terms-condition.html" class="hover:underline hover:text-gray-300">Terms of Service</a>
+        <span class="hidden sm:inline">&bull;</span>
+        <a href="#" class="hover:underline hover:text-gray-300">Status</a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="#" class="p-2 rounded-lg bg-gray-800/60 hover:bg-brand-600 group transition duration-300"
+          aria-label="Twitter">
+          <i data-lucide="twitter" class="w-4 h-4 text-gray-400 group-hover:text-white"></i>
+        </a>
+        <a href="#" class="p-2 rounded-lg bg-gray-800/60 hover:bg-blue-600 group transition duration-300"
+          aria-label="GitHub">
+          <i data-lucide="github" class="w-4 h-4 text-gray-400 group-hover:text-white"></i>
+        </a>
+        <a href="#" class="p-2 rounded-lg bg-gray-800/60 hover:bg-green-600 group transition duration-300"
+          aria-label="Slack">
+          <i data-lucide="slack" class="w-4 h-4 text-gray-400 group-hover:text-white"></i>
+        </a>
+        <a href="#" class="p-2 rounded-lg bg-gray-800/60 hover:bg-purple-600 group transition duration-300"
+          aria-label="LinkedIn">
+          <i data-lucide="linkedin" class="w-4 h-4 text-gray-400 group-hover:text-white"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Fade-in animation
+    document.querySelectorAll('[class*="animate-fade-in"]').forEach(el => {
+      el.style.opacity = 1;
+      el.style.transition = 'opacity 0.8s cubic-bezier(.4,0,.2,1)';
+    });
+  </script>
+</body>
+
+</html>
