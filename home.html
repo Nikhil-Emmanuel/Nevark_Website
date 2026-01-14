@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Nevark Technologies</title>
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -22,9 +27,13 @@
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+    <!-- Load fonts async for better performance -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    </noscript>
 
     <style>
         @font-face {
@@ -43,7 +52,10 @@
             src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
             font-weight: normal;
             font-style: normal;
+            cursor: auto !important;
         }
+
+        
 
         @font-face {
             font-family: 'Angora';
@@ -58,6 +70,44 @@
 
         html {
             scroll-behavior: smooth;
+        }
+
+        /* 3D Background Container */
+        #bg3d-container {
+            position: fixed;
+            inset: 0;
+            z-index: -10;
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
+        }
+
+        #bg3d-container canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        
+        /* Loading skeleton for Spline iframe */
+        .spline-loader {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            z-index: 1;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .spline-loaded .spline-loader {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
         }
 
         /* Scrollbar for WebKit browsers (Chrome, Edge, Safari) */
@@ -87,15 +137,16 @@
 </head>
 
 <body class="bg-dark text-light font-sans antialiased">
-    <!-- 3D / video or spline background -->
-    <div class="fixed inset-0 -z-10">
-        <iframe src="https://my.spline.design/thresholddarkambientui-v0gkZCfi6zXm69kE0wccy70f/" frameborder="0"
+    <!-- Lightweight local 3D background -->
+    <div id="bg3d-container"></div> 
+    <!-- <div class="fixed inset-0 z-2">
+        <iframe src="spline.html" frameborder="0" opacity="0.2"
             width="100%" height="100%"></iframe>
-    </div>
+    </div> -->
 
     <!-- Glass Nav -->
     <nav
-        class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-white/5 border border-white/10 rounded-full px-10 py-4 shadow-xl backdrop-blur-md">
+        class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-white/6 border border-white/10 rounded-full px-10 py-4 shadow-xl backdrop-blur-md">
         <div class="flex items-center">
             <!-- Links with increased spacing -->
             <div
@@ -120,14 +171,14 @@
         <!-- NEVARK top-right -->
         <a href="home.html">
             <div class="absolute top-8 left-16 text-white text-2xl tracking-widest angora-font z-10">
-                NEVARK
+                N E V A R K
             </div>
         </a>
 
         <!-- Subtitle -->
         <span
             class="mb-8 px-3 py-1 text-xs font-medium bg-white/10 border border-white/20 rounded-full backdrop-blur-sm">
-            Strategy & Innovation Consultancy
+            Dream. Create. Innovate
         </span>
 
         <!-- Main Heading -->
@@ -139,10 +190,8 @@
 
         <!-- CTA Buttons -->
         <div class="mt-12 flex flex-col sm:flex-row gap-4">
-            <a href="#services"
-                class="px-8 py-3 bg-white text-black font-medium rounded-full hover:bg-gray-200 transition shadow-lg hover:shadow-xl">
-                Our Services
-            </a>
+            <!-- <a href="#services" class="px-8 py-3 bg-white text-black font-medium rounded-full hover:bg-gray-200 transition shadow-lg hover:shadow-xl">
+                Our Services </a> -->
 
             <a href="bookMeeting.html"
                 class="px-8 py-3 bg-white/10 border border-white/20 text-white font-medium rounded-full backdrop-blur-sm hover:bg-white/20 transition">
@@ -150,10 +199,10 @@
             </a>
         </div>
 
-        <!-- Scroll Down Icon -->
-        <svg class="w-6 h-6 mt-24 animate-bounce text-white/50" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+        <!-- Scroll Down Icon --><a href="#services">
+        <svg class="w-8 h-8 mt-24 animate-bounce text-white/50" stroke="currentColor" fill="none" viewBox="0 0 24 24">
             <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
+        </svg></a>
     </section>
 
 
@@ -368,10 +417,15 @@
 
             function drawWave() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for (let i = 0; i < waves.length; i++) {
+                // Reduce wave count on mobile for better performance
+                const waveCount = window.innerWidth < 768 ? 4 : waves.length;
+                // Draw every 2-4 pixels instead of every pixel for performance
+                const step = window.innerWidth < 768 ? 4 : 2;
+                
+                for (let i = 0; i < waveCount; i++) {
                     const f = waves[i].val * 7;
                     ctx.beginPath();
-                    for (let x = 0; x <= canvas.width; x++) {
+                    for (let x = 0; x <= canvas.width; x += step) {
                         const nx = (x / canvas.width) * 2 - 1;
                         const y = Math.sin((nx + i * 0.05 + t) * 6) * Math.cos((nx + t) * 3) * f * 8 + canvas.height / 2;
                         x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
@@ -383,13 +437,23 @@
                 }
             }
 
+            // Use visibility API to pause animation when tab is not visible
+            let isAnimating = true;
+            document.addEventListener('visibilitychange', () => {
+                isAnimating = !document.hidden;
+                if (isAnimating) animate();
+            });
+
             function animate() {
-                t += 0.003; // slowed increment for smoother, calmer animation
+                if (!isAnimating) return;
+                t += 0.003;
                 updateWave();
                 drawWave();
                 requestAnimationFrame(animate);
             }
-            animate();
+            
+            // Start animation after a brief delay to let page load
+            setTimeout(() => animate(), 100);
         </script>
 
         <style>
@@ -469,41 +533,16 @@
     </section>
 
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Scripts - Load local 3D background and Lucide -->
+    <script src="background-3d.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
-        // Icons
+        // Initialize Lucide icons
         lucide.createIcons();
 
-        // Year
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // Chart
-        const ctx1 = document.getElementById('roiChart');
-        new Chart(ctx1, {
-            type: 'line',
-            data: {
-                labels: ['Kick-off', 'Month 1', 'Month 2', 'Month 3', 'Month 4', 'Month 5', 'Month 6'],
-                datasets: [{
-                    label: 'Revenue Uplift %',
-                    data: [0, 3, 7, 11, 14, 17, 21],
-                    borderColor: '#ffffff',
-                    backgroundColor: 'rgba(255,255,255,0.1)',
-                    tension: 0.4,
-                    fill: true
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#d1d5db' } },
-                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#d1d5db' } }
-                }
-            }
-        });
+        // Set year
+        const yearEl = document.getElementById('year');
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
     </script>
     <!-- Footer Divider -->
     <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-800/70 to-transparent my-0"></div>
@@ -695,8 +734,6 @@
     </footer>
 
     <script>
-        lucide.createIcons();
-        document.getElementById('year').textContent = new Date().getFullYear();
         // Fade-in animation
         document.querySelectorAll('[class*="animate-fade-in"]').forEach(el => {
             el.style.opacity = 1;
