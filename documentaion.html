@@ -96,34 +96,90 @@
             /* lighter purple on hover */
         }
     </style>
+    <style>
+        #bg3d-container {
+            position: fixed;
+            inset: 0;
+            z-index: -10;
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
+        }
+
+        #bg3d-container canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 
 <body
     class="bg-neutral-950 text-neutral-200 min-h-screen flex flex-col items-center justify-start p-4 relative overflow-x-hidden">
 
     <!-- Background -->
-    <div class="fixed inset-0 -z-10">
-        <iframe src="https://my.spline.design/thresholddarkambientui-v0gkZCfi6zXm69kE0wccy70f/" frameborder="0"
-            width="100%" height="100%"></iframe>
-    </div>
+    <div id="bg3d-container"></div>
 
     <!-- Navigation -->
     <nav
-        class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-white/5 border border-white/10 rounded-full px-10 py-4 shadow-xl backdrop-blur-md">
-        <div class="flex items-center">
-            <!-- Links with increased spacing -->
+        class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-white/10 border border-white/10 rounded-2xl md:rounded-full px-6 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md w-[90%] md:w-auto">
+        <div class="flex items-center justify-between md:justify-center">
+            <!-- Mobile Logo -->
+            <div id="mobile-logo-nav" class="md:hidden text-white text-sm tracking-widest angora-font">
+                NEVARK
+            </div>
+
+            <!-- Links -->
             <div
-                class="hidden md:flex items-center space-x-14 text-gray-300 text-sm font-medium tracking-wide nav-font">
+                class="hidden md:flex items-center space-x-10 text-gray-300 text-sm font-medium tracking-wide nav-font">
                 <a href="home.html" class="hover:text-white transition-colors">Home</a>
                 <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
                 <a href="about.html" class="hover:text-white transition-colors">About</a>
                 <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
             </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-toggle" class="md:hidden text-white p-2 focus:outline-none">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden flex-col items-center space-y-6 mt-4 pb-4 text-gray-300 text-sm font-medium tracking-widest nav-font border-t border-white/10 pt-6 md:hidden">
+            <a href="home.html" class="hover:text-white transition-colors">HOME</a>
+            <a href="projects.html" class="hover:text-white transition-colors">PROJECTS</a>
+            <a href="about.html" class="hover:text-white transition-colors">ABOUT</a>
+            <a href="bookMeeting.html" class="hover:text-white transition-colors">BOOKINGS</a>
         </div>
     </nav>
 
-    <a href="home.html">
-        <div class="absolute top-8 left-16 text-white text-2xl tracking-widest angora-font z-10">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+            
+            document.getElementById('mobile-menu-toggle')?.addEventListener('click', () => {
+                const menu = document.getElementById('mobile-menu');
+                const logo = document.getElementById('mobile-logo-nav');
+                const isHidden = menu.classList.contains('hidden');
+                
+                if (isHidden) {
+                    menu.classList.remove('hidden');
+                    menu.classList.add('flex');
+                    if (logo) logo.style.opacity = '0';
+                } else {
+                    menu.classList.add('hidden');
+                    menu.classList.remove('flex');
+                    if (logo) logo.style.opacity = '1';
+                }
+            });
+        });
+    </script>
+
+    <a href="home.html" class="absolute top-8 left-1/2 -translate-x-1/2 md:left-16 md:translate-x-0">
+        <div class="text-white text-xl md:text-2xl tracking-widest angora-font z-10">
             NEVARK
         </div>
     </a>
@@ -338,6 +394,7 @@
 
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
+    <script src="background-3d.js"></script>
 </body>
 
 </html>

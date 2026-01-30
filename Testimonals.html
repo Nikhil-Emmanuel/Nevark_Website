@@ -282,47 +282,145 @@
   background: linear-gradient(180deg, #a78bfa, #c084fc); /* lighter purple on hover */
 }
 
-    </style>
+/* Nav Indicator */
+#nav-indicator {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 9999px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.nav-link.active {
+    color: white;
+}
+</style>
+<script src="background-waves.js"></script>
 </head>
 
 <body class="bg-aura-bg text-aura-text font-geist">
-    <div class="fixed inset-0 -z-10">
-        <iframe src="https://my.spline.design/thresholddarkambientui-v0gkZCfi6zXm69kE0wccy70f/" frameborder="0"
-            width="100%" height="100%"></iframe>
-    </div>
+    <div id="bg3d-container"></div>
     <nav
-        class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-white/5 border border-white/10 rounded-full px-10 py-4 shadow-xl backdrop-blur-md">
-        <div class="flex items-center">
-            <!-- Links with increased spacing -->
-            <div
-                class="hidden md:flex items-center space-x-14 text-gray-300 text-sm font-medium tracking-wide nav-font">
-                <a href="home.html" class="hover:text-white transition-colors">Home</a>
-                <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
-                <a href="about.html" class="hover:text-white transition-colors">About</a>
-                <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
+        class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-white/6 border border-white/10 rounded-full px-6 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md w-[90%] md:w-auto">
+        <div class="flex items-center justify-between md:justify-center">
+            <!-- Mobile Logo -->
+            <div id="mobile-logo-nav" class="md:hidden text-white text-sm tracking-widest angora-font">
+                NEVARK
             </div>
+
+            <!-- Links -->
+            <div
+                class="relative hidden md:flex items-center space-x-10 text-gray-300 text-sm font-medium tracking-wide nav-font">
+                <a href="home.html" class="nav-link hover:text-white transition-colors">Home</a>
+                <a href="projects.html" class="nav-link hover:text-white transition-colors">Projects</a>
+                <a href="about.html" class="nav-link hover:text-white transition-colors">About</a>
+                <a href="bookMeeting.html" class="nav-link hover:text-white transition-colors">Bookings</a>
+                <div id="nav-indicator"></div>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-toggle" class="md:hidden text-white p-2">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden flex-col space-y-4 mt-4 pb-4 text-gray-300 text-sm font-medium tracking-wide nav-font border-t border-white/10 pt-4 md:hidden">
+            <a href="home.html" class="hover:text-white transition-colors">Home</a>
+            <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
+            <a href="about.html" class="hover:text-white transition-colors">About</a>
+            <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
         </div>
     </nav>
 
-    <a href="home.html">
-            <div class="absolute top-8 left-16 text-white text-2xl tracking-widest angora-font z-10">
-                NEVARK
-            </div>
-        </a>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+            
+            // Background waves initialization
+            if (typeof BackgroundWaves !== 'undefined') {
+                new BackgroundWaves('bg3d-container');
+            }
+
+            document.getElementById('mobile-menu-toggle')?.addEventListener('click', () => {
+                const menu = document.getElementById('mobile-menu');
+                const logo = document.getElementById('mobile-logo-nav');
+                const isHidden = menu.classList.contains('hidden');
+                
+                if (isHidden) {
+                    menu.classList.remove('hidden');
+                    menu.classList.add('flex');
+                    if (logo) logo.style.opacity = '0';
+                } else {
+                    menu.classList.add('hidden');
+                    menu.classList.remove('flex');
+                    if (logo) logo.style.opacity = '1';
+                }
+            });
+
+            // Nav Indicator Logic
+            const navIndicator = document.getElementById('nav-indicator');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            function updateIndicator(el) {
+                if (!el || !navIndicator) return;
+                const rect = el.getBoundingClientRect();
+                const parentRect = el.parentElement.getBoundingClientRect();
+                
+                navIndicator.style.width = `${rect.width + 24}px`;
+                navIndicator.style.height = `${rect.height + 12}px`;
+                navIndicator.style.left = `${rect.left - parentRect.left - 12}px`;
+                navIndicator.style.top = `${rect.top - parentRect.top - 6}px`;
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('mouseenter', (e) => updateIndicator(e.target));
+                
+                // Return to active link on mouse leave
+                link.parentElement.addEventListener('mouseleave', () => {
+                    const activeLink = document.querySelector('.nav-link.active');
+                    if (activeLink) updateIndicator(activeLink);
+                });
+            });
+
+            // Initialize on load
+            const activeLink = document.querySelector('.nav-link.active');
+            if (activeLink) {
+                // Wait for layout
+                setTimeout(() => updateIndicator(activeLink), 100);
+            }
+            
+            // Update on resize
+            window.addEventListener('resize', () => {
+                const activeLink = document.querySelector('.nav-link.active');
+                if (activeLink) updateIndicator(activeLink);
+            });
+        });
+    </script>
+
+    <a href="home.html" class="absolute top-8 left-1/2 -translate-x-1/2 md:left-16 md:translate-x-0">
+        <div class="text-white text-xl md:text-2xl tracking-widest angora-font z-10">
+            NEVARK
+        </div>
+    </a>
 
     <div class="container-center">
-        <div class="max-w-4xl w-full p-8">
+        <div class="max-w-4xl w-full p-4 md:p-8">
             <!-- Interactive Testimonials Stack -->
             <section id="testimonials-container" class="testimonials-stack card-1-active">
                 <!-- Testimonial 1 -->
                 <div class="testimonial-card glass-effect" data-card-id="1">
-                    <div class="p-8">
-                        <div class="flex items-start justify-between mb-6">
-                            <div class="flex items-center gap-4">
-                                <div class="avatar">SM</div>
+                    <div class="p-6 md:p-8">
+                        <div class="flex items-start justify-between mb-4 md:mb-6">
+                            <div class="flex items-center gap-3 md:gap-4">
+                                <div class="avatar flex-shrink-0">SM</div>
                                 <div>
-                                    <h3 class="text-white font-medium text-lg">Sarah Mitchell</h3>
-                                    <p class="text-sm text-aura-muted mt-1">VP of Engineering at TechFlow</p>
+                                    <h3 class="text-white font-medium text-base md:text-lg">Sarah Mitchell</h3>
+                                    <p class="text-xs md:text-sm text-aura-muted mt-0.5 md:mt-1">VP of Engineering at TechFlow</p>
                                 </div>
                             </div>
                             <div class="drag-indicator">
@@ -332,24 +430,23 @@
                             </div>
                         </div>
 
-                        <blockquote class="text-aura-text leading-relaxed text-lg mb-6">
+                        <blockquote class="text-aura-text leading-relaxed text-base md:text-lg mb-4 md:mb-6">
                             "This platform has completely transformed how our team collaborates. The AI-powered
                             analytics provide insights we never had before, and the performance improvements are
                             remarkable. Best investment we've made this year."
                         </blockquote>
 
-                        <div class="flex items-center justify-between border-t border-aura-border pt-4">
-                            <div class="flex gap-2">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-t border-aura-border pt-4 gap-4">
+                            <div class="flex flex-wrap gap-2">
                                 <span
-                                    class="text-xs px-2 py-1 rounded-md bg-aura-accent/20 text-aura-accent border border-aura-accent/30">FEATURED</span>
+                                    class="text-[10px] md:text-xs px-2 py-1 rounded-md bg-aura-accent/20 text-aura-accent border border-aura-accent/30">FEATURED</span>
                                 <span
-                                    class="text-xs px-2 py-1 rounded-md bg-aura-border text-aura-muted">Enterprise</span>
+                                    class="text-[10px] md:text-xs px-2 py-1 rounded-md bg-aura-border text-aura-muted">Enterprise</span>
                                 <span
-                                    class="text-xs px-2 py-1 rounded-md bg-aura-border text-aura-muted">Verified</span>
+                                    class="text-[10px] md:text-xs px-2 py-1 rounded-md bg-aura-border text-aura-muted">Verified</span>
                             </div>
-                            <div class="flex items-center gap-4 text-xs text-aura-muted">
+                            <div class="flex items-center gap-4 text-[10px] md:text-xs text-aura-muted">
                                 <span><i class="fas fa-users mr-1"></i> 200+ team</span>
-                                <span><i class="fas fa-calendar mr-1"></i> 2 years customer</span>
                             </div>
                         </div>
                     </div>
@@ -357,14 +454,14 @@
 
                 <!-- Testimonial 2 -->
                 <div class="testimonial-card glass-effect" data-card-id="2">
-                    <div class="p-8">
-                        <div class="flex items-start justify-between mb-6">
-                            <div class="flex items-center gap-4">
-                                <div class="avatar" style="background: linear-gradient(135deg, #10b981, #059669);">MC
+                    <div class="p-6 md:p-8">
+                        <div class="flex items-start justify-between mb-4 md:mb-6">
+                            <div class="flex items-center gap-3 md:gap-4">
+                                <div class="avatar flex-shrink-0" style="background: linear-gradient(135deg, #10b981, #059669);">MC
                                 </div>
                                 <div>
-                                    <h3 class="text-white font-medium text-lg">Marcus Chen</h3>
-                                    <p class="text-sm text-aura-muted mt-1">Product Manager at DataSync</p>
+                                    <h3 class="text-white font-medium text-base md:text-lg">Marcus Chen</h3>
+                                    <p class="text-xs md:text-sm text-aura-muted mt-0.5 md:mt-1">Product Manager at DataSync</p>
                                 </div>
                             </div>
                             <div class="drag-indicator">
@@ -374,20 +471,19 @@
                             </div>
                         </div>
 
-                        <blockquote class="text-aura-text leading-relaxed text-lg mb-6">
+                        <blockquote class="text-aura-text leading-relaxed text-base md:text-lg mb-4 md:mb-6">
                             "The real-time collaboration features are game-changing. Our remote team feels more
                             connected than ever, and the platform's reliability is outstanding. The mobile experience is
                             seamless across all devices."
                         </blockquote>
 
-                        <div class="flex items-center justify-between border-t border-aura-border pt-4">
-                            <div class="flex gap-2">
-                                <span class="text-xs px-2 py-1 rounded-md bg-aura-border text-aura-muted">Startup</span>
-                                <span class="text-xs px-2 py-1 rounded-md bg-aura-border text-aura-muted">Mobile</span>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-t border-aura-border pt-4 gap-4">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-[10px] md:text-xs px-2 py-1 rounded-md bg-aura-border text-aura-muted">Startup</span>
+                                <span class="text-[10px] md:text-xs px-2 py-1 rounded-md bg-aura-border text-aura-muted">Mobile</span>
                             </div>
-                            <div class="flex items-center gap-4 text-xs text-aura-muted">
+                            <div class="flex items-center gap-4 text-[10px] md:text-xs text-aura-muted">
                                 <span><i class="fas fa-thumbs-up mr-1"></i> Helpful</span>
-                                <span><i class="fas fa-shield-alt mr-1"></i> Verified Purchase</span>
                             </div>
                         </div>
                     </div>
@@ -730,6 +826,7 @@
             el.style.transition = 'opacity 0.8s cubic-bezier(.4,0,.2,1)';
         });
     </script>
+    <script src="background-3d.js"></script>
 </body>
 
 </html>
