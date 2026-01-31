@@ -63,10 +63,16 @@
             background: linear-gradient(180deg,
                     rgba(0, 0, 0, 0.55),
                     rgba(0, 0, 0, 0.15));
-            padding: 2.5rem 3rem;
+            padding: 1.5rem 2rem;
             border-radius: 1.5rem;
             backdrop-filter: blur(2px);
 
+        }
+
+        @media (min-width: 768px) {
+            .text-backdrop {
+                padding: 2.5rem 3rem;
+            }
         }
 
 
@@ -133,10 +139,10 @@
 <body class="bg-zinc-950">
     <canvas id="canvas"></canvas>
     <nav
-        class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-white/5 border border-white/10 rounded-full px-6 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md w-[90%] md:w-auto">
+        class="fixed top-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50 bg-white/5 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md md:w-auto transition-all duration-300">
         <div class="flex items-center justify-between md:justify-center">
             <!-- Mobile Logo -->
-            <div class="md:hidden text-white text-sm tracking-widest angora-font">
+            <div id="mobile-logo-nav" class="md:hidden text-white text-sm tracking-widest angora-font transition-opacity duration-300">
                 NEVARK
             </div>
 
@@ -152,10 +158,7 @@
 
             <!-- Mobile Menu Toggle -->
             <button id="mobile-menu-toggle" class="md:hidden text-white p-2">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
-                    </path>
-                </svg>
+                <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
 
@@ -169,7 +172,38 @@
         </div>
     </nav>
 
-    <a href="home.html">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+
+            const toggleBtn = document.getElementById('mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLogo = document.getElementById('mobile-logo-nav');
+
+            if (toggleBtn && mobileMenu) {
+                toggleBtn.addEventListener('click', () => {
+                    const isHidden = mobileMenu.classList.contains('hidden');
+                    if (isHidden) {
+                        mobileMenu.classList.remove('hidden');
+                        mobileMenu.classList.add('flex');
+                        if (mobileLogo) mobileLogo.style.opacity = '0';
+                        toggleBtn.innerHTML = '<i data-lucide="x" class="w-6 h-6"></i>';
+                    } else {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('flex');
+                        if (mobileLogo) mobileLogo.style.opacity = '1';
+                        toggleBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6"></i>';
+                    }
+                    lucide.createIcons();
+                });
+            }
+        });
+    </script>
+
+    <a href="home.html" class="hidden md:block">
         <div class="absolute top-8 left-16 text-white text-2xl tracking-widest angora-font z-10">
             NEVARK
         </div>
@@ -184,14 +218,14 @@
     <div class="relative z-10 pointer-events-none">
 
         <!-- Section 1 -->
-        <section class="h-screen flex items-center justify-center px-8">
+        <section class="h-screen flex items-center justify-center px-6 md:px-8">
             <div class="max-w-7xl pointer-events-auto">
                 <h1
-                    class=" text-backdrop hero-title md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 tracking-tight">
+                    class=" text-backdrop hero-title text-4xl sm:text-6xl md:text-9xl font-bold leading-tight mb-8 md:mb-12 opacity-0 transform translate-y-12 tracking-tight">
                     About Nevark<br>Technologies
                 </h1>
                 <p
-                    class="text-backdrop hero-subtext md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
+                    class="text-backdrop hero-subtext text-lg sm:text-xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
                     We build intelligent systems at the intersection of AI, machine learning, and real-world industrial
                     engineering—turning complex data into decisive operational intelligence.
                 </p>
@@ -199,22 +233,22 @@
         </section>
 
         <!-- Quote 1 -->
-        <div class="h-96 flex items-center justify-center px-8">
+        <div class="h-96 flex items-center justify-center px-6 md:px-8">
             <p
-                class="text-violet-400 text-backdrop text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 italic font-medium">
+                class="text-violet-400 text-backdrop text-2xl sm:text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 italic font-medium">
                 “Innovation matters only when it solves real problems.”
             </p>
         </div>
 
         <!-- Section 2 -->
-        <section class="h-screen flex items-center justify-center px-8">
+        <section class="h-screen flex items-center justify-center px-6 md:px-8">
             <div class="max-w-7xl pointer-events-auto">
                 <h1
-                    class="text-backdrop text-8xl md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
+                    class="text-backdrop text-4xl sm:text-6xl md:text-9xl font-bold leading-tight mb-8 md:mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
                     Intelligent<br>Foundations
                 </h1>
                 <p
-                    class="text-backdrop text-2xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
+                    class="text-backdrop text-lg sm:text-xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
                     Our work focuses on predictive intelligence, flow-based analytics, and scalable system
                     design—engineered
                     to integrate seamlessly into existing industrial environments.
@@ -223,22 +257,22 @@
         </section>
 
         <!-- Quote 2 -->
-        <div class="h-96 flex items-center justify-center px-8">
+        <div class="h-96 flex items-center justify-center px-6 md:px-8">
             <p
-                class="text-cyan-400 text-backdrop text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 italic font-medium">
+                class="text-cyan-400 text-backdrop text-2xl sm:text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 italic font-medium">
                 “Data becomes powerful when learning never stops.”
             </p>
         </div>
 
         <!-- Section 3 -->
-        <section class="h-screen flex items-center justify-center px-8">
+        <section class="h-screen flex items-center justify-center px-6 md:px-8">
             <div class="max-w-7xl pointer-events-auto">
                 <h1
-                    class="text-backdrop text-8xl md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
+                    class="text-backdrop text-4xl sm:text-6xl md:text-9xl font-bold leading-tight mb-8 md:mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
                     Built for<br>Industry
                 </h1>
                 <p
-                    class="text-backdrop text-2xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
+                    class="text-backdrop text-lg sm:text-xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
                     From predictive maintenance to real-time monitoring, our solutions reduce downtime, uncover hidden
                     inefficiencies, and enable proactive, data-driven decision-making.
                 </p>
@@ -246,22 +280,22 @@
         </section>
 
         <!-- Quote 3 -->
-        <div class="h-96 flex items-center justify-center px-8">
+        <div class="h-96 flex items-center justify-center px-6 md:px-8">
             <p
-                class="text-backdrop text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 text-rose-400 italic font-medium">
+                class="text-backdrop text-2xl sm:text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 text-rose-400 italic font-medium">
                 “Sustainable growth begins with operational clarity.”
             </p>
         </div>
 
         <!-- Section 4 -->
-        <section class="h-screen flex items-center justify-center px-8">
+        <section class="h-screen flex items-center justify-center px-6 md:px-8">
             <div class="max-w-7xl pointer-events-auto">
                 <h1
-                    class="text-backdrop text-8xl md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
+                    class="text-backdrop text-4xl sm:text-6xl md:text-9xl font-bold leading-tight mb-8 md:mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
                     Vision<br>& Purpose
                 </h1>
                 <p
-                    class="text-backdrop text-2xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
+                    class="text-backdrop text-lg sm:text-xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
                     We envision intelligent manufacturing ecosystems powered by transparent data, continuous learning,
                     and technology that scales responsibly with real operational needs.
                 </p>
@@ -269,26 +303,26 @@
         </section>
 
         <!-- Quote 4 -->
-        <div class="h-96 flex items-center justify-center px-8">
+        <div class="h-96 flex items-center justify-center px-6 md:px-8">
             <p
-                class="text-backdrop text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 text-emerald-400 italic font-medium">
+                class="text-backdrop text-2xl sm:text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 text-emerald-400 italic font-medium">
                 “Let intelligence lead the way forward.”
             </p>
         </div>
 
         <!-- Section 5 -->
-        <section class="h-screen flex items-center justify-center px-8">
-            <div class="max-w-7xl pointer-events-auto">
+        <section class="h-screen flex items-center justify-center px-6 md:px-8">
+            <div class="max-w-7xl pointer-events-auto text-center md:text-left">
                 <h1
-                    class="text-backdrop text-8xl md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
+                    class="text-backdrop text-4xl sm:text-6xl md:text-9xl font-bold leading-tight mb-8 md:mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
                     Collaborate<br>With Us
                 </h1>
                 <p
-                    class="text-backdrop text-2xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
+                    class="text-backdrop text-lg sm:text-xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
                     Partner with our experts to transform complex challenges into resilient, intelligent, and
                     future-ready solutions.
                 </p>
-                <div class="mt-12">
+                <div class="mt-12 flex justify-center md:justify-start">
                     <a href="bookMeeting.html" class="group inline-flex items-center gap-3 px-8 py-4 rounded-full
             bg-white/10 backdrop-blur-md border border-white/20
             text-white text-lg font-medium tracking-wide
@@ -430,7 +464,7 @@
         }
 
         // Layer 2 - Mid-ground
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 20; i++) {
             const type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
             const shape = createGeometry(type, Math.random() * 1.5 + 0.8, brightMaterial);
 
@@ -457,7 +491,7 @@
         }
 
         // Layer 3 - Background (slowest parallax)
-        for (let i = 0; i < 40; i++) {
+        for (let i = 0; i < 20; i++) {
             const type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
             const shape = createGeometry(type, Math.random() * 2.0 + 0.5, dustMaterial);
 
@@ -631,33 +665,32 @@
         <div class="mt-12 mb-8 w-full h-px bg-gradient-to-r from-transparent via-gray-800/60 to-transparent"></div>
 
         <!-- Bottom Bar -->
-        <div class="max-w-7xl mx-auto relative px-1">
+        <div class="max-w-7xl mx-auto px-4 pb-12">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <!-- Left/Center content -->
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 text-xs text-gray-500 text-center md:text-left">
+                    <span>© 2026 Nevark Technologies LLP. All Rights Reserved </span>
+                    <span class="hidden sm:inline">&bull;</span>
+                    <a href="privacy.html" class="hover:underline hover:text-gray-300">Privacy Policy</a>
+                    <span class="hidden sm:inline">&bull;</span>
+                    <a href="terms-condition.html" class="hover:underline hover:text-gray-300">Terms of Service</a>
+                    <span class="hidden sm:inline">&bull;</span>
+                    <span class="relative group cursor-default">
+                        <span class="inline-flex items-center gap-1 hover:text-gray-300">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Status
+                        </span>
 
-            <!-- Center content -->
-            <div class="flex flex-wrap items-center justify-center gap-2 text-xs text-gray-500 text-center">
-                <span>© 2026 Nevark Technologies LLP. All Rights Reserved </span>
-                <span class="hidden sm:inline">&bull;</span>
-                <a href="privacy.html" class="hover:underline hover:text-gray-300">Privacy Policy</a>
-                <span class="hidden sm:inline">&bull;</span>
-                <a href="terms-condition.html" class="hover:underline hover:text-gray-300">Terms of Service</a>
-                <span class="hidden sm:inline">&bull;</span>
-                <span class="relative group cursor-default">
-                    <span class="inline-flex items-center gap-1 hover:text-gray-300">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        Status
+                        <!-- Tooltip -->
+                        <span
+                            class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block whitespace-nowrap text-[10px] px-2 py-1 rounded-md bg-black/80 border border-white/10 text-gray-300 backdrop-blur-md">
+                            All systems operational
+                        </span>
                     </span>
+                </div>
 
-                    <!-- Tooltip -->
-                    <span
-                        class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block whitespace-nowrap text-[10px] px-2 py-1 rounded-md bg-black/80 border border-white/10 text-gray-300 backdrop-blur-md">
-                        All systems operational
-                    </span>
-                </span>
-
-            </div>
-
-            <!-- Social icons bottom-right -->
-            <div class="absolute right-0 bottom-0 flex items-center gap-3">
+                <!-- Social icons -->
+                <div class="flex items-center gap-3">
 
                 <!-- Email -->
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=office@nevark.in&su=Nevark%20Technologies%20-%20Website%20Mailer"
@@ -700,13 +733,6 @@
 
 
     <script>
-        // Mobile menu toggle
-        document.getElementById('mobile-menu-toggle')?.addEventListener('click', () => {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-            menu.classList.toggle('flex');
-        });
-
         // Nav Indicator Logic
         const navIndicator = document.getElementById('nav-indicator');
         const navLinks = document.querySelectorAll('.nav-link');

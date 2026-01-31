@@ -122,7 +122,7 @@
 
     <!-- Navigation -->
     <nav
-        class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-white/10 border border-white/10 rounded-2xl md:rounded-full px-6 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md w-[90%] md:w-auto">
+        class="fixed top-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50 bg-white/10 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md md:w-auto transition-all duration-300">
         <div class="flex items-center justify-between md:justify-center">
             <!-- Mobile Logo -->
             <div id="mobile-logo-nav" class="md:hidden text-white text-sm tracking-widest angora-font">
@@ -160,21 +160,27 @@
                 lucide.createIcons();
             }
             
-            document.getElementById('mobile-menu-toggle')?.addEventListener('click', () => {
-                const menu = document.getElementById('mobile-menu');
-                const logo = document.getElementById('mobile-logo-nav');
-                const isHidden = menu.classList.contains('hidden');
-                
-                if (isHidden) {
-                    menu.classList.remove('hidden');
-                    menu.classList.add('flex');
-                    if (logo) logo.style.opacity = '0';
-                } else {
-                    menu.classList.add('hidden');
-                    menu.classList.remove('flex');
-                    if (logo) logo.style.opacity = '1';
-                }
-            });
+            const toggleBtn = document.getElementById('mobile-menu-toggle');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    const menu = document.getElementById('mobile-menu');
+                    const logo = document.getElementById('mobile-logo-nav');
+                    const isHidden = menu.classList.contains('hidden');
+                    
+                    if (isHidden) {
+                        menu.classList.remove('hidden');
+                        menu.classList.add('flex');
+                        if (logo) logo.style.opacity = '0';
+                        toggleBtn.innerHTML = '<i data-lucide="x" class="w-6 h-6"></i>';
+                    } else {
+                        menu.classList.add('hidden');
+                        menu.classList.remove('flex');
+                        if (logo) logo.style.opacity = '1';
+                        toggleBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6"></i>';
+                    }
+                    lucide.createIcons();
+                });
+            }
         });
     </script>
 
@@ -382,17 +388,40 @@
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             const card = document.getElementById('card');
-            setTimeout(() => {
-                card.classList.remove('opacity-0', 'translate-y-8');
-                card.classList.add('opacity-100', 'translate-y-0');
-            }, 150);
+            if (card) {
+                setTimeout(() => {
+                    card.classList.remove('opacity-0', 'translate-y-8');
+                    card.classList.add('opacity-100', 'translate-y-0');
+                }, 150);
+            }
 
-            setTimeout(() => {
-                if (window.lucide) lucide.createIcons();
-            }, 350);
+            if (window.lucide) lucide.createIcons();
+
+            const toggleBtn = document.getElementById('mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLogo = document.getElementById('mobile-logo-nav');
+
+            if (toggleBtn && mobileMenu) {
+                toggleBtn.addEventListener('click', () => {
+                    const isHidden = mobileMenu.classList.contains('hidden');
+                    if (isHidden) {
+                        mobileMenu.classList.remove('hidden');
+                        mobileMenu.classList.add('flex');
+                        if (mobileLogo) mobileLogo.style.opacity = '0';
+                        toggleBtn.innerHTML = '<i data-lucide="x" class="w-6 h-6"></i>';
+                    } else {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('flex');
+                        if (mobileLogo) mobileLogo.style.opacity = '1';
+                        toggleBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6"></i>';
+                    }
+                    if (window.lucide) lucide.createIcons();
+                });
+            }
         });
 
-        document.getElementById('year').textContent = new Date().getFullYear();
+        const yearEl = document.getElementById('year');
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
     </script>
     <script src="background-3d.js"></script>
 </body>

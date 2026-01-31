@@ -302,7 +302,7 @@
 <body class="bg-aura-bg text-aura-text font-geist">
     <div id="bg3d-container"></div>
     <nav
-        class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-white/6 border border-white/10 rounded-full px-6 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md w-[90%] md:w-auto">
+        class="fixed top-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50 bg-white/6 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md md:w-auto transition-all duration-300">
         <div class="flex items-center justify-between md:justify-center">
             <!-- Mobile Logo -->
             <div id="mobile-logo-nav" class="md:hidden text-white text-sm tracking-widest angora-font">
@@ -346,21 +346,27 @@
                 new BackgroundWaves('bg3d-container');
             }
 
-            document.getElementById('mobile-menu-toggle')?.addEventListener('click', () => {
-                const menu = document.getElementById('mobile-menu');
-                const logo = document.getElementById('mobile-logo-nav');
-                const isHidden = menu.classList.contains('hidden');
-                
-                if (isHidden) {
-                    menu.classList.remove('hidden');
-                    menu.classList.add('flex');
-                    if (logo) logo.style.opacity = '0';
-                } else {
-                    menu.classList.add('hidden');
-                    menu.classList.remove('flex');
-                    if (logo) logo.style.opacity = '1';
-                }
-            });
+            const toggleBtn = document.getElementById('mobile-menu-toggle');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    const menu = document.getElementById('mobile-menu');
+                    const logo = document.getElementById('mobile-logo-nav');
+                    const isHidden = menu.classList.contains('hidden');
+                    
+                    if (isHidden) {
+                        menu.classList.remove('hidden');
+                        menu.classList.add('flex');
+                        if (logo) logo.style.opacity = '0';
+                        toggleBtn.innerHTML = '<i data-lucide="x" class="w-6 h-6"></i>';
+                    } else {
+                        menu.classList.add('hidden');
+                        menu.classList.remove('flex');
+                        if (logo) logo.style.opacity = '1';
+                        toggleBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6"></i>';
+                    }
+                    lucide.createIcons();
+                });
+            }
 
             // Nav Indicator Logic
             const navIndicator = document.getElementById('nav-indicator');
