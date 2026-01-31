@@ -114,7 +114,8 @@
     class="fixed top-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50 bg-white/6 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md md:w-auto transition-all duration-300">
     <div class="flex items-center justify-between md:justify-center">
       <!-- Mobile Logo -->
-      <div id="mobile-logo-nav" class="md:hidden text-white text-sm tracking-widest angora-font transition-opacity duration-300">
+      <div id="mobile-logo-nav"
+        class="md:hidden text-white text-sm tracking-widest angora-font transition-opacity duration-300">
         NEVARK
       </div>
 
@@ -393,12 +394,13 @@
       </div>
 
       <!-- Social icons bottom-right -->
-      <div class="absolute left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto md:right-0 bottom-0 flex items-center gap-3">
+      <div
+        class="absolute left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto md:right-0 bottom-0 flex items-center gap-3">
 
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=office@nevark.in&su=Nevark%20Technologies%20-%20Website%20Mailer"
-          target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
-                hover:bg-red-600/80
-                transition-all duration-300 hover:-translate-y-0.5" aria-label="Email">
+        <a id="emailLink" href="#" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+          hover:bg-red-600/80 transition-all duration-300
+          hover:-translate-y-0.5" aria-label="Email">
+
           <svg data-lucide="mail" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
         </a>
 
@@ -417,6 +419,21 @@
       </div>
     </div>
   </footer>
+  <script>
+    (function () {
+      const email = "office@nevark.in";
+      const subject = "Nevark Technologies - Website Mailer";
+
+      const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+      const gmailWeb = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}`;
+
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      const link = document.getElementById("emailLink");
+      link.href = isMobile ? mailto : gmailWeb;
+    })();
+  </script>
+
 
   <script src="background-3d.js"></script>
 

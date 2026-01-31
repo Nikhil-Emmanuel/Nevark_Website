@@ -44,7 +44,7 @@
         }
 
         .hero-title {
-            color: #326ee6;
+            color: #d5b357;
             /* softer than pure white */
             text-shadow:
                 0 2px 8px rgba(0, 0, 0, 0.45),
@@ -142,7 +142,8 @@
         class="fixed top-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50 bg-white/5 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md md:w-auto transition-all duration-300">
         <div class="flex items-center justify-between md:justify-center">
             <!-- Mobile Logo -->
-            <div id="mobile-logo-nav" class="md:hidden text-white text-sm tracking-widest angora-font transition-opacity duration-300">
+            <div id="mobile-logo-nav"
+                class="md:hidden text-white text-sm tracking-widest angora-font transition-opacity duration-300">
                 NEVARK
             </div>
 
@@ -221,7 +222,7 @@
         <section class="h-screen flex items-center justify-center px-6 md:px-8">
             <div class="max-w-7xl pointer-events-auto">
                 <h1
-                    class=" text-backdrop hero-title text-4xl sm:text-6xl md:text-9xl font-bold leading-tight mb-8 md:mb-12 opacity-0 transform translate-y-12 tracking-tight">
+                    class="text-amber-300 text-backdrop hero-title text-4xl sm:text-6xl md:text-9xl font-bold leading-tight mb-8 md:mb-12 opacity-0 transform translate-y-12 tracking-tight">
                     About Nevark<br>Technologies
                 </h1>
                 <p
@@ -668,7 +669,8 @@
         <div class="max-w-7xl mx-auto px-4 pb-12">
             <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                 <!-- Left/Center content -->
-                <div class="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 text-xs text-gray-500 text-center md:text-left">
+                <div
+                    class="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 text-xs text-gray-500 text-center md:text-left">
                     <span>© 2026 Nevark Technologies LLP. All Rights Reserved </span>
                     <span class="hidden sm:inline">&bull;</span>
                     <a href="privacy.html" class="hover:underline hover:text-gray-300">Privacy Policy</a>
@@ -692,34 +694,48 @@
                 <!-- Social icons -->
                 <div class="flex items-center gap-3">
 
-                <!-- Email -->
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=office@nevark.in&su=Nevark%20Technologies%20-%20Website%20Mailer"
-                    target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
-                hover:bg-red-600/80
-                transition-all duration-300
-                hover:-translate-y-0.5" aria-label="Email">
-                    <svg data-lucide="mail" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
-                </a>
+                    <!-- Email -->
+                    <a id="emailLink" href="#" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+          hover:bg-red-600/80 transition-all duration-300
+          hover:-translate-y-0.5" aria-label="Email">
 
-                <!-- LinkedIn -->
-                <a href="https://www.linkedin.com/company/nevark-technologies" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+                        <svg data-lucide="mail" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    </a>
+
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/company/nevark-technologies" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
                    hover:bg-blue-600/80
                    transition-all duration-300
                    hover:-translate-y-0.5" aria-label="LinkedIn">
-                    <svg data-lucide="linkedin" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
-                </a>
+                        <svg data-lucide="linkedin" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    </a>
 
-                <!-- Instagram -->
-                <a href="https://www.instagram.com/nevark.in" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/nevark.in" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
                     hover:bg-pink-600 
                     transition-all duration-300
                     hover:-translate-y-0.5" aria-label="Instagram">
-                    <svg data-lucide="instagram" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
-                </a>
+                        <svg data-lucide="instagram" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    </a>
 
+                </div>
             </div>
-        </div>
     </footer>
+    <script>
+        (function () {
+            const email = "office@nevark.in";
+            const subject = "Nevark Technologies - Website Mailer";
+
+            const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+            const gmailWeb = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}`;
+
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+            const link = document.getElementById("emailLink");
+            link.href = isMobile ? mailto : gmailWeb;
+        })();
+    </script>
+
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
