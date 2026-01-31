@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="scripts/tailwind.js"></script>
 
     <!-- Lucide -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="scripts/lucide.js"></script>
 
     <!-- Angora Font -->
     <style>
@@ -243,11 +243,12 @@
 
                 <section>
                     <h2 class="text-white font-medium mb-2">13. Contact</h2>
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=office@nevark.in&su=Nevark%20Technologies%20-%20Website%20Terms%20of%20Service"
-                        target="_blank" class="inline-flex items-center gap-2 text-indigo-400 hover:underline">
-                        <i data-lucide="mail" class="w-4 h-4"></i>
+                    <a id="termsEmailLink" href="#" target="_blank"
+                        class="inline-flex items-center gap-2 text-indigo-400 hover:underline" aria-label="Email">
+                        <svg data-lucide="mail" class="w-4 h-4"></svg>
                         office@nevark.in
                     </a>
+
                 </section>
 
             </div>
@@ -424,7 +425,7 @@
                         <!-- Tooltip -->
                         <span
                             class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block whitespace-nowrap text-[10px] px-2 py-1 rounded-md bg-black/80 border border-white/10 text-gray-300 backdrop-blur-md">
-                            All systems operational
+                            Website Online
                         </span>
                     </span>
                 </div>
@@ -462,7 +463,31 @@
             </div>
 
     </footer>
-    <!-- Scripts -->
+    <script>
+  (function () {
+    const email = "office@nevark.in";
+    const subject = "Nevark Technologies - Website Privacy Policy";
+
+    const mailto =
+      `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+
+    const gmailWeb =
+      `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}`;
+
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    const link = document.getElementById("termsEmailLink");
+    link.href = isMobile ? mailto : gmailWeb;
+
+    // Only open new tab on desktop
+    if (isMobile) {
+      link.removeAttribute("target");
+    }
+  })();
+</script>
+<!-- Scripts -->
+
+
     <script>
         (function () {
             const email = "office@nevark.in";

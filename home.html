@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Nevark • Home</title>
     <!-- Preload critical resources -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="stylesheet" href="/dist/tailwind.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="scripts/tailwind.js"></script>
+    <script src="scripts/lucide.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -295,12 +295,12 @@
 
         <!-- Subtitle -->
         <span
-            class="mb-6 md:mb-10 px-3 py-2 text-[10px] md:text-xs font-medium bg-white/10 border border-white/5 rounded-full backdrop-blur-sm">
+            class="cursor-default mb-6 md:mb-10 px-3 py-2 text-[10px] md:text-xs font-medium bg-white/10 border border-white/5 rounded-full backdrop-blur-sm">
             Dream. Create. Innovate
         </span>
 
         <!-- Main Heading -->
-        <h1 class="text-3xl sm:text-6xl md:text-8xl font-normal tracking-[0.2em] sm:tracking-[0.4em] md:tracking-[0.8em] leading-tight inline-block translate-x-[0.1em] sm:translate-x-[0.2em] md:translate-x-[0.4em]"
+        <h1 class="cursor-default text-3xl sm:text-6xl md:text-8xl font-normal tracking-[0.2em] sm:tracking-[0.4em] md:tracking-[0.8em] leading-tight inline-block translate-x-[0.1em] sm:translate-x-[0.2em] md:translate-x-[0.4em]"
             style="font-family: 'Angora', sans-serif;">
             NEVARK
         </h1>
@@ -329,18 +329,16 @@
     <section id="services" class="relative py-24 px-6">
         <div class="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-transparent pointer-events-none">
         </div>
-        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-center mb-16">What we do</h2>
+        <h2 class="cursor-default text-3xl md:text-4xl font-semibold tracking-tight text-center mb-16">What we do</h2>
 
         <div class="max-w-5xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
             <!-- Modern Full Stack -->
             <div
-                class="group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 transition backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-cyan-400">
+                class="cursor-pointer group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 hover:scale-110 transition-transform duration-500 ease-in-out backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-cyan-400">
                 <div
                     class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-cyan-400 text-xl">
                     <i class="fa-solid fa-layer-group"></i>
-
-
                 </div>
                 <h3 class="text-xl font-semibold mb-3">Full Stack Development</h3>
                 <p class="text-sm text-neutral-300">End-to-end web applications with scalable backends, modern
@@ -349,7 +347,7 @@
 
             <!-- Apps -->
             <div
-                class="group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 transition backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-green-400">
+                class="cursor-pointer group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 hover:scale-110 transition-transform duration-500 ease-in-out backdrop-blur-lg text-center hover:outline  hover:outline-2 hover:outline-green-400 ">
                 <div
                     class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-green-400 text-xl">
                     <i class="fa-brands fa-android"></i>
@@ -362,7 +360,7 @@
 
             <!-- Manufacturing  -->
             <div
-                class="group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 transition backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-pink-400">
+                class="cursor-pointer group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 hover:scale-110 transition-transform duration-500 ease-in-out backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-pink-400">
                 <div
                     class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-pink-400 text-xl">
                     <i class="fa-solid fa-gears"></i>
@@ -375,7 +373,7 @@
 
             <!-- Cloud Services -->
             <div
-                class="group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 transition backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-blue-400">
+                class="cursor-pointer group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 hover:scale-110 transition-transform duration-500 ease-in-out backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-blue-400">
                 <div
                     class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-blue-400 text-xl">
                     <i class="fa-solid fa-cloud"></i>
@@ -388,7 +386,7 @@
 
             <!-- AI Engineering -->
             <div
-                class="group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 transition backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-yellow-400">
+                class="cursor-pointer group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 hover:scale-110 transition-transform duration-500 ease-in-out backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-yellow-400">
                 <div
                     class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-yellow-400 text-xl">
                     <i class="fa-solid fa-brain"></i>
@@ -400,7 +398,7 @@
 
             <!-- Farming and Agriculture -->
             <div
-                class="group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 transition backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-red-400">
+                class="cursor-pointer group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 hover:scale-110 transition-transform duration-500 ease-in-out backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-red-400">
                 <div
                     class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-red-400 text-xl">
                     <i class="fa-solid fa-seedling text-emerald-400"></i>
@@ -416,7 +414,7 @@
 
     <!-- Impact Partner (Logo Only with Ripple Effect and Title) -->
     <section id="industries" class="py-24 px-6 border-t border-white/10 overflow-hidden">
-        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-center mb-16">
+        <h2 class="cursor-default text-3xl md:text-4xl font-semibold tracking-tight text-center mb-16">
             Our Clients
         </h2>
         <div class="max-w-6xl mx-auto flex justify-center items-center">
@@ -428,7 +426,7 @@
 
                 <!-- Logo -->
                 <img src="assests/Ashok_Leyland-Logo.wine.png" alt="Ashok Leyland Logo"
-                    class="relative z-10 w-60 md:w-72 max-w-full object-contain transition-transform duration-500 group-hover:scale-105" />
+                    class="cursor-pointer relative z-10 w-60 md:w-72 max-w-full object-contain transition-transform duration-800 group-hover:scale-125" />
             </div>
         </div>
     </section>
@@ -442,7 +440,7 @@
         <!-- Content -->
         <div class="relative z-10 flex items-center justify-center p-4 md:p-6 min-h-screen">
             <div class="w-full max-w-md animate-float">
-                <div class="glass gradient-border rounded-3xl overflow-hidden shadow-xl backdrop-blur-2xl bg-white/5">
+                <div class="cursor-pointer glass gradient-border rounded-3xl overflow-hidden shadow-xl backdrop-blur-2xl bg-white/5 hover:outline-red-400 hover:scale-110 hover:shadow-2xl transition-transform duration-500 ease-in-out">
                     <!-- Header -->
                     <div class="p-6 md:p-8 text-center">
                         <h2 class="text-2xl md:text-4xl tracking-tight font-semibold text-white">
@@ -616,9 +614,9 @@
 
     <!-- Testimonials -->
     <section class="py-24 px-6">
-        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-center mb-16">Voices of Inspiration</h2>
+        <h2 class="cursor-default text-3xl md:text-4xl font-semibold tracking-tight text-center mb-16">Voices of Inspiration</h2>
         <div class="max-w-4xl mx-auto space-y-12">
-            <div class="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-10 backdrop-blur-lg">
+            <div class="cursor-pointer bg-white/5 border border-white/10 rounded-2xl p-6 md:p-10 backdrop-blur-lg hover:scale-110 transition-transform duration-500 ease-in-out">
                 <p class="text-lg md:text-xl text-neutral-200 italic">
                     “It doesn't make sense to hire smart people and tell them what to do, we hire smart people so they
                     can tell us what to do.”
@@ -631,7 +629,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-10 backdrop-blur-lg">
+            <div class="cursor-pointer bg-white/5 border border-white/10 rounded-2xl p-6 md:p-10 backdrop-blur-lg hover:scale-110 transition-transform duration-500 ease-in-out">
                 <p class="text-lg md:text-xl text-neutral-200 italic">
                     “When something is important enough, you do it even if the odds are not in your favor.”
                 </p>
@@ -654,8 +652,8 @@
             class="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-20 rounded-2xl blur-3xl pointer-events-none">
         </div>
         <div class="max-w-4xl mx-auto text-center relative">
-            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-6">Ready to Accelerate your Vision?</h2>
-            <p class="text-neutral-200 mb-10 max-w-2xl mx-auto">Let’s create value together<br> Book a complimentary
+            <h2 class="cursor-default text-3xl md:text-4xl font-semibold tracking-tight mb-6">Ready to Accelerate your Vision?</h2>
+            <p class="cursor-default text-neutral-200 mb-10 max-w-2xl mx-auto">Let’s create value together<br> Book a complimentary
                 strategy session with our leadership team now</p>
             <a href="bookMeeting.html"
                 class="px-8 py-3 bg-white text-black font-medium rounded-full hover:bg-gray-200 transition shadow-lg hover:shadow-xl">Schedule
@@ -666,7 +664,7 @@
 
     <!-- Scripts - Load local 3D background and Lucide -->
     <script src="background-3d.js"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="scripts/lucide.js"></script>
     <script>
         // Initialize Lucide icons
         document.addEventListener('DOMContentLoaded', () => {
@@ -701,7 +699,7 @@
                     NEVARK
                 </a>
 
-                <p class="mt-3 text-gray-400 text-base leading-relaxed">
+                <p class="cursor-default mt-3 text-gray-400 text-base leading-relaxed">
                     Accelerate your team’s workflow.<br>
                     Connect » Automate » Monitor your workspace.<br>
                     All from one powerful hub.
@@ -850,7 +848,7 @@
                         <!-- Tooltip -->
                         <span
                             class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block whitespace-nowrap text-[10px] px-2 py-1 rounded-md bg-black/80 border border-white/10 text-gray-300 backdrop-blur-md">
-                            All systems operational
+                            Website Online
                         </span>
                     </span>
                 </div>

@@ -7,7 +7,8 @@
     <title>Nevark Testimonials</title>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/dist/tailwind.css">
+
     <script>
         tailwind.config = {
             theme: {
@@ -264,39 +265,43 @@
         .angora-font {
             font-family: 'Angora', sans-serif;
         }
+
         /* Scrollbar for WebKit browsers (Chrome, Edge, Safari) */
-::-webkit-scrollbar {
-  width: 10px;
-}
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
 
-::-webkit-scrollbar-track {
-  background: #111827; /* dark background */
-}
+        ::-webkit-scrollbar-track {
+            background: #111827;
+            /* dark background */
+        }
 
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #6366f1, #8b5cf6); /* indigo to purple */
-  border-radius: 6px;
-}
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #6366f1, #8b5cf6);
+            /* indigo to purple */
+            border-radius: 6px;
+        }
 
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #a78bfa, #c084fc); /* lighter purple on hover */
-}
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #a78bfa, #c084fc);
+            /* lighter purple on hover */
+        }
 
-/* Nav Indicator */
-#nav-indicator {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 9999px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 0;
-    pointer-events: none;
-}
+        /* Nav Indicator */
+        #nav-indicator {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 9999px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 0;
+            pointer-events: none;
+        }
 
-.nav-link.active {
-    color: white;
-}
-</style>
-<script src="background-waves.js"></script>
+        .nav-link.active {
+            color: white;
+        }
+    </style>
+    <script src="background-waves.js"></script>
 </head>
 
 <body class="bg-aura-bg text-aura-text font-geist">
@@ -326,7 +331,8 @@
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden flex-col space-y-4 mt-4 pb-4 text-gray-300 text-sm font-medium tracking-wide nav-font border-t border-white/10 pt-4 md:hidden">
+        <div id="mobile-menu"
+            class="hidden flex-col space-y-4 mt-4 pb-4 text-gray-300 text-sm font-medium tracking-wide nav-font border-t border-white/10 pt-4 md:hidden">
             <a href="home.html" class="hover:text-white transition-colors">Home</a>
             <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
             <a href="about.html" class="hover:text-white transition-colors">About</a>
@@ -340,7 +346,7 @@
             if (window.lucide) {
                 lucide.createIcons();
             }
-            
+
             // Background waves initialization
             if (typeof BackgroundWaves !== 'undefined') {
                 new BackgroundWaves('bg3d-container');
@@ -352,7 +358,7 @@
                     const menu = document.getElementById('mobile-menu');
                     const logo = document.getElementById('mobile-logo-nav');
                     const isHidden = menu.classList.contains('hidden');
-                    
+
                     if (isHidden) {
                         menu.classList.remove('hidden');
                         menu.classList.add('flex');
@@ -376,7 +382,7 @@
                 if (!el || !navIndicator) return;
                 const rect = el.getBoundingClientRect();
                 const parentRect = el.parentElement.getBoundingClientRect();
-                
+
                 navIndicator.style.width = `${rect.width + 24}px`;
                 navIndicator.style.height = `${rect.height + 12}px`;
                 navIndicator.style.left = `${rect.left - parentRect.left - 12}px`;
@@ -385,7 +391,7 @@
 
             navLinks.forEach(link => {
                 link.addEventListener('mouseenter', (e) => updateIndicator(e.target));
-                
+
                 // Return to active link on mouse leave
                 link.parentElement.addEventListener('mouseleave', () => {
                     const activeLink = document.querySelector('.nav-link.active');
@@ -399,7 +405,7 @@
                 // Wait for layout
                 setTimeout(() => updateIndicator(activeLink), 100);
             }
-            
+
             // Update on resize
             window.addEventListener('resize', () => {
                 const activeLink = document.querySelector('.nav-link.active');
@@ -426,7 +432,8 @@
                                 <div class="avatar flex-shrink-0">SM</div>
                                 <div>
                                     <h3 class="text-white font-medium text-base md:text-lg">Sarah Mitchell</h3>
-                                    <p class="text-xs md:text-sm text-aura-muted mt-0.5 md:mt-1">VP of Engineering at TechFlow</p>
+                                    <p class="text-xs md:text-sm text-aura-muted mt-0.5 md:mt-1">VP of Engineering at
+                                        TechFlow</p>
                                 </div>
                             </div>
                             <div class="drag-indicator">
@@ -442,7 +449,8 @@
                             remarkable. Best investment we've made this year."
                         </blockquote>
 
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-t border-aura-border pt-4 gap-4">
+                        <div
+                            class="flex flex-col sm:flex-row sm:items-center justify-between border-t border-aura-border pt-4 gap-4">
                             <div class="flex flex-wrap gap-2">
                                 <span
                                     class="text-[10px] md:text-xs px-2 py-1 rounded-md bg-aura-accent/20 text-aura-accent border border-aura-accent/30">FEATURED</span>
@@ -463,11 +471,13 @@
                     <div class="p-6 md:p-8">
                         <div class="flex items-start justify-between mb-4 md:mb-6">
                             <div class="flex items-center gap-3 md:gap-4">
-                                <div class="avatar flex-shrink-0" style="background: linear-gradient(135deg, #10b981, #059669);">MC
+                                <div class="avatar flex-shrink-0"
+                                    style="background: linear-gradient(135deg, #10b981, #059669);">MC
                                 </div>
                                 <div>
                                     <h3 class="text-white font-medium text-base md:text-lg">Marcus Chen</h3>
-                                    <p class="text-xs md:text-sm text-aura-muted mt-0.5 md:mt-1">Product Manager at DataSync</p>
+                                    <p class="text-xs md:text-sm text-aura-muted mt-0.5 md:mt-1">Product Manager at
+                                        DataSync</p>
                                 </div>
                             </div>
                             <div class="drag-indicator">
@@ -483,10 +493,13 @@
                             seamless across all devices."
                         </blockquote>
 
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-t border-aura-border pt-4 gap-4">
+                        <div
+                            class="flex flex-col sm:flex-row sm:items-center justify-between border-t border-aura-border pt-4 gap-4">
                             <div class="flex flex-wrap gap-2">
-                                <span class="text-[10px] md:text-xs px-2 py-1 rounded-md bg-aura-border text-aura-muted">Startup</span>
-                                <span class="text-[10px] md:text-xs px-2 py-1 rounded-md bg-aura-border text-aura-muted">Mobile</span>
+                                <span
+                                    class="text-[10px] md:text-xs px-2 py-1 rounded-md bg-aura-border text-aura-muted">Startup</span>
+                                <span
+                                    class="text-[10px] md:text-xs px-2 py-1 rounded-md bg-aura-border text-aura-muted">Mobile</span>
                             </div>
                             <div class="flex items-center gap-4 text-[10px] md:text-xs text-aura-muted">
                                 <span><i class="fas fa-thumbs-up mr-1"></i> Helpful</span>

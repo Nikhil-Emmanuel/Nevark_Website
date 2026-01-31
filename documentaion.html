@@ -10,7 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/dist/tailwind.css">
+
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/lu.min.js"></script>
@@ -145,7 +146,8 @@
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden flex-col items-center space-y-6 mt-4 pb-4 text-gray-300 text-sm font-medium tracking-widest nav-font border-t border-white/10 pt-6 md:hidden">
+        <div id="mobile-menu"
+            class="hidden flex-col items-center space-y-6 mt-4 pb-4 text-gray-300 text-sm font-medium tracking-widest nav-font border-t border-white/10 pt-6 md:hidden">
             <a href="home.html" class="hover:text-white transition-colors">HOME</a>
             <a href="projects.html" class="hover:text-white transition-colors">PROJECTS</a>
             <a href="about.html" class="hover:text-white transition-colors">ABOUT</a>
@@ -159,14 +161,14 @@
             if (window.lucide) {
                 lucide.createIcons();
             }
-            
+
             const toggleBtn = document.getElementById('mobile-menu-toggle');
             if (toggleBtn) {
                 toggleBtn.addEventListener('click', () => {
                     const menu = document.getElementById('mobile-menu');
                     const logo = document.getElementById('mobile-logo-nav');
                     const isHidden = menu.classList.contains('hidden');
-                    
+
                     if (isHidden) {
                         menu.classList.remove('hidden');
                         menu.classList.add('flex');

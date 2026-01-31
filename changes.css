@@ -1,5 +1,6 @@
 /* Hide default cursor */
-body, * {
+body,
+* {
   cursor: none !important;
 }
 
@@ -15,14 +16,14 @@ body, * {
   z-index: 9999;
 
   background: radial-gradient(circle at center,
-    rgba(0, 255, 255, 0.6),
-    rgba(153, 0, 255, 0.4),
-    transparent);
+      rgba(0, 255, 255, 0.6),
+      rgba(153, 0, 255, 0.4),
+      transparent);
   box-shadow: 0 0 20px rgba(0, 255, 255, 0.3),
-              0 0 40px rgba(153, 0, 255, 0.3);
+    0 0 40px rgba(153, 0, 255, 0.3);
   filter: blur(4px);
   transform: translate(-50%, -50%);
-  transition: background 0.2s ease;
+  transition: 0.2s ease;
 }
 
 @media (max-width: 768px) {
@@ -30,7 +31,8 @@ body, * {
     display: none;
   }
 
-  body, * {
+  body,
+  * {
     cursor: auto !important;
   }
 }
