@@ -81,8 +81,20 @@
   </style>
   <script src="background-waves.js"></script>
 </head>
+<script>
+  function handleFormSubmit() {
+    setTimeout(() => {
+      alert("✅ Thank you! Your request has been sent successfully. Our team will reach out shortly.");
+    }, 300);
+    document.querySelector("button[type='submit']").disabled = true;
+
+  }
+</script>
+
 
 <body class="bg-black text-white font-sans min-h-screen flex flex-col">
+  <iframe name="hidden_iframe" style="display:none;"></iframe>
+
   <!-- 3D ambience -->
   <div id="bg3d-container"></div>
   <nav
@@ -202,19 +214,27 @@
           </p>
 
           <!-- form -->
-          <form class="grid grid-cols-1 md:grid-cols-2 gap-6
-         w-full max-w-3xl mx-auto">
+          <form action="https://formsubmit.co/office@nevark.in?success=true" method="POST" target="hidden_iframe"
+            onsubmit="handleFormSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl mx-auto">
+
+            <!-- REQUIRED CONFIG -->
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_subject" value="New Booking Request – Nevark">
+
+            <input type="hidden" name="_next" value="">
+
 
             <!-- Name -->
             <div class="col-span-1">
               <label class="block text-sm mb-2" for="name">Full Name</label>
               <div class="relative">
-                <input id="name" type="text" placeholder="Jane Doe" required class="w-full h-12 bg-white/10 border border-white/20 rounded-xl
-                px-4 py-3 text-sm
-                flex items-center
-                focus:outline-none focus:ring-2 focus:ring-white/30
-                placeholder-gray-400 backdrop-blur-md"><i data-lucide="user"
-                  class="w-4 h-4 absolute right-3 top-3 text-gray-400"></i>
+                <input id="name" name="Full Name" type="text" placeholder="Jane Doe" required class="w-full h-12 bg-white/10 border border-white/20 rounded-xl
+        px-4 py-3 text-sm
+        flex items-center
+        focus:outline-none focus:ring-2 focus:ring-white/30
+        placeholder-gray-400 backdrop-blur-md" />
+                <i data-lucide="user" class="w-4 h-4 absolute right-3 top-3 text-gray-400"></i>
               </div>
             </div>
 
@@ -222,8 +242,10 @@
             <div class="col-span-1">
               <label class="block text-sm mb-2" for="email">Email</label>
               <div class="relative">
-                <input id="email" type="email" placeholder="jane@domain.com" required
-                  class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-white/30 placeholder-gray-400 backdrop-blur-md" />
+                <input id="email" name="Email" type="email" placeholder="jane@domain.com" required class="w-full bg-white/10 border border-white/20 rounded-xl
+        px-4 py-3 text-sm
+        focus:outline-none focus:ring-2 focus:ring-white/30
+        placeholder-gray-400 backdrop-blur-md" />
                 <i data-lucide="mail" class="w-4 h-4 absolute right-3 top-3 text-gray-400"></i>
               </div>
             </div>
@@ -232,29 +254,34 @@
             <div class="col-span-1">
               <label class="block text-sm mb-2" for="company">Company</label>
               <div class="relative">
-                <input id="company" type="text" placeholder="Acme Inc."
-                  class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-white/30 placeholder-gray-400 backdrop-blur-md" />
+                <input id="company" name="Company" type="text" placeholder="Acme Inc." class="w-full bg-white/10 border border-white/20 rounded-xl
+        px-4 py-3 text-sm
+        focus:outline-none focus:ring-2 focus:ring-white/30
+        placeholder-gray-400 backdrop-blur-md" />
                 <i data-lucide="briefcase" class="w-4 h-4 absolute right-3 top-3 text-gray-400"></i>
               </div>
             </div>
 
             <!-- Contact -->
             <div class="col-span-1">
-              <label class="block text-sm mb-2" for="company">Contact Number</label>
+              <label class="block text-sm mb-2" for="contact">Contact Number</label>
               <div class="relative">
-                <input id="contact" type="text" placeholder="+91 86609 16819" required
-                  class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-white/30 placeholder-gray-400 backdrop-blur-md" />
+                <input id="contact" name="Contact Number" type="text" placeholder="+91 86609 16819" required class="w-full bg-white/10 border border-white/20 rounded-xl
+        px-4 py-3 text-sm
+        focus:outline-none focus:ring-2 focus:ring-white/30
+        placeholder-gray-400 backdrop-blur-md" />
                 <i data-lucide="phone" class="w-4 h-4 absolute right-3 top-3 text-gray-400"></i>
-
               </div>
             </div>
 
-
             <!-- Message -->
             <div class="col-span-1 md:col-span-2">
-              <label class="block text-sm mb-2" for="message">Message</label>
-              <textarea id="message" rows="4" placeholder="Kindly let us know how we can assist you." required
-                class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-white/30 placeholder-gray-400 backdrop-blur-md resize-none"></textarea>
+              <label class="block text-sm mb-2" for="message">Drop Your Requirements</label>
+              <textarea id="message" name="Message" rows="4" placeholder="Kindly let us know how we can assist you."
+                required class="w-full bg-white/10 border border-white/20 rounded-xl
+      px-4 py-3 text-sm
+      focus:outline-none focus:ring-2 focus:ring-white/30
+      placeholder-gray-400 backdrop-blur-md resize-none"></textarea>
             </div>
 
             <!-- Submit -->
@@ -267,13 +294,17 @@
                   Your data is secure.
                 </p>
               </div>
-              <button type="submit"
-                class="group relative overflow-hidden bg-white text-black px-10 py-3 rounded-full font-medium shadow-lg">
+
+              <button type="submit" class="group relative overflow-hidden bg-white text-black
+      px-10 py-3 rounded-full font-medium shadow-lg">
                 <span class="relative z-10">Book Meeting</span>
-                <span class="absolute inset-0 bg-black/10 group-hover:opacity-0 transition-opacity duration-300"></span>
+                <span class="absolute inset-0 bg-black/10
+      group-hover:opacity-0 transition-opacity duration-300"></span>
               </button>
             </div>
+
           </form>
+
         </div>
 
         <!-- subtle divider -->
@@ -283,17 +314,24 @@
         <div class="grid grid-cols-2 md:grid-cols-2 gap-px bg-white/10 text-center text-xs">
           <div class="py-5 backdrop-blur-lg">
             <p class="text-gray-300 mb-1">Wait Time</p>
-            <p class="text-base font-medium"> &lt; 24h</p>
+            <p class="text-base font-medium"> &lt; 24 hrs</p>
           </div>
           <div class="py-5 backdrop-blur-lg">
             <p class="text-gray-300 mb-1">Avg. Call</p>
             <p class="text-base font-medium">30 min</p>
           </div>
-          
+
         </div>
       </div>
     </div>
   </section>
+  <script>
+    if (window.location.search.includes("success=true")) {
+      alert("✅ Thank you! Your request has been sent successfully. We’ll get back to you shortly.");
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  </script>
+
 
   <script>
     lucide.createIcons();
@@ -366,7 +404,8 @@
       <!-- Social icons bottom-right -->
       <div class="absolute right-0 bottom-0 flex items-center gap-3">
 
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nevarkcompany@gmail.com" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=office@nevark.in&su=Nevark%20Technologies%20-%20Website%20Mailer"
+          target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
                 hover:bg-red-600/80
                 transition-all duration-300 hover:-translate-y-0.5" aria-label="Email">
           <svg data-lucide="mail" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>

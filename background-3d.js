@@ -78,8 +78,8 @@ class ParticleBackground {
     drawParticles() {
         // Clear with subtle fade for trail effect
         this.ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
-        //this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        //this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.particles.forEach((particle, i) => {
             // Update position

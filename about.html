@@ -43,6 +43,34 @@
             font-style: normal;
         }
 
+        .hero-title {
+            color: #326ee6;
+            /* softer than pure white */
+            text-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.45),
+                0 0 1px rgba(255, 255, 255, 0.15);
+        }
+
+        .hero-subtext {
+            color: #D1D5DB;
+            /* gray-300 */
+            line-height: 1.65;
+            letter-spacing: 0.02em;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        .text-backdrop {
+            background: linear-gradient(180deg,
+                    rgba(0, 0, 0, 0.55),
+                    rgba(0, 0, 0, 0.15));
+            padding: 2.5rem 3rem;
+            border-radius: 1.5rem;
+            backdrop-filter: blur(2px);
+
+        }
+
+
+
         .nav-font {
             font-family: 'Angora', sans-serif;
         }
@@ -56,7 +84,7 @@
 
         @font-face {
             font-family: 'Angora';
-            src: url('./assets/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+            src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
             font-weight: normal;
             font-style: normal;
         }
@@ -154,69 +182,141 @@
     </div>
 
     <div class="relative z-10 pointer-events-none">
+
+        <!-- Section 1 -->
         <section class="h-screen flex items-center justify-center px-8">
             <div class="max-w-7xl pointer-events-auto">
                 <h1
-                    class="text-8xl md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
-                    WE ARE<br>READY TO COLLAB</h1>
+                    class=" text-backdrop hero-title md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 tracking-tight">
+                    About Nevark<br>Technologies
+                </h1>
                 <p
-                    class="text-2xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
-                    Experience Projects with most creativity. We are ready to collab with "You" for a Dynamic and Heart
-                    Warming Projects</p>
+                    class="text-backdrop hero-subtext md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
+                    We build intelligent systems at the intersection of AI, machine learning, and real-world industrial
+                    engineering—turning complex data into decisive operational intelligence.
+                </p>
             </div>
         </section>
 
+        <!-- Quote 1 -->
         <div class="h-96 flex items-center justify-center px-8">
             <p
-                class="text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 text-zinc-400 italic font-medium">
-                "Coming Together is a Beginning. Staying Togeather is success and Working Togeather is Success"</p>
+                class="text-violet-400 text-backdrop text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 italic font-medium">
+                “Innovation matters only when it solves real problems.”
+            </p>
         </div>
 
+        <!-- Section 2 -->
         <section class="h-screen flex items-center justify-center px-8">
             <div class="max-w-7xl pointer-events-auto">
                 <h1
-                    class="text-8xl md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
-                    Outlined<br>Dimensions</h1>
+                    class="text-backdrop text-8xl md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
+                    Intelligent<br>Foundations
+                </h1>
                 <p
-                    class="text-2xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
-                    Let's Create Projects with Overwhelming creativity which succeeds the Creativity Dimentions</p>
+                    class="text-backdrop text-2xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
+                    Our work focuses on predictive intelligence, flow-based analytics, and scalable system
+                    design—engineered
+                    to integrate seamlessly into existing industrial environments.
+                </p>
             </div>
         </section>
 
+        <!-- Quote 2 -->
         <div class="h-96 flex items-center justify-center px-8">
             <p
-                class="text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 text-zinc-400 italic font-medium">
-                "If people like you they will listen to you. If people trust you they will do Bussiness with you!"</p>
+                class="text-cyan-400 text-backdrop text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 italic font-medium">
+                “Data becomes powerful when learning never stops.”
+            </p>
         </div>
 
+        <!-- Section 3 -->
         <section class="h-screen flex items-center justify-center px-8">
             <div class="max-w-7xl pointer-events-auto">
                 <h1
-                    class="text-8xl md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
-                    Company<br>Experts</h1>
+                    class="text-backdrop text-8xl md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
+                    Built for<br>Industry
+                </h1>
                 <p
-                    class="text-2xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
-                    Book a Meeting with aout experts and Get your Dream Project a Life and bring it to reality.</p>
+                    class="text-backdrop text-2xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
+                    From predictive maintenance to real-time monitoring, our solutions reduce downtime, uncover hidden
+                    inefficiencies, and enable proactive, data-driven decision-making.
+                </p>
             </div>
         </section>
 
+        <!-- Quote 3 -->
         <div class="h-96 flex items-center justify-center px-8">
             <p
-                class="text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 text-zinc-400 italic font-medium">
-                "Let's Start the Journey Here!"</p>
+                class="text-backdrop text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 text-rose-400 italic font-medium">
+                “Sustainable growth begins with operational clarity.”
+            </p>
         </div>
 
+        <!-- Section 4 -->
         <section class="h-screen flex items-center justify-center px-8">
             <div class="max-w-7xl pointer-events-auto">
                 <h1
-                    class="text-8xl md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
-                    Book<br>Now</h1>
+                    class="text-backdrop text-8xl md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
+                    Vision<br>& Purpose
+                </h1>
                 <p
-                    class="text-2xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
-                    Book a Meeting now and Get responses. @ Bookings Page!!</p>
+                    class="text-backdrop text-2xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
+                    We envision intelligent manufacturing ecosystems powered by transparent data, continuous learning,
+                    and technology that scales responsibly with real operational needs.
+                </p>
             </div>
         </section>
+
+        <!-- Quote 4 -->
+        <div class="h-96 flex items-center justify-center px-8">
+            <p
+                class="text-backdrop text-3xl md:text-4xl text-center max-w-5xl opacity-0 transform translate-y-8 text-emerald-400 italic font-medium">
+                “Let intelligence lead the way forward.”
+            </p>
+        </div>
+
+        <!-- Section 5 -->
+        <section class="h-screen flex items-center justify-center px-8">
+            <div class="max-w-7xl pointer-events-auto">
+                <h1
+                    class="text-backdrop text-8xl md:text-9xl font-bold leading-tight mb-12 opacity-0 transform translate-y-12 text-white tracking-tight">
+                    Collaborate<br>With Us
+                </h1>
+                <p
+                    class="text-backdrop text-2xl md:text-3xl leading-relaxed max-w-4xl opacity-0 transform translate-y-8 text-zinc-300 font-medium">
+                    Partner with our experts to transform complex challenges into resilient, intelligent, and
+                    future-ready solutions.
+                </p>
+                <div class="mt-12">
+                    <a href="bookMeeting.html" class="group inline-flex items-center gap-3 px-8 py-4 rounded-full
+            bg-white/10 backdrop-blur-md border border-white/20
+            text-white text-lg font-medium tracking-wide
+            shadow-[0_10px_40px_rgba(0,0,0,0.35)]
+            transition-all duration-300 ease-out
+            hover:ring-2 hover:ring-cyan-400/30
+
+
+            hover:bg-white/20 hover:border-white/30
+            hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.55)]">
+
+                        <span>Book a Meeting</span>
+
+                        <!-- arrow -->
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
     </div>
+
 
     <script type="module">
         import * as THREE from "https://esm.sh/three@0.160.0";
@@ -551,7 +651,8 @@
             <div class="absolute right-0 bottom-0 flex items-center gap-3">
 
                 <!-- Email -->
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nevarkcompany@gmail.com" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=office@nevark.in&su=Nevark%20Technologies%20-%20Website%20Mailer"
+                    target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
                 hover:bg-red-600/80
                 transition-all duration-300
                 hover:-translate-y-0.5" aria-label="Email">
