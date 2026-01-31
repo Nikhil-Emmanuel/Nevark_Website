@@ -64,6 +64,10 @@
             pointer-events: none;
         }
 
+        .nav-link.active {
+            color: rgb(13, 91, 234);
+        }
+
         #bg3d-container {
             position: fixed;
             inset: 0;
@@ -89,11 +93,12 @@
             </div>
 
             <!-- Links -->
-            <div class="relative hidden md:flex items-center space-x-10 text-gray-300 text-sm tracking-wide nav-font">
-                <a href="home.html" class="hover:text-white transition-colors">Home</a>
-                <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
-                <a href="about.html" class="hover:text-white transition-colors">About</a>
-                <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
+            <div
+                class="relative hidden md:flex items-center space-x-10 text-gray-300 text-sm font-medium tracking-wide nav-font">
+                <a href="index.html" class="nav-link hover:text-white transition-colors">Home</a>
+                <a href="projects.html" class="nav-link hover:text-white transition-colors">Projects</a>
+                <a href="about.html" class="nav-link active hover:text-white transition-colors">About</a>
+                <a href="bookMeeting.html" class="nav-link hover:text-white transition-colors">Bookings</a>
                 <div id="nav-indicator"></div>
             </div>
 
@@ -106,7 +111,7 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu"
             class="hidden flex-col space-y-4 mt-4 pb-4 text-gray-300 text-sm tracking-wide nav-font border-t border-white/10 pt-4 md:hidden">
-            <a href="home.html" class="hover:text-white transition-colors">Home</a>
+            <a href="index.html" class="hover:text-white transition-colors">Home</a>
             <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
             <a href="about.html" class="hover:text-white transition-colors">About</a>
             <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
@@ -144,7 +149,7 @@
     </script>
 
     <!-- LOGO -->
-    <a href="home.html" class="hidden md:block absolute top-8 left-16 z-10">
+    <a href="index.html" class="hidden md:block absolute top-8 left-16 z-10">
         <div class="text-white text-xl md:text-2xl tracking-widest">
             NEVARK
         </div>
@@ -464,28 +469,28 @@
 
     </footer>
     <script>
-  (function () {
-    const email = "office@nevark.in";
-    const subject = "Nevark Technologies - Website Privacy Policy";
+        (function () {
+            const email = "office@nevark.in";
+            const subject = "Nevark Technologies - Website Privacy Policy";
 
-    const mailto =
-      `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+            const mailto =
+                `mailto:${email}?subject=${encodeURIComponent(subject)}`;
 
-    const gmailWeb =
-      `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}`;
+            const gmailWeb =
+                `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}`;
 
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    const link = document.getElementById("termsEmailLink");
-    link.href = isMobile ? mailto : gmailWeb;
+            const link = document.getElementById("termsEmailLink");
+            link.href = isMobile ? mailto : gmailWeb;
 
-    // Only open new tab on desktop
-    if (isMobile) {
-      link.removeAttribute("target");
-    }
-  })();
-</script>
-<!-- Scripts -->
+            // Only open new tab on desktop
+            if (isMobile) {
+                link.removeAttribute("target");
+            }
+        })();
+    </script>
+    <!-- Scripts -->
 
 
     <script>
@@ -515,20 +520,50 @@
         });
 
         const navIndicator = document.getElementById('nav-indicator');
-        const navLinks = document.querySelectorAll('.nav-font a');
+        const navLinks = document.querySelectorAll('.nav-link');
 
-        function moveIndicator(el) {
-            if (!el) return;
-            const r = el.getBoundingClientRect();
-            const p = el.parentElement.getBoundingClientRect();
-            navIndicator.style.width = `${r.width + 24}px`;
-            navIndicator.style.height = `${r.height + 12}px`;
-            navIndicator.style.left = `${r.left - p.left - 52}px`;
-            navIndicator.style.top = `${r.top - p.top - 6}px`;
+        function updateIndicator(el) {
+            if (!el || !navIndicator) return;
+
+            const rect = el.getBoundingClientRect();
+            const parentRect = el.parentElement.getBoundingClientRect();
+
+            navIndicator.style.width = `${rect.width + 24}px`;
+            navIndicator.style.height = `${rect.height + 12}px`;
+            navIndicator.style.left = `${rect.left - parentRect.left - 52}px`;
+            navIndicator.style.top = `${rect.top - parentRect.top - 6}px`;
+            navIndicator.style.opacity = '1';
         }
 
-        navLinks.forEach(l => l.addEventListener('mouseenter', e => moveIndicator(e.target)));
-        setTimeout(() => moveIndicator(navLinks[0]), 200);
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', e => updateIndicator(e.target));
+
+            link.parentElement.addEventListener('mouseleave', () => {
+                const activeLink = document.querySelector('.nav-link.active');
+                if (activeLink) updateIndicator(activeLink);
+            });
+        });
+
+        const activeLink = document.querySelector('.nav-link.active');
+        if (activeLink) {
+            // Wait for layout
+            setTimeout(() => updateIndicator(activeLink), 100);
+        }
+        window.addEventListener('load', () => {
+            const activeLink = document.querySelector('.nav-link.active');
+            if (activeLink) updateIndicator(activeLink);
+        });
+
+        window.addEventListener('resize', () => {
+            const activeLink = document.querySelector('.nav-link.active');
+            if (activeLink) updateIndicator(activeLink);
+        });
+
+        // Fade-in animation
+        document.querySelectorAll('[class*="animate-fade-in"]').forEach(el => {
+            el.style.opacity = 1;
+            el.style.transition = 'opacity 0.8s cubic-bezier(.4,0,.2,1)';
+        });
 
         lucide.createIcons();
     </script>

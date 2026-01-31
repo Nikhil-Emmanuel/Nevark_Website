@@ -15,7 +15,7 @@
     <!-- Tailwind -->
     <script src="scripts/tailwind.js"></script>
 
-    <!-- Tailwind Config (SAME AS HOME) -->
+    <!-- Tailwind Config  -->
     <script>
         tailwind.config = {
             theme: {
@@ -117,7 +117,7 @@
     <!-- Background -->
     <div id="bg3d-container"></div>
 
-    <!-- NAV (IDENTICAL TO HOME) -->
+    <!-- NAV  -->
     <nav
         class="fixed top-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50 bg-white/6 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md md:w-auto transition-all duration-300">
         <div class="flex items-center justify-between md:justify-center">
@@ -131,7 +131,7 @@
             <!-- Links -->
             <div
                 class="relative hidden md:flex items-center space-x-11 text-gray-300 text-sm font-medium tracking-wide nav-font">
-                <a href="home.html" class="nav-link hover:text-white transition-colors">Home</a>
+                <a href="index.html" class="nav-link hover:text-white transition-colors">Home</a>
                 <a href="projects.html" class="nav-link hover:text-white transition-colors">Projects</a>
                 <a href="about.html" class="nav-link hover:text-white transition-colors">About</a>
                 <a href="bookMeeting.html" class="nav-link hover:text-white transition-colors">Bookings</a>
@@ -147,7 +147,7 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu"
             class="hidden flex-col space-y-4 mt-4 pb-4 text-gray-300 text-sm font-medium tracking-wide nav-font border-t border-white/10 pt-4 md:hidden">
-            <a href="home.html" class="hover:text-white transition-colors">Home</a>
+            <a href="index.html" class="hover:text-white transition-colors">Home</a>
             <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
             <a href="about.html" class="hover:text-white transition-colors">About</a>
             <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
@@ -615,8 +615,12 @@
             });
 
             // Default active = Home
-            const activeLink = document.querySelector('.nav-link[href="home.html"]');
+            const activeLink = document.querySelector('.nav-link[href="about.html"]');
             activeLink?.classList.add('active');
+            window.addEventListener('load', () => {
+                const activeLink = document.querySelector('.nav-link.active');
+                if (activeLink) updateIndicator(activeLink);
+            });
 
             setTimeout(() => updateIndicator(activeLink), 50);
             window.addEventListener('resize', () => updateIndicator(activeLink));
