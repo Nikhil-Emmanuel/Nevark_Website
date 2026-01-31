@@ -581,8 +581,17 @@
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
+        let started = false;
 
-        animate();
+        function startScene() {
+            if (started) return;
+            started = true;
+            animate();
+        }
+
+        window.addEventListener('scroll', startScene, { once: true });
+        setTimeout(startScene, 2000); // fallback
+
     </script>
     <!-- Footer Divider -->
     <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-800/70 to-transparent my-0"></div>
