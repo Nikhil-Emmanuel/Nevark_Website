@@ -1,73 +1,914 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nevark Technologies • Coming Soon</title>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nevark • Home</title>
+    <!-- Preload critical resources -->
+    <link rel="stylesheet" href="/dist/tailwind.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <script src="scripts/tailwind.js"></script>
+    <script src="scripts/lucide.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#000000',
+                        light: '#ffffff',
+                        subtle: 'rgba(255,255,255,0.06)'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
 
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at top, #0f172a, #020617);
-      color: #e5e7eb;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      text-align: center;
-    }
 
-    .card {
-      padding: 3rem 2.5rem;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(12px);
-      max-width: 420px;
-      width: 90%;
-    }
+    </script>
+    <!-- Load fonts async for better performance -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"
+        media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    </noscript>
 
-    h1 {
-      letter-spacing: 0.3em;
-      font-size: 1.6rem;
-      margin-bottom: 1rem;
-    }
+    <style>
+        @font-face {
+            font-family: 'Angora';
+            src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
 
-    p {
-      color: #9ca3af;
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
+        .nav-font {
+            font-family: 'Angora', sans-serif;
+        }
 
-    .divider {
-      width: 40px;
-      height: 2px;
-      background: #6366f1;
-      margin: 1.5rem auto;
-      border-radius: 999px;
-    }
+        body {
+            font-family: 'Angora';
+            src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            cursor: auto !important;
+        }
 
-    footer {
-      margin-top: 1.5rem;
-      font-size: 0.75rem;
-      color: #6b7280;
-    }
-  </style>
+        .angora-footer,
+        .angora-footer * {
+            font-family: 'Angora', sans-serif !important;
+        }
+
+
+
+
+        @font-face {
+            font-family: 'Angora';
+            src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .angora-font {
+            font-family: 'Angora', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* 3D Background Container */
+        #bg3d-container {
+            position: fixed;
+            inset: 0;
+            z-index: -10;
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
+        }
+
+        #bg3d-container canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+
+        /* Loading skeleton for Spline iframe */
+        .spline-loader {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            z-index: 1;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .spline-loaded .spline-loader {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        /* Scrollbar for WebKit browsers (Chrome, Edge, Safari) */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111827;
+            /* dark background */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #6366f1, #8b5cf6);
+            /* indigo to purple */
+            border-radius: 6px;
+        }
+
+        /* Nav Indicator */
+        #nav-indicator {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.14);
+            border-radius: 999px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1.5);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .nav-link.active {
+            color: rgb(13, 91, 234);
+        }
+    </style>
+
+
+
 </head>
 
-<body>
-  <div class="card">
-    <h1>NEVARK</h1>
-    <div class="divider"></div>
-    <p>
-      We’re building something powerful.<br />
-      Our website is launching soon.
-    </p>
-    <footer>
-      © 2026 Nevark Technologies LLP
+<body class="bg-dark text-light font-sans antialiased overflow-x-hidden">
+    <!-- Lightweight local 3D background -->
+    <div id="bg3d-container"></div>
+    <!-- <div class="fixed inset-0 z-2">
+        <iframe src="spline.html" frameborder="0" opacity="0.2"
+            width="100%" height="100%"></iframe>
+    </div> -->
+
+    <!-- Glass Nav -->
+    <nav
+        class="fixed top-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50 bg-white/6 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md md:w-auto transition-all duration-300">
+        <div class="flex items-center justify-between md:justify-center">
+            <!-- Mobile Logo -->
+            <div id="mobile-logo-nav"
+                class="md:hidden text-white text-sm tracking-widest angora-font transition-opacity duration-300">
+                NEVARK
+            </div>
+
+            <!-- Links -->
+            <div
+                class="relative hidden md:flex items-center space-x-11 text-gray-300 text-sm font-medium tracking-wide nav-font">
+                <a href="home.html" class="nav-link active hover:text-white transition-colors">Home</a>
+                <a href="projects.html" class="nav-link hover:text-white transition-colors">Projects</a>
+                <a href="about.html" class="nav-link hover:text-white transition-colors">About</a>
+                <a href="bookMeeting.html" class="nav-link hover:text-white transition-colors">Bookings</a>
+                <div id="nav-indicator"></div>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-toggle" class="md:hidden text-white p-2">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="hidden flex-col space-y-4 mt-4 pb-4 text-gray-300 text-sm font-medium tracking-wide nav-font border-t border-white/10 pt-4 md:hidden">
+            <a href="home.html" class="hover:text-white transition-colors">Home</a>
+            <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
+            <a href="about.html" class="hover:text-white transition-colors">About</a>
+            <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+
+            const toggleBtn = document.getElementById('mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLogo = document.getElementById('mobile-logo-nav');
+
+            if (toggleBtn && mobileMenu) {
+                toggleBtn.addEventListener('click', () => {
+                    const isHidden = mobileMenu.classList.contains('hidden');
+                    if (isHidden) {
+                        mobileMenu.classList.remove('hidden');
+                        mobileMenu.classList.add('flex');
+                        if (mobileLogo) mobileLogo.style.opacity = '0';
+                        toggleBtn.innerHTML = '<i data-lucide="x" class="w-6 h-6"></i>';
+                    } else {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('flex');
+                        if (mobileLogo) mobileLogo.style.opacity = '1';
+                        toggleBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6"></i>';
+                    }
+                    lucide.createIcons();
+                });
+            }
+        });
+
+        // Nav Indicator Logic
+        const navIndicator = document.getElementById('nav-indicator');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function updateIndicator(el) {
+            if (!el || !navIndicator) return;
+            const rect = el.getBoundingClientRect();
+            const parentRect = el.parentElement.getBoundingClientRect();
+
+            navIndicator.style.width = `${rect.width + 24}px`;
+            navIndicator.style.height = `${rect.height + 12}px`;
+            navIndicator.style.left = `${rect.left - parentRect.left - 56}px`;
+            navIndicator.style.top = `${rect.top - parentRect.top - 6}px`;
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', (e) => updateIndicator(e.target));
+
+            // Return to active link on mouse leave
+            link.parentElement.addEventListener('mouseleave', () => {
+                const activeLink = document.querySelector('.nav-link.active');
+                if (activeLink) updateIndicator(activeLink);
+            });
+        });
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            const activeLink = document.querySelector('.nav-link.active');
+            if (activeLink) updateIndicator(activeLink);
+        });
+
+        // Update on resize
+        window.addEventListener('resize', () => {
+            const activeLink = document.querySelector('.nav-link.active');
+            if (activeLink) updateIndicator(activeLink);
+        });
+    </script>
+
+
+    <!-- Hero -->
+    <section
+        class="relative flex flex-col items-center justify-center text-center min-h-screen px-6 pt-32 md:pt-40 overflow-hidden">
+
+        <!-- Floating Background Blob -->
+        <div
+            class="absolute top-1/2 left-1/2 w-[600px] h-[600px] -translate-x-1/2 -translate-y-1/2 bg-white opacity-5 blur-[100px] rounded-full pointer-events-none">
+        </div>
+
+        <!-- NEVARK top-right -->
+        <a href="home.html">
+            <div
+                class="absolute top-8 left-6 md:left-16 text-white text-xl md:text-2xl tracking-widest angora-font z-10">
+
+            </div>
+        </a>
+
+        <!-- Subtitle -->
+        <span
+            class="cursor-default mb-6 md:mb-10 px-3 py-2 text-[10px] md:text-xs font-medium bg-white/10 border border-white/5 rounded-full backdrop-blur-sm">
+            Dream. Create. Innovate
+        </span>
+
+        <!-- Main Heading -->
+        <h1 class="cursor-default text-3xl sm:text-6xl md:text-8xl font-normal tracking-[0.2em] sm:tracking-[0.4em] md:tracking-[0.8em] leading-tight inline-block translate-x-[0.1em] sm:translate-x-[0.2em] md:translate-x-[0.4em]"
+            style="font-family: 'Angora', sans-serif;">
+            NEVARK
+        </h1>
+
+
+        <!-- CTA Buttons -->
+        <div class="mt-12 flex flex-col sm:flex-row gap-4 items-center justify-center">
+            <!-- <a href="#services" class="px-8 py-3 bg-white text-black font-medium rounded-full hover:bg-gray-200 transition shadow-lg hover:shadow-xl">
+                Our Services </a> -->
+
+            <a href="bookMeeting.html"
+                class="px-3 py-4 bg-white/10 border border-white/5 text-white font-medium rounded-full backdrop-blur-sm hover:bg-white/30 transition">
+                Book a Consultation
+            </a>
+        </div>
+
+        <!-- Scroll Down Icon --><a href="#services">
+            <svg class="w-8 h-8 mt-24 animate-bounce text-white/50" stroke="currentColor" fill="none"
+                viewBox="0 0 24 24">
+                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg></a>
+    </section>
+
+
+    <!-- Services -->
+    <section id="services" class="relative py-24 px-6">
+        <div class="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-transparent pointer-events-none">
+        </div>
+        <h2 class="cursor-default text-3xl md:text-4xl font-semibold tracking-tight text-center mb-16">What we do</h2>
+
+        <div class="max-w-5xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- Modern Full Stack -->
+            <div
+                class="cursor-pointer group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 hover:scale-110 transition-transform duration-500 ease-in-out backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-cyan-400">
+                <div
+                    class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-cyan-400 text-xl">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Full Stack Development</h3>
+                <p class="text-sm text-neutral-300">End-to-end web applications with scalable backends, modern
+                    frontends, and clean system architecture</p>
+            </div>
+
+            <!-- Apps -->
+            <div
+                class="cursor-pointer group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 hover:scale-110 transition-transform duration-500 ease-in-out backdrop-blur-lg text-center hover:outline  hover:outline-2 hover:outline-green-400 ">
+                <div
+                    class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-green-400 text-xl">
+                    <i class="fa-brands fa-android"></i>
+
+                </div>
+                <h3 class="text-xl font-semibold mb-3">App Dev and Hosting</h3>
+                <p class="text-sm text-neutral-300">Designing, deploying, and hosting reliable mobile and web
+                    applications with continuous monitoring and uptime assurance</p>
+            </div>
+
+            <!-- Manufacturing  -->
+            <div
+                class="cursor-pointer group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 hover:scale-110 transition-transform duration-500 ease-in-out backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-pink-400">
+                <div
+                    class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-pink-400 text-xl">
+                    <i class="fa-solid fa-gears"></i>
+
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Manufacturing Solutions</h3>
+                <p class="text-sm text-neutral-300">Custom-built digital platforms for manufacturing workflows,
+                    automation, and real-time operational control</p>
+            </div>
+
+            <!-- Cloud Services -->
+            <div
+                class="cursor-pointer group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 hover:scale-110 transition-transform duration-500 ease-in-out backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-blue-400">
+                <div
+                    class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-blue-400 text-xl">
+                    <i class="fa-solid fa-cloud"></i>
+
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Cloud Infrastructure Services</h3>
+                <p class="text-sm text-neutral-300">Robust infrastructure setup with high availability, performance
+                    optimization, and full operational visibility</p>
+            </div>
+
+            <!-- AI Engineering -->
+            <div
+                class="cursor-pointer group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 hover:scale-110 transition-transform duration-500 ease-in-out backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-yellow-400">
+                <div
+                    class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-yellow-400 text-xl">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">AI and ML Engineering</h3>
+                <p class="text-sm text-neutral-300">Crafting AI systems and models that invisibly automate operations,
+                    extract insights, and power smarter decisions</p>
+            </div>
+
+            <!-- Farming and Agriculture -->
+            <div
+                class="cursor-pointer group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 hover:scale-110 transition-transform duration-500 ease-in-out backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-red-400">
+                <div
+                    class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-red-400 text-xl">
+                    <i class="fa-solid fa-seedling text-emerald-400"></i>
+
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Agricultural Solutions</h3>
+                <p class="text-sm text-neutral-300">Technology-driven agricultural platforms for monitoring,
+                    optimization, and data-led farming operations under one ecosystem</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Impact Partner (Logo Only with Ripple Effect and Title) -->
+    <section id="industries" class="py-24 px-6 border-t border-white/10 overflow-hidden">
+        <h2 class="cursor-default text-3xl md:text-4xl font-semibold tracking-tight text-center mb-16">
+            Our Clients
+        </h2>
+        <div class="max-w-6xl mx-auto flex justify-center items-center">
+            <div class="relative group">
+                <!-- Ripple Galaxy Effect (hover only) -->
+                <div
+                    class="absolute inset-0 w-full h-full rounded-full bg-gradient-to-r from-purple-500 via-indigo-600 to-blue-500 opacity-0 group-hover:opacity-40 blur-3xl scale-110 transition-all duration-500 pointer-events-none z-0">
+                </div>
+
+                <!-- Logo -->
+                <img src="assests/Ashok_Leyland-Logo.wine.png" alt="Ashok Leyland Logo"
+                    class="cursor-pointer relative z-10 w-60 md:w-72 max-w-full object-contain transition-transform duration-800 group-hover:scale-125" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Metrics Section -->
+    <section class="relative overflow-hidden w-full font-geist">
+
+        <!-- Animated Wave Background -->
+        <canvas id="bgWave" class="absolute inset-0 w-full h-full"></canvas>
+
+        <!-- Content -->
+        <div class="relative z-10 flex items-center justify-center p-4 md:p-6 min-h-screen">
+            <div class="w-full max-w-md animate-float">
+                <div class="cursor-pointer glass gradient-border rounded-3xl overflow-hidden shadow-xl backdrop-blur-2xl bg-white/5 hover:outline-red-400 hover:scale-110 hover:shadow-2xl transition-transform duration-500 ease-in-out">
+                    <!-- Header -->
+                    <div class="p-6 md:p-8 text-center">
+                        <h2 class="text-2xl md:text-4xl tracking-tight font-semibold text-white">
+                            Turn your Dreams into Reality
+                        </h2>
+                        <p class="text-xs md:text-sm text-white/70 mt-4 max-w-xs mx-auto">
+                            We transform groundbreaking ideas into delightful experiences that are powered by measurable
+                            results
+                        </p>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+
+                    <!-- Metrics -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 p-8">
+                        <!-- Years in AI Market -->
+                        <div class="flex flex-col items-center" data-target="2">
+                            <div
+                                class="w-12 h-12 flex items-center justify-center rounded-full glass border border-indigo-400/30">
+                                <i data-lucide="brain-circuit" class="w-5 h-5 text-indigo-300"></i>
+                            </div>
+                            <span class="mt-4 text-2xl font-semibold text-white tracking-tight" data-count>0</span>
+                            <span class="text-xs text-white/60 mt-1">Years in AI Market</span>
+                        </div>
+
+                        <!-- Business Partners -->
+                        <div class="flex flex-col items-center" data-target="1">
+                            <div
+                                class="w-12 h-12 flex items-center justify-center rounded-full glass border border-indigo-400/30">
+                                <i data-lucide="handshake" class="w-5 h-5 text-indigo-300"></i>
+                            </div>
+                            <span class="mt-4 text-2xl font-semibold text-white tracking-tight" data-count>0</span>
+                            <span class="text-xs text-white/60 mt-1">Business Partners</span>
+                        </div>
+
+                        <!-- Products Installed -->
+                        <div class="flex flex-col items-center" data-target="100">
+                            <div
+                                class="w-12 h-12 flex items-center justify-center rounded-full glass border border-indigo-400/30">
+                                <i data-lucide="package" class="w-5 h-5 text-indigo-300"></i>
+                            </div>
+                            <span class="mt-4 text-2xl font-semibold text-white tracking-tight" data-count>0</span>
+                            <span class="text-xs text-white/60 mt-1">Products Installed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        <script>
+            //lucide.createIcons();
+
+            // Counter Animation
+            const counters = document.querySelectorAll('[data-count]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const span = entry.target;
+                        const parent = span.parentElement;
+                        const target = +parent.getAttribute('data-target');
+                        let count = 0;
+                        const duration = 1000;
+                        const step = Math.ceil(target / (duration / 16));
+
+                        function update() {
+                            count += step;
+                            if (count > target) count = target;
+                            span.textContent = count + (target > 10 ? '+' : '');
+                            if (count < target) requestAnimationFrame(update);
+                        }
+                        requestAnimationFrame(update);
+                        observer.unobserve(span);
+                    }
+                });
+            }, { threshold: 0.6 });
+            counters.forEach((c) => observer.observe(c));
+
+            // Wave Background
+            const canvas = document.getElementById('bgWave');
+            const ctx = canvas.getContext('2d');
+            let t = 0;
+            const waves = [...Array(8)].map(() => ({
+                val: Math.random() * 0.5 + 0.2,
+                tgt: Math.random() * 0.5 + 0.2,
+                spd: Math.random() * 0.01 + 0.005,
+            }));
+
+            function resize() {
+                canvas.width = innerWidth;
+                canvas.height = innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            function updateWave() {
+                waves.forEach((w) => {
+                    if (Math.random() < 0.02) w.tgt = Math.random() * 0.6 + 0.2;
+                    w.val += (w.tgt - w.val) * w.spd;
+                });
+            }
+
+            function drawWave() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                // Reduce wave count on mobile for better performance
+                const waveCount = window.innerWidth < 768 ? 4 : waves.length;
+                // Draw every 2-4 pixels instead of every pixel for performance
+                const step = window.innerWidth < 768 ? 4 : 2;
+
+                for (let i = 0; i < waveCount; i++) {
+                    const f = waves[i].val * 7;
+                    ctx.beginPath();
+                    for (let x = 0; x <= canvas.width; x += step) {
+                        const nx = (x / canvas.width) * 2 - 1;
+                        const y = Math.sin((nx + i * 0.05 + t) * 6) * Math.cos((nx + t) * 3) * f * 8 + canvas.height / 2;
+                        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                    }
+                    const r = 79 + f * 60, g = 70 + f * 100, b = 229;
+                    ctx.strokeStyle = `rgba(${r},${g},${b},0.5)`;
+                    ctx.lineWidth = 1 + i * 0.25;
+                    ctx.stroke();
+                }
+            }
+
+            // Use visibility API to pause animation when tab is not visible
+            let isAnimating = true;
+            document.addEventListener('visibilitychange', () => {
+                isAnimating = !document.hidden;
+                if (isAnimating) animate();
+            });
+
+            function animate() {
+                if (!isAnimating) return;
+                t += 0.003;
+                updateWave();
+                drawWave();
+                requestAnimationFrame(animate);
+            }
+
+            // Start animation after a brief delay to let page load
+            setTimeout(() => animate(), 100);
+        </script>
+
+        <style>
+            .glass {
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(18px);
+                -webkit-backdrop-filter: blur(18px);
+            }
+
+            .gradient-border {
+                position: relative;
+            }
+
+            .gradient-border::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                padding: 2px;
+                background: linear-gradient(135deg, #4f46e5, #3b82f6, #8b5cf6, #f59e0b);
+                border-radius: inherit;
+                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                mask-composite: xor;
+                -webkit-mask-composite: xor;
+            }
+        </style>
+    </section>
+
+
+
+    <!-- Testimonials -->
+    <section class="py-24 px-6">
+        <h2 class="cursor-default text-3xl md:text-4xl font-semibold tracking-tight text-center mb-16">Voices of Inspiration</h2>
+        <div class="max-w-4xl mx-auto space-y-12">
+            <div class="cursor-pointer bg-white/5 border border-white/10 rounded-2xl p-6 md:p-10 backdrop-blur-lg hover:scale-110 transition-transform duration-500 ease-in-out">
+                <p class="text-lg md:text-xl text-neutral-200 italic">
+                    “It doesn't make sense to hire smart people and tell them what to do, we hire smart people so they
+                    can tell us what to do.”
+                </p>
+                <div class="mt-6 flex items-center space-x-3">
+                    <img src="assests/steve-jobs.png" alt="Steve Jobs" class="w-10 h-10 rounded-full object-cover" />
+                    <div>
+                        <p class="text-sm font-semibold">Steve Jobs</p>
+                        <p class="text-xs text-neutral-400">Co-Founder, Apple Inc.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="cursor-pointer bg-white/5 border border-white/10 rounded-2xl p-6 md:p-10 backdrop-blur-lg hover:scale-110 transition-transform duration-500 ease-in-out">
+                <p class="text-lg md:text-xl text-neutral-200 italic">
+                    “When something is important enough, you do it even if the odds are not in your favor.”
+                </p>
+                <div class="mt-6 flex items-center space-x-3">
+                    <img src="assests/elon-musk.png" alt="Sudha Murthy" class="w-10 h-10 rounded-full object-cover" />
+                    <div>
+                        <p class="text-sm font-semibold">Elon Musk</p>
+                        <p class="text-xs text-neutral-400">Founder, SpaceX Corp.</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="relative py-24 px-6 overflow-hidden">
+        <div
+            class="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-20 rounded-2xl blur-3xl pointer-events-none">
+        </div>
+        <div class="max-w-4xl mx-auto text-center relative">
+            <h2 class="cursor-default text-3xl md:text-4xl font-semibold tracking-tight mb-6">Ready to Accelerate your Vision?</h2>
+            <p class="cursor-default text-neutral-200 mb-10 max-w-2xl mx-auto">Let’s create value together<br> Book a complimentary
+                strategy session with our leadership team now</p>
+            <a href="bookMeeting.html"
+                class="px-8 py-3 bg-white text-black font-medium rounded-full hover:bg-gray-200 transition shadow-lg hover:shadow-xl">Schedule
+                now</a>
+        </div>
+    </section>
+
+
+    <!-- Scripts - Load local 3D background and Lucide -->
+    <script src="background-3d.js"></script>
+    <script src="scripts/lucide.js"></script>
+    <script>
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        });
+
+
+        // Set year
+        const yearEl = document.getElementById('year');
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
+    </script>
+    <!-- Footer Divider -->
+    <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-800/70 to-transparent my-0"></div>
+    <style>
+        @font-face {
+            font-family: 'Angora';
+            src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
+
+    <footer
+        class="angora-footer pt-14 pb-8 px-4 sm:px-8 lg:px-16 relative bg-gradient-to-t from-gray-950 via-gray-900/80 to-transparent z-20">
+        <div class="max-w-7xl mx-auto flex flex-col items-center text-center gap-12">
+
+            <div class="flex flex-col items-center min-w-[240px] max-w-md mb-8">
+                <a href="#"
+                    class="angora-font text-2xl font-normal tracking-widest text-white hover:text-indigo-400 transition-colors duration-300 mb-5">
+                    NEVARK
+                </a>
+
+                <p class="cursor-default mt-3 text-gray-400 text-base leading-relaxed">
+                    Accelerate your team’s workflow.<br>
+                    Connect » Automate » Monitor your workspace.<br>
+                    All from one powerful hub.
+                </p>
+            </div>
+
+        </div>
+
+
+
+        <!--
+<div class="flex-1 flex flex-col sm:flex-row gap-10 lg:gap-16 justify-between">
+
+    <!-- Product Links
+            <div>
+                <h4 class="text-white font-semibold mb-4 tracking-tight text-base flex items-center gap-1">
+                    <i data-lucide="grid" class="w-4 h-4 text-brand-400"></i>
+                    Product
+                </h4>
+                <ul class="space-y-3 text-gray-400 text-sm">
+                    <li>
+                        <a href="#" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                            <i data-lucide="zap" class="w-4 h-4 text-brand-400"></i>
+                            Automation Hub
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                            <i data-lucide="layers" class="w-4 h-4 text-blue-400"></i>
+                            Integrations
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                            <i data-lucide="bar-chart" class="w-4 h-4 text-purple-400"></i>
+                            Analytics
+                        </a>
+                    </li>
+                    <li>
+                        <a href="privacy.html"
+                            class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                            <i data-lucide="shield" class="w-4 h-4 text-green-400"></i>
+                            Security
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Resources Links
+            <div>
+                <h4 class="text-white font-semibold mb-4 tracking-tight text-base flex items-center gap-1">
+                    <i data-lucide="book-open" class="w-4 h-4 text-blue-400"></i>
+                    Resources
+                </h4>
+                <ul class="space-y-3 text-gray-400 text-sm">
+                    <li>
+                        <a href="documentaion.html"
+                            class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                            <i data-lucide="file-text" class="w-4 h-4"></i>
+                            Documentation
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                            <i data-lucide="help-circle" class="w-4 h-4"></i>
+                            Help Center
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                            <i data-lucide="mail" class="w-4 h-4"></i>
+                            Contact Support
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                            <i data-lucide="megaphone" class="w-4 h-4"></i>
+                            Blog
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Company Links 
+            <div>
+                <h4 class="text-white font-semibold mb-4 tracking-tight text-base flex items-center gap-1">
+                    <i data-lucide="building-2" class="w-4 h-4 text-purple-400"></i>
+                    Company
+                </h4>
+                <ul class="space-y-3 text-gray-400 text-sm">
+                    <li>
+                        <a href="about.html"
+                            class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                            <i data-lucide="users" class="w-4 h-4"></i>
+                            About Us
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                            <i data-lucide="briefcase" class="w-4 h-4"></i>
+                            Careers
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Testimonals.html"
+                            class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                            <i data-lucide="award" class="w-4 h-4"></i>
+                            Testimonials
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-white hover:underline flex items-center gap-2 transition-colors">
+                            <i data-lucide="credit-card" class="w-4 h-4"></i>
+                            Pricing
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        -->
+
+
+
+        <!-- Divider -->
+        <div class="mt-12 mb-8 w-full h-px bg-gradient-to-r from-transparent via-gray-800/60 to-transparent"></div>
+
+        <!-- Bottom Bar -->
+        <div class="max-w-7xl mx-auto px-4 pb-12">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <!-- Left/Center content -->
+                <div
+                    class="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 text-xs text-gray-500 text-center md:text-left">
+                    <span>© 2026 Nevark Technologies LLP. All Rights Reserved </span>
+                    <span class="hidden sm:inline">&bull;</span>
+                    <a href="privacy.html" class="hover:underline hover:text-gray-300">Privacy Policy</a>
+                    <span class="hidden sm:inline">&bull;</span>
+                    <a href="terms-condition.html" class="hover:underline hover:text-gray-300">Terms of Service</a>
+                    <span class="hidden sm:inline">&bull;</span>
+                    <span class="relative group cursor-default">
+                        <span class="inline-flex items-center gap-1 hover:text-gray-300">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Status
+                        </span>
+
+                        <!-- Tooltip -->
+                        <span
+                            class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block whitespace-nowrap text-[10px] px-2 py-1 rounded-md bg-black/80 border border-white/10 text-gray-300 backdrop-blur-md">
+                            Website Online
+                        </span>
+                    </span>
+                </div>
+
+                <!-- Social icons -->
+                <div class="flex items-center gap-3">
+
+                    <!-- Email -->
+                    <a id="emailLink" href="#" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+          hover:bg-red-600/80 transition-all duration-300
+          hover:-translate-y-0.5" aria-label="Email">
+
+                        <svg data-lucide="mail" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    </a>
+
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/company/nevark-technologies" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+                   hover:bg-blue-600/80
+                   transition-all duration-300
+                   hover:-translate-y-0.5" aria-label="LinkedIn">
+                        <svg data-lucide="linkedin" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/nevark.in" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+                    hover:bg-pink-600 
+                    transition-all duration-300
+                    hover:-translate-y-0.5" aria-label="Instagram">
+                        <svg data-lucide="instagram" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    </a>
+
+                </div>
+
+
+            </div>
+
     </footer>
-  </div>
+    <script>
+        (function () {
+            const email = "office@nevark.in";
+            const subject = "Nevark Technologies - Website Mailer";
+
+            const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+            const gmailWeb = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}`;
+
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+            const link = document.getElementById("emailLink");
+            link.href = isMobile ? mailto : gmailWeb;
+        })();
+    </script>
+
+
+    <script>
+        // Fade-in animation
+        document.querySelectorAll('[class*="animate-fade-in"]').forEach(el => {
+            el.style.opacity = 1;
+            el.style.transition = 'opacity 0.8s cubic-bezier(.4,0,.2,1)';
+        });
+    </script>
 </body>
+
 </html>
