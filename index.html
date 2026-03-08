@@ -162,6 +162,66 @@
         .nav-link.active {
             color: rgb(13, 91, 234);
         }
+
+        /* Running Glow Button */
+        .glow-btn-wrapper {
+            position: relative;
+            padding: 1.5px; /* Border thickness */
+            border-radius: 9999px;
+            overflow: hidden;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .glow-btn-wrapper:hover {
+            transform: scale(1.05);
+        }
+
+        .glow-btn-bg {
+            position: absolute;
+            inset: -100%;
+            background: conic-gradient(from 0deg, transparent 70%, #6366f1 85%, #a855f7 95%, transparent 100%);
+            animation: rotate-glow 3s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate-glow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .glow-btn-content {
+            position: relative;
+            z-index: 10;
+            display: block;
+        }
+
+        /* Text-Clipped Shimmer Effect */
+        .text-shimmer {
+            background: linear-gradient(
+                90deg, 
+                #ffffff 0%, 
+                #ffffff 45%, 
+                #3b82f6 50%, 
+                #ffffff 55%, 
+                #ffffff 100%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-position: 200% center;
+            transition: background-position 0s;
+        }
+
+        .group:hover .text-shimmer {
+            animation: shimmer-ripple 2s ease-out forwards;
+        }
+
+        @keyframes shimmer-ripple {
+            0% { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
     </style>
 
 
@@ -301,14 +361,13 @@
 
         <!-- Subtitle -->
         <span
-            class="cursor-default mb-6 md:mb-10 px-3 py-2 text-[10px] md:text-xs font-medium bg-white/10 border border-white/5 rounded-full backdrop-blur-sm">
+            class="cursor-default mb-6 md:mb-10 px-3 py-2 text-[11px] md:text-xs font-medium bg-white/10 border border-white/5 rounded-full backdrop-blur-sm">
             Dream. Create. Innovate
         </span>
 
         <!-- Main Heading -->
-        <h1 class="cursor-default text-3xl sm:text-6xl md:text-8xl font-normal tracking-[0.2em] sm:tracking-[0.4em] md:tracking-[0.8em] leading-tight inline-block translate-x-[0.1em] sm:translate-x-[0.2em] md:translate-x-[0.4em]"
-            style="font-family: 'Angora', sans-serif;">
-            NEVARK
+        <h1 class="relative group cursor-default text-6xl sm:text-6xl md:text-8xl font-normal tracking-[0.2em] sm:tracking-[0.4em] md:tracking-[0.8em] leading-tight inline-block translate-x-[0.1em] sm:translate-x-[0.2em] md:translate-x-[0.4em]">
+            <span class="text-shimmer" style="font-family: 'Angora', sans-serif;">NEVARK</span>
         </h1>
 
 
@@ -317,10 +376,13 @@
             <!-- <a href="#services" class="px-8 py-3 bg-white text-black font-medium rounded-full hover:bg-gray-200 transition shadow-lg hover:shadow-xl">
                 Our Services </a> -->
 
-            <a href="bookMeeting.html"
-                class="px-3 py-4 bg-white/10 border border-white/5 text-white font-medium rounded-full backdrop-blur-sm hover:bg-white/30 transition">
-                Book a Consultation
-            </a>
+            <div class="glow-btn-wrapper">
+                <div class="glow-btn-bg"></div>
+                <a href="bookMeeting.html"
+                    class="glow-btn-content text-sm px-3 py-2 bg-black/80 border border-white/5 text-white font-normal rounded-full backdrop-blur-sm hover:bg-white/10 transition">
+                    Book a Consultation
+                </a>
+            </div>
         </div>
 
         <!-- Scroll Down Icon --><a href="#services">
@@ -351,6 +413,19 @@
                     frontends, and clean system architecture</p>
             </div>
 
+            <!-- Custom PC Build -->
+            <a href="build-pc.html"
+                class="cursor-pointer group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 hover:scale-110 transition-transform duration-500 ease-in-out backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-blue-400 block">
+                <div
+                    class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-blue-400 text-xl">
+                    <i class="fa-solid fa-desktop"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Custom Build PC</h3>
+                <p class="text-sm text-neutral-300">Design and assemble your dream high-performance workstation using
+                    our immersive 3D build experience</p>
+            </a>
+
+
             <!-- Apps -->
             <div
                 class="cursor-pointer group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 hover:scale-110 transition-transform duration-500 ease-in-out backdrop-blur-lg text-center hover:outline  hover:outline-2 hover:outline-green-400 ">
@@ -375,19 +450,6 @@
                 <h3 class="text-xl font-semibold mb-3">Manufacturing Solutions</h3>
                 <p class="text-sm text-neutral-300">Custom-built digital platforms for manufacturing workflows,
                     automation, and real-time operational control</p>
-            </div>
-
-            <!-- Cloud Services -->
-            <div
-                class="cursor-pointer group border border-white/10 rounded-2xl p-6 md:p-8 bg-white/5 hover:bg-white/10 hover:scale-110 transition-transform duration-500 ease-in-out backdrop-blur-lg text-center hover:outline hover:outline-2 hover:outline-blue-400">
-                <div
-                    class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 text-blue-400 text-xl">
-                    <i class="fa-solid fa-cloud"></i>
-
-                </div>
-                <h3 class="text-xl font-semibold mb-3">Cloud Infrastructure Services</h3>
-                <p class="text-sm text-neutral-300">Robust infrastructure setup with high availability, performance
-                    optimization, and full operational visibility</p>
             </div>
 
             <!-- AI Engineering -->
@@ -447,7 +509,7 @@
         <div class="relative z-10 flex items-center justify-center p-4 md:p-6 min-h-screen">
             <div class="w-full max-w-md animate-float">
                 <div
-                    class="cursor-pointer glass gradient-border rounded-3xl overflow-hidden shadow-xl backdrop-blur-2xl bg-white/5 hover:outline-red-400 hover:scale-110 hover:shadow-2xl transition-transform duration-500 ease-in-out">
+                    class="cursor-pointer glass gradient-border rounded-3xl overflow-hidden shadow-xl backdrop-blur-2xl bg-white/5 hover:outline-red-400 hover:scale-105 hover:shadow-2xl transition-transform duration-500 ease-in-out">
                     <!-- Header -->
                     <div class="p-6 md:p-8 text-center">
                         <h2 class="text-2xl md:text-4xl tracking-tight font-semibold text-white">

@@ -97,7 +97,7 @@
         }
 
         .nav-link.active {
-            color: #6366f1;
+            color: #8e1af4;
         }
 
         /* Custom Scrollbar */
@@ -113,11 +113,27 @@
             background: linear-gradient(to bottom, #6366f1, #a855f7);
             border-radius: 10px;
         }
+
+        .part-glow {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), var(--color, rgba(99, 102, 241, 0.45)) 0%, transparent 80%);
+            mix-blend-mode: screen;
+            filter: blur(60px);
+            transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            will-change: opacity;
+            transform: translateZ(0);
+            /* Hardware acceleration hint */
+        }
     </style>
 </head>
 
 <body class="bg-black text-white antialiased overflow-x-hidden">
     <canvas id="build-canvas"></canvas>
+    <div id="glow-container"></div>
 
     <!-- Navigation -->
     <nav
@@ -241,7 +257,8 @@
 
     <!-- Final Stage -->
     <section id="stage5" class="h-[100vh] flex flex-col justify-center items-center text-center px-6">
-        <div class="glass-card max-w-4xl p-12 md:p-20">
+        <div class="glass-card w-full max-w-[95%] md:max-w-5xl lg:max-w-6xl p-8 md:p-16 lg:p-20">
+
             <div class="text-rose-500 mb-6 flex justify-center items-center gap-3">
                 <i data-lucide="award" class="w-8 h-8"></i>
                 <span class="text-sm font-bold tracking-[0.3em] uppercase angora-font">Final Stage</span>
@@ -250,8 +267,8 @@
             <p class="text-gray-400 text-xl md:text-2xl mb-12 angora-font">
                 Your legacy is forged. Every cable hidden, every LED synced, every component tested for 24 hours.
             </p>
-            <a href="bookMeeting.html"
-                class="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-12 py-5 rounded-full font-bold text-lg hover:scale-105 transition-transform angora-font">
+            <a href="https://forms.gle/FYTjVcSxD6S12Fan9" target="_blank"
+                class="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-5 py-3 rounded-full font-bold text-lg hover:scale-105 transition-transform angora-font">
                 BOOK YOUR BUILD <i data-lucide="arrow-right" class="w-6 h-6"></i>
             </a>
         </div>
@@ -355,110 +372,360 @@
             link.href = isMobile ? mailto : gmailWeb;
         })();
     </script>
-
     <script>
         // Lucide
         lucide.createIcons();
 
+        // WebGL Compatibility Check
+        function isWebGLAvailable() {
+            try {
+                const canvas = document.createElement('canvas');
+                return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+            } catch (e) {
+                return false;
+            }
+        }
+
+        if (!isWebGLAvailable()) {
+            document.body.innerHTML += '<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;color:#fff;font-family:sans-serif;"><div><h1 style="font-size:24px;margin-bottom:10px;">WebGL Not Supported</h1><p>Your browser or device does not support WebGL, which is required for the 3D PC Build experience. Please enable hardware acceleration in your browser settings or try a different browser.</p></div></div>';
+        }
+
         // 3D Setup
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // Optimized Renderer
         const renderer = new THREE.WebGLRenderer({
             canvas: document.querySelector('#build-canvas'),
             antialias: true,
-            alpha: true
+            alpha: true,
+            powerPreference: 'high-performance',
+            precision: 'highp',
+            stencil: false,
+            depth: true
         });
-        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Cap pixel ratio for performance
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.outputColorSpace = THREE.SRGBColorSpace; // Modern color handling
 
         // Lights
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
         scene.add(ambientLight);
 
-        const blueLight = new THREE.PointLight(0x6366f1, 10, 50);
+        const mainLight = new THREE.DirectionalLight(0xffffff, 2);
+        mainLight.position.set(5, 5, 10);
+        scene.add(mainLight);
+
+        const blueLight = new THREE.PointLight(0x6366f1, 40, 60);
         blueLight.position.set(5, 5, 5);
         scene.add(blueLight);
 
-        const purpleLight = new THREE.PointLight(0x8b5cf6, 10, 50);
+        const purpleLight = new THREE.PointLight(0x8b5cf6, 40, 60);
         purpleLight.position.set(-5, -5, 5);
         scene.add(purpleLight);
 
         const pcGroup = new THREE.Group();
         scene.add(pcGroup);
 
+        // Interior RGB Accents
+        const interiorLight1 = new THREE.PointLight(0x6366f1, 0, 15);
+        interiorLight1.position.set(0, 1, 0);
+        pcGroup.add(interiorLight1);
+
+        const interiorLight2 = new THREE.PointLight(0x8b5cf6, 0, 15);
+        interiorLight2.position.set(0, -1, 0);
+        pcGroup.add(interiorLight2);
+
+        const pcLights = [blueLight, purpleLight, interiorLight1, interiorLight2];
+
         // Materials
-        const darkMetal = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.9, roughness: 0.2 });
-        const whiteMetal = new THREE.MeshStandardMaterial({ color: 0xdddddd, metalness: 0.8, roughness: 0.2 });
-        const pcbGreen = new THREE.MeshStandardMaterial({ color: 0x0a1a0a, roughness: 0.5 });
-        const rgbEmissive = new THREE.MeshStandardMaterial({ color: 0x6366f1, emissive: 0x6366f1, emissiveIntensity: 5 });
+        const darkMetal = new THREE.MeshStandardMaterial({ color: 0x0a0a0a, metalness: 0.9, roughness: 0.1 });
+        const pcbBlack = new THREE.MeshStandardMaterial({ color: 0x050505, roughness: 0.8 });
+        const glassMat = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff,
+            metalness: 0,
+            roughness: 0,
+            transmission: 0.9,
+            thickness: 0.5,
+            transparent: true,
+            opacity: 0.2
+        });
+        const rgbEmissive = new THREE.MeshStandardMaterial({
+            color: 0x6366f1,
+            emissive: 0x6366f1,
+            emissiveIntensity: 10
+        });
 
-        // Helper to create parts
-        function createPart(geometry, material, initialPos) {
-            const mesh = new THREE.Mesh(geometry, material);
-            mesh.position.set(...initialPos);
-            mesh.scale.set(0, 0, 0);
-            pcGroup.add(mesh);
-            return mesh;
+        // Track RGB materials for final assembly
+        const rgbMaterials = [rgbEmissive];
+
+        // Light shift for final assembly
+        const caseGlowMaterial = new THREE.MeshStandardMaterial({
+            color: 0x6366f1,
+            emissive: 0x6366f1,
+            emissiveIntensity: 0,
+            transparent: true,
+            opacity: 0.5
+        });
+        rgbMaterials.push(caseGlowMaterial);
+
+        // --- Realistic Procedural Parts ---
+
+        function createMotherboard() {
+            const group = new THREE.Group();
+            // Main board
+            const pcb = new THREE.Mesh(new THREE.BoxGeometry(3.5, 4.5, 0.1), pcbBlack);
+            group.add(pcb);
+
+            // Socket
+            const socket = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 0.05), darkMetal);
+            socket.position.set(0, 0.5, 0.08);
+            group.add(socket);
+
+            // RAM Slots
+            for (let i = 0; i < 4; i++) {
+                const slot = new THREE.Mesh(new THREE.BoxGeometry(0.05, 1.6, 0.15), darkMetal);
+                slot.position.set(0.8 + (i * 0.15), 0.5, 0.1);
+                group.add(slot);
+            }
+
+            // Heatsinks
+            const hs1 = new THREE.Mesh(new THREE.BoxGeometry(1, 4, 0.3), darkMetal);
+            hs1.position.set(-1, 0, 0.2);
+            group.add(hs1);
+
+            return group;
         }
 
-        // Parts
-        const caseMesh = createPart(new THREE.BoxGeometry(4, 5, 2), new THREE.MeshStandardMaterial({ color: 0x6366f1, transparent: true, opacity: 0.2, wireframe: true }), [0, 0, 0]);
-        const mobo = createPart(new THREE.BoxGeometry(3, 4, 0.1), pcbGreen, [10, 10, -10]);
-        const cpu = createPart(new THREE.BoxGeometry(0.8, 0.8, 0.1), whiteMetal, [-10, 5, 10]);
-        const ram1 = createPart(new THREE.BoxGeometry(0.1, 1.5, 0.3), rgbEmissive, [5, -5, -5]);
-        const ram2 = createPart(new THREE.BoxGeometry(0.1, 1.5, 0.3), rgbEmissive, [6, -5, -4]);
-        const gpu = createPart(new THREE.BoxGeometry(3, 0.8, 0.6), darkMetal, [15, 0, 15]);
-        const cooler = createPart(new THREE.CylinderGeometry(0.6, 0.6, 0.3, 32), rgbEmissive, [-5, -10, 0]);
+        function createGPU() {
+            const group = new THREE.Group();
+            // Shroud
+            const shroud = new THREE.Mesh(new THREE.BoxGeometry(3.2, 1, 0.6), darkMetal);
+            group.add(shroud);
 
-        camera.position.z = 8;
+            // Fans
+            const fanGeo = new THREE.CylinderGeometry(0.4, 0.4, 0.05, 32);
+            for (let i = 0; i < 3; i++) {
+                const fan = new THREE.Mesh(fanGeo, rgbEmissive);
+                fan.rotation.x = Math.PI / 2;
+                fan.position.set(-0.9 + (i * 0.9), 0, 0.32);
+                group.add(fan);
+            }
 
-        // Animate loop
-        function animate() {
-            requestAnimationFrame(animate);
-            pcGroup.rotation.y += 0.002;
-            cooler.rotation.y += 0.05;
-            renderer.render(scene, camera);
+            // RGB Strip
+            const strip = new THREE.Mesh(new THREE.BoxGeometry(3, 0.05, 0.05), rgbEmissive);
+            strip.position.set(0, 0.4, 0.3);
+            group.add(strip);
+
+            return group;
         }
-        animate();
 
-        // ScrollTrigger
+        function createCase() {
+            const group = new THREE.Group();
+            // Frame (Edges)
+            const edgesGeo = new THREE.EdgesGeometry(new THREE.BoxGeometry(4.2, 5.2, 2.2));
+            const line = new THREE.LineSegments(edgesGeo, new THREE.LineBasicMaterial({ color: 0x6366f1, transparent: true, opacity: 0.5 }));
+            group.add(line);
+
+            // Inner Glow Frame
+            const innerFrame = new THREE.Mesh(new THREE.BoxGeometry(4.1, 5.1, 2.1), caseGlowMaterial);
+            group.add(innerFrame);
+
+            // Glass Panel
+            const glass = new THREE.Mesh(new THREE.BoxGeometry(4, 5, 0.05), glassMat);
+            glass.position.z = 1.1;
+            group.add(glass);
+
+            // PSU Shroud
+            const shroud = new THREE.Mesh(new THREE.BoxGeometry(4, 1.2, 2), darkMetal);
+            shroud.position.y = -1.9;
+            group.add(shroud);
+
+            return group;
+        }
+
+        function createCables() {
+            const group = new THREE.Group();
+            // 24-pin cable
+            const curve = new THREE.CatmullRomCurve3([
+                new THREE.Vector3(1.2, 0.5, -0.5),
+                new THREE.Vector3(1.8, 0, -0.5),
+                new THREE.Vector3(1.8, -1.5, -0.5)
+            ]);
+            const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 20, 0.05, 8, false), darkMetal);
+            group.add(tube);
+            return group;
+        }
+
+        // --- Streak System ---
+        function createStreak(targetPos, startPos, baseColor) {
+            const group = new THREE.Group();
+            const streakCount = 5;
+            const streakLines = [];
+
+            for (let i = 0; i < streakCount; i++) {
+                const length = 15 + Math.random() * 25;
+                const points = [new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -length)];
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+                const color = new THREE.Color(baseColor);
+                color.offsetHSL(Math.random() * 0.1 - 0.05, 0.2, 0.1);
+
+                const material = new THREE.LineBasicMaterial({
+                    color: color,
+                    transparent: true,
+                    opacity: 0,
+                    linewidth: 1
+                });
+                const line = new THREE.Line(geometry, material);
+
+                line.position.set(
+                    (Math.random() - 0.5) * 0.5,
+                    (Math.random() - 0.5) * 0.5,
+                    (Math.random() - 0.5) * 0.5
+                );
+
+                group.add(line);
+                streakLines.push(line);
+            }
+
+            scene.add(group);
+
+            // Create dedicated edge glow for this part
+            const glowEl = document.createElement('div');
+            glowEl.className = 'part-glow';
+            document.getElementById('glow-container').appendChild(glowEl);
+
+            // Pre-calculate corner based on startPos
+            const tempStart = new THREE.Vector3(...startPos);
+            tempStart.project(camera);
+            const edgeX = (Math.sign(tempStart.x) * 50) + 50;
+            const edgeY = (Math.sign(-tempStart.y) * 50) + 50;
+
+            glowEl.style.setProperty('--x', `${edgeX}%`);
+            glowEl.style.setProperty('--y', `${edgeY}%`);
+            glowEl.style.setProperty('--color', `#${baseColor.toString(16).padStart(6, '0')}44`);
+
+            return {
+                group,
+                update: (progress, currentPos) => {
+                    const opacity = Math.sin(progress * Math.PI) * 0.8;
+                    streakLines.forEach((line, i) => {
+                        line.material.opacity = opacity * (1 - (i / streakCount));
+                        line.scale.z = 1 + Math.sin(Date.now() * 0.015 + i) * 0.3; // Slower, more elegant pulse
+                    });
+                    group.position.copy(currentPos);
+                    group.lookAt(targetPos);
+
+                    // Sync Edge Glow
+                    if (progress > 0.02 && progress < 0.85) {
+                        glowEl.style.opacity = Math.sin(progress * Math.PI) * 0.95;
+                    } else {
+                        glowEl.style.opacity = 0;
+                    }
+                }
+            };
+        }
+
+        // --- Component Setup ---
+        const parts = {
+            case: { mesh: createCase(), startPos: [0, 0, 0], targetPos: [0, 0, 0], color: 0x6366f1 },
+            mobo: { mesh: createMotherboard(), startPos: [30, 20, -30], targetPos: [0, 0, -0.8], color: 0x8b5cf6 },
+            gpu: { mesh: createGPU(), startPos: [-40, 0, 40], targetPos: [0, -0.8, -0.3], color: 0x06b6d4 },
+            cooler: { mesh: new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 0.4, 32), rgbEmissive), startPos: [0, -30, 30], targetPos: [0, 0.5, -0.3], color: 0xef4444 },
+            ram1: { mesh: new THREE.Mesh(new THREE.BoxGeometry(0.08, 1.5, 0.2), rgbEmissive), startPos: [30, -20, 10], targetPos: [0.8, 0.5, -0.5], color: 0x6366f1 },
+            ram2: { mesh: new THREE.Mesh(new THREE.BoxGeometry(0.08, 1.5, 0.2), rgbEmissive), startPos: [35, -15, 5], targetPos: [1.0, 0.5, -0.5], color: 0x6366f1 },
+            cables: { mesh: createCables(), startPos: [-20, -20, -20], targetPos: [0, 0, 0], color: 0x444444 }
+        };
+
+        Object.values(parts).forEach(p => {
+            p.mesh.position.set(...p.startPos);
+            // Case starts visible, others start at 0
+            if (p === parts.case) {
+                p.mesh.scale.set(1, 1, 1);
+            } else {
+                p.mesh.scale.set(0, 0, 0);
+            }
+            pcGroup.add(p.mesh);
+            p.streak = createStreak(new THREE.Vector3(...p.targetPos), p.startPos, p.color);
+        });
+
+        camera.position.z = 10;
+
+        // --- GSAP Timeline ---
         gsap.registerPlugin(ScrollTrigger);
-
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: "body",
                 start: "top top",
                 end: "bottom bottom",
-                scrub: 1
+                scrub: 2.5, // Heavier, more cinematic scrub
+                anticipatePin: 1
             }
         });
 
-        // Stage 0: Hero
-        tl.to(caseMesh.scale, { x: 1, y: 1, z: 1, duration: 2 }, 0);
+        // Animate Parts
+        Object.entries(parts).forEach(([key, p], i) => {
+            const startT = i * 1.5;
+            // Case is already visible, don't scale it from 0
+            if (key !== 'case') {
+                tl.to(p.mesh.scale, { x: 1, y: 1, z: 1, duration: 2 }, startT);
+            }
+            tl.to(p.mesh.position, {
+                x: p.targetPos[0],
+                y: p.targetPos[1],
+                z: p.targetPos[2],
+                duration: 4,
+                ease: "power3.out", // Smoother landing
+                onUpdate: function () {
+                    const progress = this.progress();
+                    p.streak.update(progress, p.mesh.position);
+                }
+            }, startT);
+        });
 
-        // Stage 1: Mobo & CPU
-        tl.to(mobo.scale, { x: 1, y: 1, z: 1, duration: 2 }, 1);
-        tl.to(mobo.position, { x: 0, y: 0, z: -0.8, duration: 3 }, 1);
-        tl.to(cpu.scale, { x: 1, y: 1, z: 1, duration: 1 }, 2.5);
-        tl.to(cpu.position, { x: 0, y: 0.5, z: -0.7, duration: 2 }, 2.5);
+        // Global rotation and final camera zoom
+        tl.to(pcGroup.rotation, { y: Math.PI * 4, duration: 15, ease: "none" }, 0);
+        tl.to(camera.position, { z: 7, duration: 5 }, ">");
 
-        // Stage 2: Memory
-        tl.to([ram1.scale, ram2.scale], { x: 1, y: 1, z: 1, duration: 2 }, 4);
-        tl.to(ram1.position, { x: 0.8, y: 0.5, z: -0.6, duration: 2 }, 4);
-        tl.to(ram2.position, { x: 1.1, y: 0.5, z: -0.6, duration: 2.2 }, 4);
+        // RGB Final Flare
+        tl.to(rgbMaterials, {
+            emissiveIntensity: 20,
+            duration: 3,
+            stagger: 0.1
+        }, "-=3");
 
-        // Stage 3: Heartbeat (GPU & Cooler)
-        tl.to(gpu.scale, { x: 1, y: 1, z: 1, duration: 2 }, 6);
-        tl.to(gpu.position, { x: 0, y: -0.8, z: 0.5, duration: 2.5 }, 6);
-        tl.to(cooler.scale, { x: 1, y: 1, z: 1, duration: 1.5 }, 6.5);
-        tl.to(cooler.position, { x: 0, y: 0.5, z: 0.2, duration: 2 }, 6.5);
+        tl.to([interiorLight1, interiorLight2], {
+            intensity: 30,
+            duration: 2
+        }, "-=2");
 
-        // Stage 4: Finish setup
-        tl.to(caseMesh.material, { opacity: 0.8, wireframe: false, duration: 2 }, 8);
-        tl.to(pcGroup.rotation, { x: 0.2, y: Math.PI * 2, duration: 10 }, 0);
-        tl.to(camera.position, { z: 6, duration: 5 }, 7);
+        // --- Render Loop ---
+        let hue = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            // Spin fans in GPU
+            parts.gpu.mesh.children.forEach(c => {
+                if (c.geometry instanceof THREE.CylinderGeometry) c.rotation.y += 0.2;
+            });
 
-        // Nav logic
+            // Final RGB Hue Shift
+            if (tl.progress() > 0.95) {
+                hue = (hue + 1) % 360;
+                rgbMaterials.forEach(mat => {
+                    mat.color.setHSL(hue / 360, 0.8, 0.5);
+                    mat.emissive.setHSL(hue / 360, 0.8, 0.5);
+                });
+                pcLights.forEach((light, i) => {
+                    light.color.setHSL((hue + (i * 90)) % 360 / 360, 0.8, 0.5);
+                });
+            }
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // --- Navigation & Resize ---
         const navIndicator = document.getElementById('nav-indicator');
         const navLinks = document.querySelectorAll('.nav-link');
         function updateIndicator(el) {
@@ -509,7 +776,7 @@
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
-                
+
                 if (targetElement) {
                     window.scrollTo({
                         top: targetElement.offsetTop,
