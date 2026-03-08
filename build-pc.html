@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nevark • Build Your PC</title>
+    <script src="scripts/tailwind.js"></script>
+    <script src="scripts/lucide.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <script src="scripts/gsap.min.js"></script>
+    <script src="scripts/scrolltrigger.min.js"></script>
+    <style>
+        @font-face {
+            font-family: 'Angora';
+            src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .angora-footer,
+        .angora-footer * {
+            font-family: 'Angora', sans-serif !important;
+        }
+
+        .angora-font {
+            font-family: 'Angora', sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        #build-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        section {
+            position: relative;
+            z-index: 10;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #nav-indicator {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1.5);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .nav-link {
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-link.active {
+            color: #6366f1;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #6366f1, #a855f7);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body class="bg-black text-white antialiased overflow-x-hidden">
+    <canvas id="build-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav
+        class="fixed top-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50 bg-white/5 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md md:w-auto transition-all duration-300">
+        <div class="flex items-center justify-between md:justify-center">
+            <div id="mobile-logo-nav" class="md:hidden text-white text-sm tracking-widest angora-font">NEVARK</div>
+            <div
+                class="relative hidden md:flex items-center space-x-11 text-gray-300 text-sm font-medium tracking-wide angora-font">
+                <a href="index.html" class="nav-link hover:text-white transition-colors">Home</a>
+                <a href="projects.html" class="nav-link hover:text-white transition-colors">Projects</a>
+                <a href="build-pc.html" class="nav-link active hover:text-white transition-colors">Build Your PC</a>
+                <a href="about.html" class="nav-link hover:text-white transition-colors">About</a>
+                <a href="bookMeeting.html" class="nav-link hover:text-white transition-colors">Bookings</a>
+                <div id="nav-indicator"></div>
+            </div>
+            <button id="mobile-menu-toggle" class="md:hidden text-white p-2">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <div id="mobile-menu"
+            class="hidden flex-col space-y-4 mt-4 pb-4 text-gray-300 text-sm font-medium tracking-wide angora-font border-t border-white/10 pt-4 md:hidden">
+            <a href="index.html" class="hover:text-white transition-colors">Home</a>
+            <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
+            <a href="build-pc.html" class="hover:text-white transition-colors">Build Your PC</a>
+            <a href="about.html" class="hover:text-white transition-colors">About</a>
+            <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="h-[100vh] flex flex-col justify-center items-center text-center px-6">
+        <div class="space-y-6 max-w-4xl animate-fade-in">
+            <h1 class="angora-font text-5xl md:text-8xl font-bold tracking-tighter text-white">
+                BUILD YOUR <span
+                    class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">LEGACY</span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed angora-font">
+                Witness the birth of performance. Scroll down to see how we craft the ultimate gaming machines, part by
+                part, with surgical precision.
+            </p>
+            <div class="flex justify-center gap-4 pt-10">
+                <div class="animate-bounce text-gray-500">
+                    <a href="#stage1"><i data-lucide="chevron-down" class="w-10 h-10"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stage 1: Foundation -->
+    <section id="stage1" class="h-[120vh] flex items-center px-6 md:px-24">
+        <div class="glass-card max-w-xl p-10 md:p-14">
+            <div class="text-blue-500 mb-4 flex items-center gap-3">
+                <i data-lucide="cpu" class="w-7 h-7"></i>
+                <span class="text-sm font-bold tracking-[0.2em] uppercase angora-font">Stage 01</span>
+            </div>
+            <h2 class="angora-font text-4xl md:text-5xl text-white mb-6">The Foundation</h2>
+            <p class="text-gray-300 leading-relaxed text-lg mb-8 italic">
+                "A masterpiece is only as stable as its core."
+            </p>
+            <p class="text-gray-400 leading-relaxed text-lg">
+                We hand-select overbuilt motherboards with premium VRMs to ensure rock-solid stability. Our CPU
+                installation includes thermal paste application techniques that guarantee 100% surface contact for
+                maximum heat dissipation.
+            </p>
+        </div>
+    </section>
+
+    <!-- Stage 2: Memory -->
+    <section id="stage2" class="h-[120vh] flex items-center justify-end px-6 md:px-24">
+        <div class="glass-card max-w-xl p-10 md:p-14">
+            <div class="text-purple-500 mb-4 flex items-center gap-3">
+                <i data-lucide="brain" class="w-7 h-7"></i>
+                <span class="text-sm font-bold tracking-[0.2em] uppercase angora-font">Stage 02</span>
+            </div>
+            <h2 class="angora-font text-4xl md:text-5xl text-white mb-6">Neural Pathways</h2>
+            <p class="text-gray-300 leading-relaxed text-lg mb-8 italic">
+                "Speed is the bridge between thought and action."
+            </p>
+            <p class="text-gray-400 leading-relaxed text-lg">
+                We utilize high-frequency, low-latency RAM kits, tuned for XMP/EXPO profiles out of the box. Our NVMe
+                storage solutions are paired with custom heat-spreaders, ensuring your load times remain instantaneous.
+            </p>
+        </div>
+    </section>
+
+    <!-- Stage 3: GPU -->
+    <section id="stage3" class="h-[120vh] flex items-center px-6 md:px-24">
+        <div class="glass-card max-w-xl p-10 md:p-14">
+            <div class="text-emerald-500 mb-4 flex items-center gap-3">
+                <i data-lucide="zap" class="w-7 h-7"></i>
+                <span class="text-sm font-bold tracking-[0.2em] uppercase angora-font">Stage 03</span>
+            </div>
+            <h2 class="angora-font text-4xl md:text-5xl text-white mb-6">The Heartbeat</h2>
+            <p class="text-gray-300 leading-relaxed text-lg mb-8 italic">
+                "Unleashing the raw power of visual excellence."
+            </p>
+            <p class="text-gray-400 leading-relaxed text-lg">
+                Power delivery is never an afterthought. We use 80+ Gold and Platinum rated PSUs. Our GPU selection
+                focuses on triple-fan monsters, reinforced with custom anti-sag brackets for longevity.
+            </p>
+        </div>
+    </section>
+
+    <!-- Stage 4: Cooling -->
+    <section id="stage4" class="h-[120vh] flex items-center justify-end px-6 md:px-24">
+        <div class="glass-card max-w-xl p-10 md:p-14">
+            <div class="text-cyan-400 mb-4 flex items-center gap-3">
+                <i data-lucide="snowflake" class="w-7 h-7"></i>
+                <span class="text-sm font-bold tracking-[0.2em] uppercase angora-font">Stage 04</span>
+            </div>
+            <h2 class="angora-font text-4xl md:text-5xl text-white mb-6">Thermal Mastery</h2>
+            <p class="text-gray-300 leading-relaxed text-lg mb-8 italic">
+                "Silent performance, aggressive cooling."
+            </p>
+            <p class="text-gray-400 leading-relaxed text-lg">
+                Our signature "Vortex Airflow" configuration utilizes positive pressure to keep dust out. Every fan
+                curve is meticulously tuned to provide a whisper-quiet experience without sacrificing stability.
+            </p>
+        </div>
+    </section>
+
+    <!-- Final Stage -->
+    <section id="stage5" class="h-[100vh] flex flex-col justify-center items-center text-center px-6">
+        <div class="glass-card max-w-4xl p-12 md:p-20">
+            <div class="text-rose-500 mb-6 flex justify-center items-center gap-3">
+                <i data-lucide="award" class="w-8 h-8"></i>
+                <span class="text-sm font-bold tracking-[0.3em] uppercase angora-font">Final Stage</span>
+            </div>
+            <h2 class="angora-font text-5xl md:text-7xl text-white mb-8">ASCENSION</h2>
+            <p class="text-gray-400 text-xl md:text-2xl mb-12 angora-font">
+                Your legacy is forged. Every cable hidden, every LED synced, every component tested for 24 hours.
+            </p>
+            <a href="bookMeeting.html"
+                class="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-12 py-5 rounded-full font-bold text-lg hover:scale-105 transition-transform angora-font">
+                BOOK YOUR BUILD <i data-lucide="arrow-right" class="w-6 h-6"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer Divider -->
+    <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-800/70 to-transparent my-0"></div>
+
+    <footer
+        class="angora-footer pt-14 pb-8 px-4 sm:px-8 lg:px-16 relative bg-gradient-to-t from-gray-950 via-gray-900/80 to-transparent z-20">
+        <div class="max-w-7xl mx-auto flex flex-col items-center text-center gap-12">
+
+            <div class="flex flex-col items-center min-w-[240px] max-w-md mb-8">
+                <a href="#"
+                    class="angora-font text-2xl font-normal tracking-widest text-white hover:text-indigo-400 transition-colors duration-300 mb-5">
+                    NEVARK
+                </a>
+
+                <p class="cursor-default mt-3 text-gray-400 text-base leading-relaxed">
+                    Accelerate your team’s workflow.<br>
+                    Connect » Automate » Monitor your workspace.<br>
+                    All from one powerful hub.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Divider -->
+        <div class="mt-12 mb-8 w-full h-px bg-gradient-to-r from-transparent via-gray-800/60 to-transparent"></div>
+
+        <!-- Bottom Bar -->
+        <div class="max-w-7xl mx-auto px-4 pb-12">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <!-- Left/Center content -->
+                <div
+                    class="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 text-xs text-gray-500 text-center md:text-left">
+                    <span>© 2026 Nevark Technologies LLP. All Rights Reserved </span>
+                    <span class="hidden sm:inline">&bull;</span>
+                    <a href="privacy.html" class="hover:underline hover:text-gray-300">Privacy Policy</a>
+                    <span class="hidden sm:inline">&bull;</span>
+                    <a href="terms-condition.html" class="hover:underline hover:text-gray-300">Terms of Service</a>
+                    <span class="hidden sm:inline">&bull;</span>
+                    <span class="relative group cursor-default">
+                        <span class="inline-flex items-center gap-1 hover:text-gray-300">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Status
+                        </span>
+
+                        <!-- Tooltip -->
+                        <span
+                            class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block whitespace-nowrap text-[10px] px-2 py-1 rounded-md bg-black/80 border border-white/10 text-gray-300 backdrop-blur-md">
+                            Website Online
+                        </span>
+                    </span>
+                </div>
+
+                <!-- Social icons -->
+                <div class="flex items-center gap-3">
+
+                    <!-- Email -->
+                    <a id="emailLink" href="#" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+          hover:bg-red-600/80 transition-all duration-300
+          hover:-translate-y-0.5" aria-label="Email">
+
+                        <svg data-lucide="mail" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    </a>
+
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/company/nevark-technologies" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+                   hover:bg-blue-600/80
+                   transition-all duration-300
+                   hover:-translate-y-0.5" aria-label="LinkedIn">
+                        <svg data-lucide="linkedin" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/nevark.in" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+                    hover:bg-pink-600 
+                    transition-all duration-300
+                    hover:-translate-y-0.5" aria-label="Instagram">
+                        <svg data-lucide="instagram" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    </a>
+
+                </div>
+
+
+            </div>
+
+    </footer>
+    <script>
+        (function () {
+            const email = "office@nevark.in";
+            const subject = "Nevark Technologies - Website Mailer";
+
+            const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+            const gmailWeb = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}`;
+
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+            const link = document.getElementById("emailLink");
+            link.href = isMobile ? mailto : gmailWeb;
+        })();
+    </script>
+
+    <script>
+        // Lucide
+        lucide.createIcons();
+
+        // 3D Setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.querySelector('#build-canvas'),
+            antialias: true,
+            alpha: true
+        });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        scene.add(ambientLight);
+
+        const blueLight = new THREE.PointLight(0x6366f1, 10, 50);
+        blueLight.position.set(5, 5, 5);
+        scene.add(blueLight);
+
+        const purpleLight = new THREE.PointLight(0x8b5cf6, 10, 50);
+        purpleLight.position.set(-5, -5, 5);
+        scene.add(purpleLight);
+
+        const pcGroup = new THREE.Group();
+        scene.add(pcGroup);
+
+        // Materials
+        const darkMetal = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.9, roughness: 0.2 });
+        const whiteMetal = new THREE.MeshStandardMaterial({ color: 0xdddddd, metalness: 0.8, roughness: 0.2 });
+        const pcbGreen = new THREE.MeshStandardMaterial({ color: 0x0a1a0a, roughness: 0.5 });
+        const rgbEmissive = new THREE.MeshStandardMaterial({ color: 0x6366f1, emissive: 0x6366f1, emissiveIntensity: 5 });
+
+        // Helper to create parts
+        function createPart(geometry, material, initialPos) {
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(...initialPos);
+            mesh.scale.set(0, 0, 0);
+            pcGroup.add(mesh);
+            return mesh;
+        }
+
+        // Parts
+        const caseMesh = createPart(new THREE.BoxGeometry(4, 5, 2), new THREE.MeshStandardMaterial({ color: 0x6366f1, transparent: true, opacity: 0.2, wireframe: true }), [0, 0, 0]);
+        const mobo = createPart(new THREE.BoxGeometry(3, 4, 0.1), pcbGreen, [10, 10, -10]);
+        const cpu = createPart(new THREE.BoxGeometry(0.8, 0.8, 0.1), whiteMetal, [-10, 5, 10]);
+        const ram1 = createPart(new THREE.BoxGeometry(0.1, 1.5, 0.3), rgbEmissive, [5, -5, -5]);
+        const ram2 = createPart(new THREE.BoxGeometry(0.1, 1.5, 0.3), rgbEmissive, [6, -5, -4]);
+        const gpu = createPart(new THREE.BoxGeometry(3, 0.8, 0.6), darkMetal, [15, 0, 15]);
+        const cooler = createPart(new THREE.CylinderGeometry(0.6, 0.6, 0.3, 32), rgbEmissive, [-5, -10, 0]);
+
+        camera.position.z = 8;
+
+        // Animate loop
+        function animate() {
+            requestAnimationFrame(animate);
+            pcGroup.rotation.y += 0.002;
+            cooler.rotation.y += 0.05;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1
+            }
+        });
+
+        // Stage 0: Hero
+        tl.to(caseMesh.scale, { x: 1, y: 1, z: 1, duration: 2 }, 0);
+
+        // Stage 1: Mobo & CPU
+        tl.to(mobo.scale, { x: 1, y: 1, z: 1, duration: 2 }, 1);
+        tl.to(mobo.position, { x: 0, y: 0, z: -0.8, duration: 3 }, 1);
+        tl.to(cpu.scale, { x: 1, y: 1, z: 1, duration: 1 }, 2.5);
+        tl.to(cpu.position, { x: 0, y: 0.5, z: -0.7, duration: 2 }, 2.5);
+
+        // Stage 2: Memory
+        tl.to([ram1.scale, ram2.scale], { x: 1, y: 1, z: 1, duration: 2 }, 4);
+        tl.to(ram1.position, { x: 0.8, y: 0.5, z: -0.6, duration: 2 }, 4);
+        tl.to(ram2.position, { x: 1.1, y: 0.5, z: -0.6, duration: 2.2 }, 4);
+
+        // Stage 3: Heartbeat (GPU & Cooler)
+        tl.to(gpu.scale, { x: 1, y: 1, z: 1, duration: 2 }, 6);
+        tl.to(gpu.position, { x: 0, y: -0.8, z: 0.5, duration: 2.5 }, 6);
+        tl.to(cooler.scale, { x: 1, y: 1, z: 1, duration: 1.5 }, 6.5);
+        tl.to(cooler.position, { x: 0, y: 0.5, z: 0.2, duration: 2 }, 6.5);
+
+        // Stage 4: Finish setup
+        tl.to(caseMesh.material, { opacity: 0.8, wireframe: false, duration: 2 }, 8);
+        tl.to(pcGroup.rotation, { x: 0.2, y: Math.PI * 2, duration: 10 }, 0);
+        tl.to(camera.position, { z: 6, duration: 5 }, 7);
+
+        // Nav logic
+        const navIndicator = document.getElementById('nav-indicator');
+        const navLinks = document.querySelectorAll('.nav-link');
+        function updateIndicator(el) {
+            if (!el || !navIndicator) return;
+            const rect = el.getBoundingClientRect();
+            const parentRect = el.parentElement.getBoundingClientRect();
+            navIndicator.style.width = `${rect.width + 24}px`;
+            navIndicator.style.height = `${rect.height + 12}px`;
+            navIndicator.style.left = `${rect.left - parentRect.left - 56}px`;
+            navIndicator.style.top = `${rect.top - parentRect.top - 6}px`;
+            navIndicator.style.opacity = '1';
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', e => updateIndicator(e.target));
+            link.parentElement.addEventListener('mouseleave', () => {
+                const activeLink = document.querySelector('.nav-link.active');
+                if (activeLink) updateIndicator(activeLink);
+            });
+        });
+
+        window.addEventListener('load', () => {
+            const activeLink = document.querySelector('.nav-link.active');
+            if (activeLink) updateIndicator(activeLink);
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            const activeLink = document.querySelector('.nav-link.active');
+            if (activeLink) updateIndicator(activeLink);
+        });
+
+        // Mobile toggle
+        const toggleBtn = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (toggleBtn && mobileMenu) {
+            toggleBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.classList.toggle('flex');
+            });
+        }
+
+        // Smooth Scroll for all devices
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
