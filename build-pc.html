@@ -938,7 +938,7 @@
                 tapOverlay.style.opacity = '0';
                 setTimeout(() => tapOverlay.style.display = 'none', 500);
                 revealVideo();
-                video.playbackRate = 0.7;
+                video.playbackRate = 1;
                 video.addEventListener('timeupdate', onTimeUpdate);
                 video.addEventListener('ended', unlockPage, { once: true });
                 video.play().catch(() => unlockPage());
@@ -951,7 +951,7 @@
                 setTimeout(() => {
                     video.play()
                         .then(() => {
-                            video.playbackRate = 0.7;
+                            video.playbackRate = 1;
                             document.documentElement.style.overflow = 'hidden';
                             document.body.style.overflowY = 'hidden';
                             document.body.style.cursor = 'none';
