@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nevark • Build Your PC</title>
+    <script src="scripts/tailwind.js"></script>
+    <script src="scripts/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
+    <script src="scripts/gsap.min.js"></script>
+    <script src="scripts/scrolltrigger.min.js"></script>
+    <style>
+        @font-face {
+            font-family: 'Angora';
+            src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .angora-footer,
+        .angora-footer * {
+            font-family: 'Angora', sans-serif !important;
+        }
+
+        .angora-font {
+            font-family: 'Angora', sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        #build-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        section {
+            position: relative;
+            z-index: 10;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #nav-indicator {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1.5);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .nav-link {
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-link.active {
+            color: #8e1af4;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #6366f1, #a855f7);
+            border-radius: 10px;
+        }
+
+        .part-glow {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), var(--color, rgba(99, 102, 241, 0.45)) 0%, transparent 80%);
+            mix-blend-mode: screen;
+            filter: blur(60px);
+            transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            will-change: opacity;
+            transform: translateZ(0);
+            /* Hardware acceleration hint */
+        }
+    </style>
+</head>
+
+<body class="bg-black text-white antialiased overflow-x-hidden">
+    <canvas id="build-canvas"></canvas>
+    <div id="glow-container"></div>
+
+    <!-- Navigation -->
+    <nav
+        class="fixed top-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50 bg-white/5 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md md:w-auto transition-all duration-300">
+        <div class="flex items-center justify-between md:justify-center">
+            <!-- Mobile Logo -->
+            <div id="mobile-logo-nav"
+                class="md:hidden text-white text-sm tracking-widest angora-font transition-opacity duration-300">
+                NEVARK
+            </div>
+
+            <!-- Links -->
+            <div
+                class="relative hidden md:flex items-center space-x-10 text-gray-300 text-sm font-medium tracking-wide angora-font">
+                <a href="index.html" class="nav-link hover:text-white transition-colors">Home</a>
+                <a href="projects.html" class="nav-link hover:text-white transition-colors">Projects</a>
+                <a href="build-pc.html" class="nav-link active hover:text-white transition-colors">Build Your PC</a>
+                <a href="about.html" class="nav-link hover:text-white transition-colors">About</a>
+                <a href="bookMeeting.html" class="nav-link hover:text-white transition-colors">Bookings</a>
+                <div id="nav-indicator"></div>
+            </div>
+            <button id="mobile-menu-toggle" class="md:hidden text-white p-2">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <div id="mobile-menu"
+            class="hidden flex-col space-y-4 mt-4 pb-4 text-gray-300 text-sm font-medium tracking-wide angora-font border-t border-white/10 pt-4 md:hidden">
+            <a href="index.html" class="hover:text-white transition-colors">Home</a>
+            <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
+            <a href="build-pc.html" class="hover:text-white transition-colors">Build Your PC</a>
+            <a href="about.html" class="hover:text-white transition-colors">About</a>
+            <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="h-[100vh] flex flex-col justify-center items-center text-center px-6">
+        <div class="space-y-6 max-w-4xl animate-fade-in">
+            <h1 class="angora-font text-5xl md:text-8xl font-bold tracking-tighter text-white">
+                BUILD YOUR <span
+                    class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">LEGACY</span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed angora-font">
+                Witness the birth of performance. Scroll down to see how we craft the ultimate gaming machines, part by
+                part, with surgical precision.
+            </p>
+            <div class="flex justify-center gap-4 pt-10">
+                <div class="animate-bounce text-gray-500">
+                    <a href="#stage1"><i data-lucide="chevron-down" class="w-10 h-10"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stage 1: Foundation -->
+    <section id="stage1" class="h-[120vh] flex items-center px-6 md:px-24">
+        <div class="glass-card max-w-xl p-10 md:p-14">
+            <div class="text-blue-500 mb-4 flex items-center gap-3">
+                <i data-lucide="cpu" class="w-7 h-7"></i>
+                <span class="text-sm font-bold tracking-[0.2em] uppercase angora-font">Stage 01</span>
+            </div>
+            <h2 class="angora-font text-4xl md:text-5xl text-white mb-6">The Foundation</h2>
+            <p class="text-gray-300 leading-relaxed text-lg mb-8 italic">
+                "A masterpiece is only as stable as its core."
+            </p>
+            <p class="text-gray-400 leading-relaxed text-lg">
+                We hand-select overbuilt motherboards with premium VRMs to ensure rock-solid stability. Our CPU
+                installation includes thermal paste application techniques that guarantee 100% surface contact for
+                maximum heat dissipation.
+            </p>
+        </div>
+    </section>
+
+    <!-- Stage 2: Memory -->
+    <section id="stage2" class="h-[120vh] flex items-center justify-end px-6 md:px-24">
+        <div class="glass-card max-w-xl p-10 md:p-14">
+            <div class="text-purple-500 mb-4 flex items-center gap-3">
+                <i data-lucide="brain" class="w-7 h-7"></i>
+                <span class="text-sm font-bold tracking-[0.2em] uppercase angora-font">Stage 02</span>
+            </div>
+            <h2 class="angora-font text-4xl md:text-5xl text-white mb-6">Neural Pathways</h2>
+            <p class="text-gray-300 leading-relaxed text-lg mb-8 italic">
+                "Speed is the bridge between thought and action."
+            </p>
+            <p class="text-gray-400 leading-relaxed text-lg">
+                We utilize high-frequency, low-latency RAM kits, tuned for XMP/EXPO profiles out of the box. Our NVMe
+                storage solutions are paired with custom heat-spreaders, ensuring your load times remain instantaneous.
+            </p>
+        </div>
+    </section>
+
+    <!-- Stage 3: GPU -->
+    <section id="stage3" class="h-[120vh] flex items-center px-6 md:px-24">
+        <div class="glass-card max-w-xl p-10 md:p-14">
+            <div class="text-emerald-500 mb-4 flex items-center gap-3">
+                <i data-lucide="zap" class="w-7 h-7"></i>
+                <span class="text-sm font-bold tracking-[0.2em] uppercase angora-font">Stage 03</span>
+            </div>
+            <h2 class="angora-font text-4xl md:text-5xl text-white mb-6">The Heartbeat</h2>
+            <p class="text-gray-300 leading-relaxed text-lg mb-8 italic">
+                "Unleashing the raw power of visual excellence."
+            </p>
+            <p class="text-gray-400 leading-relaxed text-lg">
+                Power delivery is never an afterthought. We use 80+ Gold and Platinum rated PSUs. Our GPU selection
+                focuses on triple-fan monsters, reinforced with custom anti-sag brackets for longevity.
+            </p>
+        </div>
+    </section>
+
+    <!-- Stage 4: Cooling -->
+    <section id="stage4" class="h-[120vh] flex items-center justify-end px-6 md:px-24">
+        <div class="glass-card max-w-xl p-10 md:p-14">
+            <div class="text-cyan-400 mb-4 flex items-center gap-3">
+                <i data-lucide="snowflake" class="w-7 h-7"></i>
+                <span class="text-sm font-bold tracking-[0.2em] uppercase angora-font">Stage 04</span>
+            </div>
+            <h2 class="angora-font text-4xl md:text-5xl text-white mb-6">Thermal Mastery</h2>
+            <p class="text-gray-300 leading-relaxed text-lg mb-8 italic">
+                "Silent performance, aggressive cooling."
+            </p>
+            <p class="text-gray-400 leading-relaxed text-lg">
+                Our signature "Vortex Airflow" configuration utilizes positive pressure to keep dust out. Every fan
+                curve is meticulously tuned to provide a whisper-quiet experience without sacrificing stability.
+            </p>
+        </div>
+    </section>
+
+    <!-- Final Stage -->
+    <section id="stage5" class="h-[100vh] flex flex-col justify-center items-center text-center px-6">
+        <div class="glass-card w-full max-w-[95%] md:max-w-5xl lg:max-w-6xl p-8 md:p-16 lg:p-20">
+
+            <div class="text-rose-500 mb-6 flex justify-center items-center gap-3">
+                <i data-lucide="award" class="w-8 h-8"></i>
+                <span class="text-sm font-bold tracking-[0.3em] uppercase angora-font">Final Stage</span>
+            </div>
+            <h2 class="angora-font text-5xl md:text-7xl text-white mb-8">ASCENSION</h2>
+            <p class="text-gray-400 text-xl md:text-2xl mb-12 angora-font">
+                Your legacy is forged. Every cable hidden, every LED synced, every component tested for 24 hours.
+            </p>
+            <a href="https://forms.gle/FYTjVcSxD6S12Fan9" target="_blank"
+                class="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-5 py-3 rounded-full font-bold text-lg hover:scale-105 transition-transform angora-font">
+                BOOK YOUR BUILD <i data-lucide="arrow-right" class="w-6 h-6"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer Divider -->
+    <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-800/70 to-transparent my-0"></div>
+    <style>
+        @font-face {
+            font-family: 'Angora';
+            src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
+
+    <footer
+        class="angora-footer pt-14 pb-8 px-4 sm:px-8 lg:px-16 relative bg-gradient-to-t from-gray-950 via-gray-900/80 to-transparent z-20">
+        <div class="max-w-7xl mx-auto flex flex-col items-center text-center gap-12">
+
+            <div class="flex flex-col items-center min-w-[240px] max-w-md mb-8">
+                <a href="#"
+                    class="angora-font text-2xl font-normal tracking-widest text-white hover:text-indigo-400 transition-colors duration-300 mb-5">
+                    NEVARK
+                </a>
+
+                <p class="cursor-default mt-3 text-gray-400 text-base leading-relaxed">
+                    Accelerate your team’s workflow.<br>
+                    Connect » Automate » Monitor your workspace.<br>
+                    All from one powerful hub.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Divider -->
+        <div class="mt-12 mb-8 w-full h-px bg-gradient-to-r from-transparent via-gray-800/60 to-transparent"></div>
+
+        <!-- Bottom Bar -->
+        <div class="max-w-7xl mx-auto px-4 pb-12">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <!-- Left/Center content -->
+                <div
+                    class="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 text-xs text-gray-500 text-center md:text-left">
+                    <span>© 2026 Nevark Technologies LLP. All Rights Reserved </span>
+                    <span class="hidden sm:inline">&bull;</span>
+                    <a href="privacy.html" class="hover:underline hover:text-gray-300">Privacy Policy</a>
+                    <span class="hidden sm:inline">&bull;</span>
+                    <a href="terms-condition.html" class="hover:underline hover:text-gray-300">Terms of Service</a>
+                    <span class="hidden sm:inline">&bull;</span>
+                    <span class="relative group cursor-default">
+                        <span class="inline-flex items-center gap-1 hover:text-gray-300">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Status
+                        </span>
+
+                        <!-- Tooltip -->
+                        <span
+                            class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block whitespace-nowrap text-[10px] px-2 py-1 rounded-md bg-black/80 border border-white/10 text-gray-300 backdrop-blur-md">
+                            Website Online
+                        </span>
+                    </span>
+                </div>
+
+                <!-- Social icons -->
+                <div class="flex items-center gap-3">
+
+                    <!-- Email -->
+                    <a id="emailLink" href="#" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+          hover:bg-red-600/80 transition-all duration-300
+          hover:-translate-y-0.5" aria-label="Email">
+
+                        <svg data-lucide="mail" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    </a>
+
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/company/nevark-technologies" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+                   hover:bg-blue-600/80
+                   transition-all duration-300
+                   hover:-translate-y-0.5" aria-label="LinkedIn">
+                        <svg data-lucide="linkedin" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/nevark.in" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+                    hover:bg-pink-600 
+                    transition-all duration-300
+                    hover:-translate-y-0.5" aria-label="Instagram">
+                        <svg data-lucide="instagram" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    </a>
+
+                </div>
+
+                <!-- Startup India Logo (Bottom Right) -->
+                <div
+                    class="mt-6 md:mt-0 opacity-70 transition-all duration-500 hover:opacity-100 hover:brightness-110 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+                    <img src="assests/dpiit_logo_startupindia.png" alt="Startup India Logo"
+                        class="h-10 md:h-12 brightness-110" />
+                </div>
+
+
+            </div>
+
+    </footer>
+    <script>
+        (function () {
+            const email = "office@nevark.in";
+            const subject = "Nevark Technologies - Website Mailer";
+
+            const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+            const gmailWeb = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}`;
+
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+            const link = document.getElementById("emailLink");
+            link.href = isMobile ? mailto : gmailWeb;
+        })();
+    </script>
+    <script>
+        // Lucide
+        lucide.createIcons();
+
+        // WebGL Compatibility Check
+        function isWebGLAvailable() {
+            try {
+                const canvas = document.createElement('canvas');
+                return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+            } catch (e) {
+                return false;
+            }
+        }
+
+        if (!isWebGLAvailable()) {
+            document.body.innerHTML += '<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;color:#fff;font-family:sans-serif;"><div><h1 style="font-size:24px;margin-bottom:10px;">WebGL Not Supported</h1><p>Your browser or device does not support WebGL, which is required for the 3D PC Build experience. Please enable hardware acceleration in your browser settings or try a different browser.</p></div></div>';
+        }
+
+        // 3D Setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // Optimized Renderer
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.querySelector('#build-canvas'),
+            antialias: true,
+            alpha: true,
+            powerPreference: 'high-performance',
+            precision: 'highp',
+            stencil: false,
+            depth: true
+        });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+        // --- Lighting ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        const hemiLight = new THREE.HemisphereLight(0xb0c8ff, 0x080820, 0.6);
+        scene.add(hemiLight);
+
+        const mainLight = new THREE.DirectionalLight(0xfff5e0, 2.5);
+        mainLight.position.set(6, 8, 10);
+        mainLight.castShadow = true;
+        scene.add(mainLight);
+
+        const fillLight = new THREE.DirectionalLight(0xc0c8ff, 0.8);
+        fillLight.position.set(-6, 2, 4);
+        scene.add(fillLight);
+
+        const blueLight = new THREE.PointLight(0x6366f1, 40, 60);
+        blueLight.position.set(5, 5, 5);
+        scene.add(blueLight);
+
+        const purpleLight = new THREE.PointLight(0x8b5cf6, 40, 60);
+        purpleLight.position.set(-5, -5, 5);
+        scene.add(purpleLight);
+
+        const pcGroup = new THREE.Group();
+        scene.add(pcGroup);
+
+        const interiorLight1 = new THREE.PointLight(0x6366f1, 0, 15);
+        interiorLight1.position.set(0, 1, 0);
+        pcGroup.add(interiorLight1);
+
+        const interiorLight2 = new THREE.PointLight(0x8b5cf6, 0, 15);
+        interiorLight2.position.set(0, -1, 0);
+        pcGroup.add(interiorLight2);
+
+        const pcLights = [blueLight, purpleLight, interiorLight1, interiorLight2];
+
+        // --- PBR Materials ---
+        const gunmetal = new THREE.MeshStandardMaterial({ color: 0x1c1c1e, metalness: 0.95, roughness: 0.1 });
+        const brushedAlu = new THREE.MeshStandardMaterial({ color: 0x909090, metalness: 0.9, roughness: 0.25 });
+        const darkMetal = new THREE.MeshStandardMaterial({ color: 0x0a0a0a, metalness: 0.9, roughness: 0.15 });
+        const copperMat = new THREE.MeshStandardMaterial({ color: 0xb87333, metalness: 0.9, roughness: 0.15 });
+        const glassMat = new THREE.MeshPhysicalMaterial({
+            color: 0xaaccff, metalness: 0, roughness: 0,
+            transmission: 0.92, thickness: 0.3, transparent: true, opacity: 0.18
+        });
+        const rgbEmissive = new THREE.MeshStandardMaterial({
+            color: 0x6366f1, emissive: 0x6366f1, emissiveIntensity: 10
+        });
+        const rgbMaterials = [rgbEmissive];
+        const caseGlowMaterial = new THREE.MeshStandardMaterial({
+            color: 0x6366f1, emissive: 0x6366f1, emissiveIntensity: 0,
+            transparent: true, opacity: 0.25
+        });
+        rgbMaterials.push(caseGlowMaterial);
+
+        // Spinning fan meshes collected for animation
+        const spinningFans = [];
+
+        // --- Canvas PCB Texture ---
+        function createPCBTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512; canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+
+            // Dark green PCB base
+            ctx.fillStyle = '#0c2914';
+            ctx.fillRect(0, 0, 512, 512);
+
+            // Subtle weave pattern
+            ctx.fillStyle = 'rgba(255,255,255,0.018)';
+            for (let x = 0; x < 512; x += 8) {
+                for (let y = 0; y < 512; y += 8) {
+                    if ((x + y) % 16 === 0) ctx.fillRect(x, y, 4, 4);
+                }
+            }
+
+            // Copper traces
+            ctx.strokeStyle = '#c8960c';
+            ctx.lineWidth = 1.8;
+            ctx.lineJoin = 'round';
+            const traces = [
+                [[40, 100], [180, 100], [180, 200], [260, 200]],
+                [[280, 60], [280, 160], [380, 160], [380, 240]],
+                [[100, 320], [100, 420], [280, 420]],
+                [[420, 100], [420, 300], [340, 300], [340, 370]],
+                [[200, 370], [340, 370]],
+                [[160, 210], [240, 210], [240, 290], [320, 290]],
+                [[60, 400], [160, 400], [160, 470]],
+                [[380, 380], [460, 380], [460, 460]],
+                [[50, 180], [50, 260], [140, 260]],
+                [[460, 200], [380, 200], [380, 130]],
+            ];
+            traces.forEach(pts => {
+                ctx.beginPath();
+                ctx.moveTo(...pts[0]);
+                pts.slice(1).forEach(p => ctx.lineTo(...p));
+                ctx.stroke();
+            });
+
+            // Via pads
+            ctx.fillStyle = '#d4a017';
+            for (let i = 0; i < 110; i++) {
+                ctx.beginPath();
+                ctx.arc(Math.random() * 510 + 1, Math.random() * 510 + 1, 2.5, 0, Math.PI * 2);
+                ctx.fill();
+                // Annular ring
+                ctx.strokeStyle = '#d4a017';
+                ctx.lineWidth = 0.8;
+                ctx.beginPath();
+                ctx.arc(Math.random() * 510 + 1, Math.random() * 510 + 1, 4, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            // Silkscreen labels
+            ctx.font = 'bold 9px monospace';
+            ctx.fillStyle = 'rgba(255,255,255,0.28)';
+            ['C1', 'R4', 'U2', 'Q1', 'L3', 'C7', 'R12', 'U5'].forEach((lbl, i) => {
+                ctx.fillText(lbl, 28 + (i % 4) * 110, 46 + Math.floor(i / 4) * 60);
+            });
+
+            // Chip outlines (silkscreen)
+            ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+            ctx.lineWidth = 1;
+            [[80, 80, 60, 60], [260, 175, 80, 80], [375, 250, 52, 52]].forEach(([x, y, w, h]) => {
+                ctx.strokeRect(x, y, w, h);
+                // Pin markers
+                ctx.fillStyle = 'rgba(255,255,255,0.18)';
+                ctx.beginPath(); ctx.arc(x + 4, y + 4, 3, 0, Math.PI * 2); ctx.fill();
+            });
+
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        // --- Component Builders ---
+
+        function createMotherboard() {
+            const group = new THREE.Group();
+
+            const pcbTex = createPCBTexture();
+            const pcbMat = new THREE.MeshStandardMaterial({
+                color: 0x1d4a28, roughness: 0.65, metalness: 0.05, map: pcbTex
+            });
+
+            // Main PCB board
+            const pcb = new THREE.Mesh(new THREE.BoxGeometry(3.5, 4.5, 0.08), pcbMat);
+            group.add(pcb);
+
+            // CPU socket (LGA frame)
+            const socketBase = new THREE.Mesh(new THREE.BoxGeometry(1.05, 1.05, 0.07), darkMetal);
+            socketBase.position.set(-0.2, 0.85, 0.075);
+            group.add(socketBase);
+            const socketInner = new THREE.Mesh(new THREE.BoxGeometry(0.88, 0.88, 0.05),
+                new THREE.MeshStandardMaterial({ color: 0x2c2c2c, metalness: 0.8, roughness: 0.3 }));
+            socketInner.position.set(-0.2, 0.85, 0.115);
+            group.add(socketInner);
+
+            // VRM heatsink fin array
+            const finMat = new THREE.MeshStandardMaterial({ color: 0x9a9a9a, metalness: 0.88, roughness: 0.2 });
+            const vrmBase = new THREE.Mesh(new THREE.BoxGeometry(0.55, 1.3, 0.14), brushedAlu);
+            vrmBase.position.set(-1.4, 1.3, 0.14);
+            group.add(vrmBase);
+            for (let i = 0; i < 6; i++) {
+                const fin = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.08, 0.38), finMat);
+                fin.position.set(-1.4, 1.8 - i * 0.22, 0.28);
+                group.add(fin);
+            }
+
+            // Chipset heatsink
+            const chipHS = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.75, 0.28), brushedAlu);
+            chipHS.position.set(0.2, -0.85, 0.2);
+            group.add(chipHS);
+            // Chipset fins
+            for (let i = 0; i < 5; i++) {
+                const cFin = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.7, 0.32), finMat);
+                cFin.position.set(0.2 - 0.14 + i * 0.07, -0.85, 0.36);
+                group.add(cFin);
+            }
+
+            // 4 RAM slots
+            for (let i = 0; i < 4; i++) {
+                const slot = new THREE.Mesh(new THREE.BoxGeometry(0.06, 1.65, 0.18), darkMetal);
+                slot.position.set(1.05 + i * 0.185, 0.65, 0.1);
+                group.add(slot);
+                // Slot latch ends
+                const latch = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.12, 0.2),
+                    new THREE.MeshStandardMaterial({ color: 0x444444, roughness: 0.7 }));
+                latch.position.set(1.05 + i * 0.185, 1.52, 0.1);
+                group.add(latch);
+            }
+
+            // PCIe x16 slot
+            const pcieSlot = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.09, 0.16), darkMetal);
+            pcieSlot.position.set(0.05, -1.6, 0.1);
+            group.add(pcieSlot);
+            // Metal reinforcement
+            const pcieReinf = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.09, 0.06), brushedAlu);
+            pcieReinf.position.set(0.05, -1.6, 0.2);
+            group.add(pcieReinf);
+
+            // M.2 slot strip
+            const m2 = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.14, 0.07), darkMetal);
+            m2.position.set(0.5, -0.3, 0.1);
+            group.add(m2);
+
+            // Capacitors (small cylinders)
+            const capMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.7 });
+            const capTopMat = new THREE.MeshStandardMaterial({ color: 0x888800, roughness: 0.5 });
+            for (let i = 0; i < 14; i++) {
+                const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.13, 8), capMat);
+                cap.position.set(-0.85 + (i % 5) * 0.18, -0.08 + Math.floor(i / 5) * 0.18, 0.12);
+                group.add(cap);
+                const capTop = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.01, 8), capTopMat);
+                capTop.position.set(cap.position.x, cap.position.y + 0.07, cap.position.z);
+                group.add(capTop);
+            }
+
+            // IO shield (back edge plate)
+            const ioPanel = new THREE.Mesh(new THREE.BoxGeometry(0.05, 4.3, 0.35), darkMetal);
+            ioPanel.position.set(-1.75, 0.1, 0.18);
+            group.add(ioPanel);
+
+            // ATX power connector
+            const atxConn = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.65, 0.18),
+                new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.9 }));
+            atxConn.position.set(1.55, -0.5, 0.14);
+            group.add(atxConn);
+
+            return group;
+        }
+
+        function createGPU() {
+            const group = new THREE.Group();
+
+            // Backplate (brushed aluminum)
+            const backplate = new THREE.Mesh(new THREE.BoxGeometry(3.3, 1.05, 0.05), brushedAlu);
+            backplate.position.z = -0.3;
+            group.add(backplate);
+
+            // Main shroud body
+            const shroud = new THREE.Mesh(new THREE.BoxGeometry(3.25, 1.0, 0.55), gunmetal);
+            group.add(shroud);
+
+            // Shroud accent strip (top)
+            const accentTop = new THREE.Mesh(new THREE.BoxGeometry(3.0, 0.06, 0.55), brushedAlu);
+            accentTop.position.y = 0.53;
+            group.add(accentTop);
+
+            // 3 fans
+            const fanHousingMat = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.5, roughness: 0.5 });
+            for (let i = 0; i < 3; i++) {
+                const fx = -1.0 + i * 1.0;
+
+                // Fan housing ring
+                const housing = new THREE.Mesh(new THREE.CylinderGeometry(0.40, 0.40, 0.06, 32), fanHousingMat);
+                housing.rotation.x = Math.PI / 2;
+                housing.position.set(fx, 0, 0.3);
+                group.add(housing);
+
+                // Fan blade disc (spins)
+                const bladeMat = new THREE.MeshStandardMaterial({ color: 0x1e1e1e, metalness: 0.6, roughness: 0.4 });
+                const bladeDisc = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.04, 32), bladeMat);
+                bladeDisc.rotation.x = Math.PI / 2;
+                bladeDisc.position.set(fx, 0, 0.31);
+                group.add(bladeDisc);
+                spinningFans.push(bladeDisc);
+
+                // Blade geometry (8 blades)
+                for (let b = 0; b < 8; b++) {
+                    const blade = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.26, 0.025), bladeMat);
+                    const angle = (b / 8) * Math.PI * 2;
+                    blade.position.set(fx + Math.sin(angle) * 0.17, Math.cos(angle) * 0.17, 0.32);
+                    blade.rotation.z = angle + 0.4;
+                    group.add(blade);
+                    spinningFans.push(blade);
+                }
+
+                // RGB hub center
+                const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.05, 16), rgbEmissive);
+                hub.rotation.x = Math.PI / 2;
+                hub.position.set(fx, 0, 0.34);
+                group.add(hub);
+            }
+
+            // RGB strip on top edge
+            const strip = new THREE.Mesh(new THREE.BoxGeometry(3.0, 0.05, 0.05), rgbEmissive);
+            strip.position.set(0, 0.48, 0.25);
+            group.add(strip);
+
+            // PCIe power connectors
+            const connMat = new THREE.MeshStandardMaterial({ color: 0x2a2a2a, roughness: 0.85 });
+            for (let c = 0; c < 2; c++) {
+                const conn = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.32, 0.18), connMat);
+                conn.position.set(1.28 + c * 0.26, 0.32, -0.12);
+                group.add(conn);
+            }
+
+            // Bracket (rear IO plate)
+            const bracket = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.95, 0.58), brushedAlu);
+            bracket.position.x = 1.65;
+            group.add(bracket);
+
+            // Display ports on bracket
+            const portMat = new THREE.MeshStandardMaterial({ color: 0x050505, roughness: 0.9 });
+            for (let p = 0; p < 3; p++) {
+                const port = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.1, 0.18), portMat);
+                port.position.set(1.69, 0.2 - p * 0.22, -0.05);
+                group.add(port);
+            }
+
+            return group;
+        }
+
+        function createCase() {
+            const group = new THREE.Group();
+
+            // Main body (solid gunmetal panels)
+            const bodyMat = new THREE.MeshStandardMaterial({ color: 0x141416, metalness: 0.92, roughness: 0.12 });
+
+            // Back panel
+            const backPanel = new THREE.Mesh(new THREE.BoxGeometry(4.0, 5.2, 0.06), bodyMat);
+            backPanel.position.z = -0.97;
+            group.add(backPanel);
+            // Side panel (non-glass)
+            const sidePanel = new THREE.Mesh(new THREE.BoxGeometry(0.06, 5.2, 2.0), bodyMat);
+            sidePanel.position.x = -2.03;
+            group.add(sidePanel);
+            // Top panel
+            const topPanel = new THREE.Mesh(new THREE.BoxGeometry(4.0, 0.06, 2.0), brushedAlu);
+            topPanel.position.y = 2.63;
+            group.add(topPanel);
+            // Bottom panel
+            const botPanel = new THREE.Mesh(new THREE.BoxGeometry(4.0, 0.06, 2.0), bodyMat);
+            botPanel.position.y = -2.63;
+            group.add(botPanel);
+
+            // Glass side panel (right)
+            const glass = new THREE.Mesh(new THREE.BoxGeometry(3.85, 5.0, 0.05), glassMat);
+            glass.position.z = 1.0;
+            group.add(glass);
+            // Glass frame bezel
+            const bezel = new THREE.Mesh(new THREE.BoxGeometry(3.95, 5.12, 0.04), bodyMat);
+            bezel.position.z = 1.0;
+            group.add(bezel);
+            // Cutout illusion — inner clear area (glass is slightly smaller, bezel slightly larger — visual only)
+
+            // Front panel (slightly textured)
+            const frontPanel = new THREE.Mesh(new THREE.BoxGeometry(0.06, 5.2, 2.0), bodyMat);
+            frontPanel.position.x = 2.03;
+            group.add(frontPanel);
+
+            // Front RGB strip (left edge accent)
+            const rgbStrip = new THREE.Mesh(new THREE.BoxGeometry(0.04, 4.6, 0.04), rgbEmissive);
+            rgbStrip.position.set(-2.0, 0.2, 0.6);
+            group.add(rgbStrip);
+
+            // Front intake fan grilles (3 rings)
+            const grilleMat = new THREE.MeshStandardMaterial({ color: 0x0a0a0a, metalness: 0.7, roughness: 0.3 });
+            for (let i = 0; i < 3; i++) {
+                const ring = new THREE.Mesh(new THREE.TorusGeometry(0.43, 0.025, 8, 28), grilleMat);
+                ring.rotation.y = Math.PI / 2;
+                ring.position.set(-2.0, 1.2 - i * 1.15, 0.2);
+                group.add(ring);
+                // Cross spokes
+                const spH = new THREE.Mesh(new THREE.BoxGeometry(0.01, 0.86, 0.01), grilleMat);
+                spH.position.set(-2.0, 1.2 - i * 1.15, 0.2);
+                group.add(spH);
+                const spV = new THREE.Mesh(new THREE.BoxGeometry(0.86, 0.01, 0.01), grilleMat);
+                spV.position.set(-2.0, 1.2 - i * 1.15, 0.2);
+                group.add(spV);
+                // Diagonal spokes
+                const spD1 = new THREE.Mesh(new THREE.BoxGeometry(0.01, 0.86, 0.01), grilleMat);
+                spD1.position.set(-2.0, 1.2 - i * 1.15, 0.2);
+                spD1.rotation.z = Math.PI / 4;
+                group.add(spD1);
+            }
+
+            // PSU shroud (bottom compartment)
+            const psuShroud = new THREE.Mesh(new THREE.BoxGeometry(3.9, 1.05, 1.95),
+                new THREE.MeshStandardMaterial({ color: 0x0e0e0e, metalness: 0.88, roughness: 0.18 }));
+            psuShroud.position.y = -2.1;
+            group.add(psuShroud);
+
+            // Power button
+            const pwrBtn = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.04, 16), rgbEmissive);
+            pwrBtn.rotation.x = Math.PI / 2;
+            pwrBtn.position.set(1.7, 2.35, 0.55);
+            group.add(pwrBtn);
+
+            // USB / IO ports strip on top
+            for (let u = 0; u < 3; u++) {
+                const usbPort = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.07, 0.05),
+                    new THREE.MeshStandardMaterial({ color: 0x050505, roughness: 0.9 }));
+                usbPort.position.set(1.1 - u * 0.2, 2.65, 0.35);
+                group.add(usbPort);
+            }
+
+            // Interior glow volume
+            const innerGlow = new THREE.Mesh(new THREE.BoxGeometry(3.8, 5.0, 1.85), caseGlowMaterial);
+            group.add(innerGlow);
+
+            return group;
+        }
+
+        function createCooler() {
+            const group = new THREE.Group();
+
+            // Contact base (copper)
+            const base = new THREE.Mesh(new THREE.BoxGeometry(0.82, 0.07, 0.82), copperMat);
+            group.add(base);
+
+            // 3 heat pipes (copper)
+            for (let i = 0; i < 3; i++) {
+                const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.038, 0.038, 1.5, 10), copperMat);
+                pipe.position.set(-0.2 + i * 0.2, 0.76, 0);
+                group.add(pipe);
+            }
+
+            // Aluminum fin stack
+            const finMat = new THREE.MeshStandardMaterial({ color: 0xb0b0b0, metalness: 0.88, roughness: 0.18 });
+            for (let i = 0; i < 16; i++) {
+                const fin = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.03, 0.65), finMat);
+                fin.position.y = 0.15 + i * 0.09;
+                group.add(fin);
+            }
+            // Fin stack side caps
+            const sideCapL = new THREE.Mesh(new THREE.BoxGeometry(0.03, 1.44, 0.65), brushedAlu);
+            sideCapL.position.set(-0.39, 0.77, 0);
+            group.add(sideCapL);
+            const sideCapR = new THREE.Mesh(new THREE.BoxGeometry(0.03, 1.44, 0.65), brushedAlu);
+            sideCapR.position.set(0.39, 0.77, 0);
+            group.add(sideCapR);
+
+            // Tower fan (120mm) frame
+            const fanFrame = new THREE.Mesh(new THREE.BoxGeometry(0.74, 0.74, 0.06),
+                new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.75 }));
+            fanFrame.position.set(0, 0.78, 0.37);
+            group.add(fanFrame);
+
+            // Fan blades disc
+            const bladeMat = new THREE.MeshStandardMaterial({ color: 0x1d1d1d, metalness: 0.5, roughness: 0.5 });
+            const fanDisc = new THREE.Mesh(new THREE.CylinderGeometry(0.31, 0.31, 0.04, 32), bladeMat);
+            fanDisc.rotation.x = Math.PI / 2;
+            fanDisc.position.set(0, 0.78, 0.39);
+            group.add(fanDisc);
+            spinningFans.push(fanDisc);
+
+            // Fan blades
+            for (let b = 0; b < 9; b++) {
+                const angle = (b / 9) * Math.PI * 2;
+                const blade = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.24, 0.025), bladeMat);
+                blade.position.set(Math.sin(angle) * 0.16, 0.78 + Math.cos(angle) * 0.16, 0.4);
+                blade.rotation.z = angle + 0.5;
+                group.add(blade);
+                spinningFans.push(blade);
+            }
+
+            // RGB ring around fan
+            const fanRGB = new THREE.Mesh(new THREE.TorusGeometry(0.33, 0.022, 8, 28), rgbEmissive);
+            fanRGB.position.set(0, 0.78, 0.42);
+            group.add(fanRGB);
+
+            return group;
+        }
+
+        function createRAM() {
+            const group = new THREE.Group();
+
+            // PCB base
+            const pcbMat = new THREE.MeshStandardMaterial({ color: 0x091a0f, roughness: 0.75 });
+            const pcb = new THREE.Mesh(new THREE.BoxGeometry(0.055, 1.45, 0.2), pcbMat);
+            group.add(pcb);
+
+            // Heatspreader (brushed aluminum)
+            const hs = new THREE.Mesh(new THREE.BoxGeometry(0.08, 1.5, 0.22), brushedAlu);
+            group.add(hs);
+
+            // Heatspreader top fin
+            const topFin = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.14, 0.22), brushedAlu);
+            topFin.position.y = 0.82;
+            group.add(topFin);
+
+            // RGB top bar
+            const rgb = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.065, 0.22), rgbEmissive);
+            rgb.position.y = 0.79;
+            group.add(rgb);
+
+            // Branding line (subtle)
+            const brand = new THREE.Mesh(new THREE.BoxGeometry(0.081, 0.04, 0.18),
+                new THREE.MeshStandardMaterial({ color: 0x303030, roughness: 0.6 }));
+            brand.position.y = 0.3;
+            group.add(brand);
+
+            return group;
+        }
+
+        function createCables() {
+            const group = new THREE.Group();
+            const cableMat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.95 });
+            const redCableMat = new THREE.MeshStandardMaterial({ color: 0x880000, roughness: 0.95 });
+            const yellowCableMat = new THREE.MeshStandardMaterial({ color: 0x885500, roughness: 0.95 });
+
+            const cableDefs = [
+                // 24-pin ATX
+                { pts: [[1.2, 0.5, -0.5], [1.8, 0, -0.5], [1.8, -1.5, -0.5]], mat: cableMat },
+                // 8-pin CPU
+                { pts: [[-0.4, 2.0, -0.5], [-0.4, 2.7, -0.4], [-0.9, 2.7, -0.4]], mat: cableMat },
+                // PCIe power
+                { pts: [[0.5, -1.5, -0.3], [0.5, -2.1, -0.4], [1.5, -2.1, -0.4]], mat: redCableMat },
+                // SATA
+                { pts: [[0.8, -0.5, -0.5], [1.5, -0.5, -0.6], [1.5, -1.8, -0.6]], mat: yellowCableMat },
+            ];
+
+            cableDefs.forEach(({ pts, mat }) => {
+                const curve = new THREE.CatmullRomCurve3(pts.map(p => new THREE.Vector3(...p)));
+                const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 20, 0.045, 6, false), mat);
+                group.add(tube);
+            });
+
+            return group;
+        }
+
+        // --- Streak System ---
+        function createStreak(targetPos, startPos, baseColor) {
+            const group = new THREE.Group();
+            const streakCount = 5;
+            const streakLines = [];
+
+            for (let i = 0; i < streakCount; i++) {
+                const length = 15 + Math.random() * 25;
+                const points = [new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -length)];
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+                const color = new THREE.Color(baseColor);
+                color.offsetHSL(Math.random() * 0.1 - 0.05, 0.2, 0.1);
+
+                const material = new THREE.LineBasicMaterial({
+                    color: color,
+                    transparent: true,
+                    opacity: 0,
+                    linewidth: 1
+                });
+                const line = new THREE.Line(geometry, material);
+
+                line.position.set(
+                    (Math.random() - 0.5) * 0.5,
+                    (Math.random() - 0.5) * 0.5,
+                    (Math.random() - 0.5) * 0.5
+                );
+
+                group.add(line);
+                streakLines.push(line);
+            }
+
+            scene.add(group);
+
+            // Create dedicated edge glow for this part
+            const glowEl = document.createElement('div');
+            glowEl.className = 'part-glow';
+            document.getElementById('glow-container').appendChild(glowEl);
+
+            // Pre-calculate corner based on startPos
+            const tempStart = new THREE.Vector3(...startPos);
+            tempStart.project(camera);
+            const edgeX = (Math.sign(tempStart.x) * 50) + 50;
+            const edgeY = (Math.sign(-tempStart.y) * 50) + 50;
+
+            glowEl.style.setProperty('--x', `${edgeX}%`);
+            glowEl.style.setProperty('--y', `${edgeY}%`);
+            glowEl.style.setProperty('--color', `#${baseColor.toString(16).padStart(6, '0')}44`);
+
+            return {
+                group,
+                update: (progress, currentPos) => {
+                    const opacity = Math.sin(progress * Math.PI) * 0.8;
+                    streakLines.forEach((line, i) => {
+                        line.material.opacity = opacity * (1 - (i / streakCount));
+                        line.scale.z = 1 + Math.sin(Date.now() * 0.015 + i) * 0.3; // Slower, more elegant pulse
+                    });
+                    group.position.copy(currentPos);
+                    group.lookAt(targetPos);
+
+                    // Sync Edge Glow
+                    if (progress > 0.02 && progress < 0.85) {
+                        glowEl.style.opacity = Math.sin(progress * Math.PI) * 0.95;
+                    } else {
+                        glowEl.style.opacity = 0;
+                    }
+                }
+            };
+        }
+
+        // --- Component Setup ---
+        const parts = {
+            case: { mesh: createCase(), startPos: [0, 0, 0], targetPos: [0, 0, 0], color: 0x6366f1 },
+            mobo: { mesh: createMotherboard(), startPos: [30, 20, -30], targetPos: [0, 0, -0.8], color: 0x8b5cf6 },
+            gpu: { mesh: createGPU(), startPos: [-40, 0, 40], targetPos: [0, -0.8, -0.3], color: 0x06b6d4 },
+            cooler: { mesh: createCooler(), startPos: [0, -30, 30], targetPos: [0, 0.5, -0.3], color: 0xef4444 },
+            ram1: { mesh: createRAM(), startPos: [30, -20, 10], targetPos: [0.8, 0.5, -0.5], color: 0x6366f1 },
+            ram2: { mesh: createRAM(), startPos: [35, -15, 5], targetPos: [1.0, 0.5, -0.5], color: 0x6366f1 },
+            cables: { mesh: createCables(), startPos: [-20, -20, -20], targetPos: [0, 0, 0], color: 0x444444 }
+        };
+
+        Object.values(parts).forEach(p => {
+            p.mesh.position.set(...p.startPos);
+            // Case starts visible, others start at 0
+            if (p === parts.case) {
+                p.mesh.scale.set(1, 1, 1);
+            } else {
+                p.mesh.scale.set(0, 0, 0);
+            }
+            pcGroup.add(p.mesh);
+            p.streak = createStreak(new THREE.Vector3(...p.targetPos), p.startPos, p.color);
+        });
+
+        camera.position.z = 10;
+
+        // --- GSAP Timeline ---
+        gsap.registerPlugin(ScrollTrigger);
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 2.5, // Heavier, more cinematic scrub
+                anticipatePin: 1
+            }
+        });
+
+        // Animate Parts
+        Object.entries(parts).forEach(([key, p], i) => {
+            const startT = i * 1.5;
+            // Case is already visible, don't scale it from 0
+            if (key !== 'case') {
+                tl.to(p.mesh.scale, { x: 1, y: 1, z: 1, duration: 2 }, startT);
+            }
+            tl.to(p.mesh.position, {
+                x: p.targetPos[0],
+                y: p.targetPos[1],
+                z: p.targetPos[2],
+                duration: 4,
+                ease: "power3.out", // Smoother landing
+                onUpdate: function () {
+                    const progress = this.progress();
+                    p.streak.update(progress, p.mesh.position);
+                }
+            }, startT);
+        });
+
+        // Global rotation and final camera zoom
+        tl.to(pcGroup.rotation, { y: Math.PI * 4, duration: 15, ease: "none" }, 0);
+        tl.to(camera.position, { z: 7, duration: 5 }, ">");
+
+        // RGB Final Flare
+        tl.to(rgbMaterials, {
+            emissiveIntensity: 20,
+            duration: 3,
+            stagger: 0.1
+        }, "-=3");
+
+        tl.to([interiorLight1, interiorLight2], {
+            intensity: 30,
+            duration: 2
+        }, "-=2");
+
+        // --- Render Loop ---
+        let hue = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Spin all fan meshes
+            spinningFans.forEach(f => { f.rotation.z += 0.05; });
+
+            // Final RGB Hue Shift
+            if (tl.progress() > 0.95) {
+                hue = (hue + 1) % 360;
+                rgbMaterials.forEach(mat => {
+                    mat.color.setHSL(hue / 360, 0.8, 0.5);
+                    mat.emissive.setHSL(hue / 360, 0.8, 0.5);
+                });
+                pcLights.forEach((light, i) => {
+                    light.color.setHSL((hue + (i * 90)) % 360 / 360, 0.8, 0.5);
+                });
+            }
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // --- Navigation & Resize ---
+        const navIndicator = document.getElementById('nav-indicator');
+        const navLinks = document.querySelectorAll('.nav-link');
+        function updateIndicator(el) {
+            if (!el || !navIndicator) return;
+            const rect = el.getBoundingClientRect();
+            const parentRect = el.parentElement.getBoundingClientRect();
+            navIndicator.style.width = `${rect.width + 24}px`;
+            navIndicator.style.height = `${rect.height + 12}px`;
+            navIndicator.style.left = `${rect.left - parentRect.left - 56}px`;
+            navIndicator.style.top = `${rect.top - parentRect.top - 6}px`;
+            navIndicator.style.opacity = '1';
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', e => updateIndicator(e.target));
+            link.parentElement.addEventListener('mouseleave', () => {
+                const activeLink = document.querySelector('.nav-link.active');
+                if (activeLink) updateIndicator(activeLink);
+            });
+        });
+
+        window.addEventListener('load', () => {
+            const activeLink = document.querySelector('.nav-link.active');
+            if (activeLink) updateIndicator(activeLink);
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            const activeLink = document.querySelector('.nav-link.active');
+            if (activeLink) updateIndicator(activeLink);
+        });
+
+        // Mobile toggle
+        const toggleBtn = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (toggleBtn && mobileMenu) {
+            toggleBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.classList.toggle('flex');
+            });
+        }
+
+        // Smooth Scroll for all devices
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+    <a href="index.html" class="hidden md:block absolute top-8 left-16">
+        <div class="text-white text-xl md:text-2xl tracking-widest angora-font z-10">
+            NEVARK
+        </div>
+    </a>
+</body>
+
+</html>

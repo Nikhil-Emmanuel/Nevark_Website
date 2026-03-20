@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
+    <title>Nevark • Build Your PC</title>
+    <script src="scripts/tailwind.js"></script>
+    <script src="scripts/lucide.min.js"></script>
+    <style>
+        @font-face {
+            font-family: 'Angora';
+            src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: auto;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Angora', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .angora-font {
+            font-family: 'Angora', sans-serif;
+        }
+
+        .angora-footer,
+        .angora-footer * {
+            font-family: 'Angora', sans-serif !important;
+        }
+
+        /* ── PC Setup image (shown after video ends) ── */
+        #setup-image-wrap {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1.4s ease;
+            will-change: opacity;
+            overflow: hidden;
+        }
+
+        #setup-image-wrap.visible {
+            opacity: 1;
+        }
+
+        #setup-image {
+            position: absolute;
+            inset: -4%;
+            /* slight oversize so Ken Burns never shows edges */
+            width: 108%;
+            height: 108%;
+            object-fit: cover;
+            object-position: center center;
+            animation: kenBurns 22s ease-in-out infinite alternate;
+            will-change: transform;
+        }
+
+        /* Slow zoom + gentle drift */
+        @keyframes kenBurns {
+            0% {
+                transform: scale(1.00) translate(0%, 0%);
+            }
+
+            25% {
+                transform: scale(1.04) translate(-1.2%, 0.8%);
+            }
+
+            50% {
+                transform: scale(1.07) translate(0.8%, 1.5%);
+            }
+
+            75% {
+                transform: scale(1.04) translate(1.5%, -0.5%);
+            }
+
+            100% {
+                transform: scale(1.00) translate(0%, 0%);
+            }
+        }
+
+        /* RGB ambient glow overlay — cycles hue like case lighting */
+        #setup-image-wrap::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background: radial-gradient(ellipse at 70% 60%, rgba(239, 68, 68, 0.18) 0%, transparent 65%),
+                radial-gradient(ellipse at 30% 40%, rgba(139, 92, 246, 0.14) 0%, transparent 60%);
+            animation: rgbPulse 8s ease-in-out infinite alternate;
+            mix-blend-mode: screen;
+        }
+
+        @keyframes rgbPulse {
+            0% {
+                opacity: 0.5;
+                filter: hue-rotate(0deg) brightness(1.0);
+            }
+
+            33% {
+                opacity: 0.9;
+                filter: hue-rotate(30deg) brightness(1.1);
+            }
+
+            66% {
+                opacity: 0.7;
+                filter: hue-rotate(-20deg) brightness(0.95);
+            }
+
+            100% {
+                opacity: 1.0;
+                filter: hue-rotate(50deg) brightness(1.05);
+            }
+        }
+
+        /* Subtle vignette to keep edges cinematic */
+        #setup-image-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            background: radial-gradient(ellipse at center,
+                    transparent 45%,
+                    rgba(0, 0, 0, 0.55) 100%);
+            pointer-events: none;
+        }
+
+        /* Scanline shimmer — very faint, adds "screen" feel */
+        #setup-scanline {
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+            background: repeating-linear-gradient(to bottom,
+                    transparent 0px,
+                    transparent 3px,
+                    rgba(0, 0, 0, 0.04) 3px,
+                    rgba(0, 0, 0, 0.04) 4px);
+            animation: scanlineMove 12s linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes scanlineMove {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 0 200px;
+            }
+        }
+
+        /* Floating dust/particle shimmer */
+        #setup-particles {
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .sp {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.55);
+            animation: floatUp linear infinite;
+            filter: blur(0.5px);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+
+            90% {
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translateY(-80vh) translateX(var(--dx)) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        #bg-video {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+            will-change: opacity;
+        }
+
+        #bg-video.visible {
+            opacity: 0.55;
+        }
+
+        #video-veil {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.18) 22%, rgba(0, 0, 0, 0.18) 78%, rgba(0, 0, 0, 0.80) 100%);
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        #video-veil.visible {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            #bg-video {
+                object-position: 65% center;
+            }
+
+            #bg-video.visible {
+                opacity: 0.45;
+            }
+
+            #video-veil {
+                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.28) 22%, rgba(0, 0, 0, 0.28) 78%, rgba(0, 0, 0, 0.85) 100%);
+            }
+        }
+
+        #load-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9000;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 22px;
+            transition: opacity 0.9s ease;
+        }
+
+        #load-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .ls-brand {
+            font-family: 'Angora', sans-serif;
+            font-size: clamp(20px, 5vw, 30px);
+            letter-spacing: 0.5em;
+            color: #fff;
+        }
+
+        .ls-hint {
+            font-size: 10px;
+            letter-spacing: 0.3em;
+            color: #444;
+            text-transform: uppercase;
+        }
+
+        #load-bar-wrap {
+            width: min(220px, 60vw);
+            height: 2px;
+            background: #1a1a1a;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        #load-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ef4444, #a855f7);
+            border-radius: 4px;
+            transition: width 0.25s ease;
+        }
+
+        #tap-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 8999;
+            background: rgba(0, 0, 0, 0.82);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            cursor: pointer;
+        }
+
+        #tap-overlay.visible {
+            display: flex;
+            opacity: 1;
+        }
+
+        .tap-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            border: 2px solid rgba(239, 68, 68, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: tapPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes tapPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4), 0 0 0 0 rgba(239, 68, 68, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 0 14px rgba(239, 68, 68, 0), 0 0 0 28px rgba(239, 68, 68, 0);
+            }
+        }
+
+        .tap-label {
+            font-family: 'Angora', sans-serif;
+            font-size: clamp(13px, 3vw, 16px);
+            letter-spacing: 0.35em;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .tap-sub {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        #scroll-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, #ef4444, #f97316, #a855f7);
+            z-index: 200;
+            pointer-events: none;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.55);
+            transition: width 0.15s linear;
+        }
+
+        #stage-chip {
+            position: fixed;
+            bottom: 28px;
+            right: 20px;
+            z-index: 50;
+            font-family: 'Angora', sans-serif;
+            font-size: clamp(8px, 1.5vw, 10px);
+            letter-spacing: 0.22em;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(0, 0, 0, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            padding: 5px 14px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            #stage-chip {
+                display: block;
+            }
+        }
+
+        #stage-chip.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #unlock-flash {
+            position: fixed;
+            inset: 0;
+            z-index: 7000;
+            background: rgba(239, 68, 68, 0.12);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        #unlock-flash.flash {
+            opacity: 1;
+        }
+
+        section,
+        nav,
+        footer {
+            position: relative;
+            z-index: 10;
+        }
+
+        .glass-card {
+            background: rgba(0, 0, 0, 0.52);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 24px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: border-color 0.35s ease, background 0.35s ease, transform 0.35s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.18);
+            background: rgba(0, 0, 0, 0.62);
+        }
+
+        .animate-fade-in {
+            opacity: 0;
+            animation: fadeUp 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #nav-indicator {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.09);
+            border-radius: 999px;
+            transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1.5);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .nav-link {
+            position: relative;
+            z-index: 1;
+            transition: color 0.25s;
+        }
+
+        .nav-link.active {
+            color: #8e1af4;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #ef4444, #a855f7);
+            border-radius: 10px;
+        }
+
+        /* ── Card fly-in animations ── */
+        .reveal {
+            opacity: 0;
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.from-left {
+            transform: translateX(-60px);
+        }
+
+        .reveal.from-right {
+            transform: translateX(60px);
+        }
+
+        .reveal.from-bottom {
+            transform: translateY(50px);
+        }
+
+        .reveal.in-view {
+            opacity: 1;
+            transform: translateX(0) translateY(0);
+        }
+
+        /* ── Restart button ── */
+        #restart-btn {
+            display: none;
+            margin-top: 32px;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: rgba(255, 255, 255, 0.55);
+            font-family: 'Angora', sans-serif;
+            font-size: clamp(10px, 2vw, 12px);
+            letter-spacing: 0.3em;
+            padding: 10px 26px;
+            border-radius: 999px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: border-color 0.3s, color 0.3s, background 0.3s;
+        }
+
+        #restart-btn:hover {
+            border-color: rgba(239, 68, 68, 0.5);
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        #restart-btn.visible {
+            display: inline-flex;
+        }
+
+        footer {
+            padding-bottom: max(2rem, env(safe-area-inset-bottom));
+        }
+
+        nav {
+            top: max(1.5rem, env(safe-area-inset-top));
+        }
+    </style>
+</head>
+
+<body class="bg-black text-white antialiased overflow-x-hidden">
+
+    <div id="load-screen">
+        <div class="angora-font ls-brand">NEVARK</div>
+        <div id="load-bar-wrap">
+            <div id="load-bar"></div>
+        </div>
+        <div class="angora-font ls-hint">Preparing your build</div>
+    </div>
+
+    <div id="tap-overlay" role="button" aria-label="Tap to start">
+        <div class="tap-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
+        </div>
+        <div class="angora-font tap-label">TAP TO START</div>
+        <div class="tap-sub">Experience the build</div>
+    </div>
+
+    <div id="unlock-flash"></div>
+    <div id="scroll-bar"></div>
+    <div id="stage-chip"></div>
+
+    <video id="bg-video" muted playsinline preload="auto">
+        <source src="video/Nevark_PC Build.mp4" type="video/mp4">
+    </video>
+    <div id="video-veil"></div>
+    <div id="setup-image-wrap">
+        <img id="setup-image" src="video/PC-setup.png" alt="PC Setup">
+        <div id="setup-scanline"></div>
+        <div id="setup-particles"></div>
+    </div>
+
+    <nav class="fixed left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50 bg-white/5 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md md:w-auto transition-all duration-300"
+        style="top: max(1.5rem, env(safe-area-inset-top, 1.5rem))">
+        <div class="flex items-center justify-between md:justify-center">
+            <div class="md:hidden text-white text-sm tracking-widest angora-font">NEVARK</div>
+            <div
+                class="relative hidden md:flex items-center space-x-10 text-gray-300 text-sm font-medium tracking-wide angora-font">
+                <a href="index.html" class="nav-link hover:text-white">Home</a>
+                <a href="projects.html" class="nav-link hover:text-white">Projects</a>
+                <a href="build-pc.html" class="nav-link active hover:text-white">Build Your PC</a>
+                <a href="about.html" class="nav-link hover:text-white">About</a>
+                <a href="bookMeeting.html" class="nav-link hover:text-white">Bookings</a>
+                <div id="nav-indicator"></div>
+            </div>
+            <button id="mobile-menu-toggle" class="md:hidden text-white p-2" aria-label="Menu">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <div id="mobile-menu"
+            class="hidden flex-col space-y-4 mt-4 pb-4 text-gray-300 text-sm font-medium tracking-wide angora-font border-t border-white/10 pt-4 md:hidden">
+            <a href="index.html" class="hover:text-white transition-colors">Home</a>
+            <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
+            <a href="build-pc.html" class="hover:text-white transition-colors">Build Your PC</a>
+            <a href="about.html" class="hover:text-white transition-colors">About</a>
+            <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
+        </div>
+    </nav>
+
+    <a href="index.html"
+        class="hidden md:block fixed top-8 left-16 z-50 angora-font text-xl tracking-widest text-white hover:text-red-400 transition-colors duration-300">NEVARK</a>
+
+    <section class="h-[100vh] flex flex-col justify-center items-center text-center px-6">
+        <div class="space-y-6 max-w-4xl animate-fade-in">
+            <h1 class="angora-font text-5xl md:text-8xl font-bold tracking-tighter leading-none">
+                BUILD YOUR<br>
+                <span
+                    class="bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-orange-400 to-purple-500">LEGACY</span>
+            </h1>
+            <p class="text-gray-300 text-base md:text-xl max-w-2xl mx-auto leading-relaxed angora-font">
+                Witness the birth of performance. Watch how we craft the ultimate gaming machines — part by part, with
+                surgical precision.
+            </p>
+            <div class="flex justify-center pt-6">
+                <div class="text-gray-400" style="animation: bounce 2s infinite">
+                    <i data-lucide="chevron-down" class="w-9 h-9"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="stage1" class="h-[120vh] flex items-center px-5 md:px-24">
+        <div class="glass-card reveal from-left max-w-xl w-full p-8 md:p-14">
+            <div class="text-red-400 mb-4 flex items-center gap-3">
+                <i data-lucide="cpu" class="w-6 h-6 md:w-7 md:h-7"></i>
+                <span class="text-xs font-bold tracking-[0.2em] uppercase angora-font">Stage 01</span>
+            </div>
+            <h2 class="angora-font text-3xl md:text-5xl text-white mb-5">The Foundation</h2>
+            <p class="text-gray-300 leading-relaxed text-base md:text-lg mb-5 italic">"A masterpiece is only as stable
+                as its core."</p>
+            <p class="text-gray-400 leading-relaxed text-sm md:text-lg">We hand-select overbuilt motherboards with
+                premium VRMs to ensure rock-solid stability. Our CPU installation includes thermal paste application
+                techniques that guarantee 100% surface contact for maximum heat dissipation.</p>
+        </div>
+    </section>
+
+    <section id="stage2" class="h-[120vh] flex items-center justify-end px-5 md:px-24">
+        <div class="glass-card reveal from-right max-w-xl w-full p-8 md:p-14">
+            <div class="text-orange-400 mb-4 flex items-center gap-3">
+                <i data-lucide="brain" class="w-6 h-6 md:w-7 md:h-7"></i>
+                <span class="text-xs font-bold tracking-[0.2em] uppercase angora-font">Stage 02</span>
+            </div>
+            <h2 class="angora-font text-3xl md:text-5xl text-white mb-5">Neural Pathways</h2>
+            <p class="text-gray-300 leading-relaxed text-base md:text-lg mb-5 italic">"Speed is the bridge between
+                thought and action."</p>
+            <p class="text-gray-400 leading-relaxed text-sm md:text-lg">We utilize high-frequency, low-latency RAM kits,
+                tuned for XMP/EXPO profiles out of the box. Our NVMe storage solutions are paired with custom
+                heat-spreaders, ensuring your load times remain instantaneous.</p>
+        </div>
+    </section>
+
+    <section id="stage3" class="h-[120vh] flex items-center px-5 md:px-24">
+        <div class="glass-card reveal from-left max-w-xl w-full p-8 md:p-14">
+            <div class="text-purple-400 mb-4 flex items-center gap-3">
+                <i data-lucide="zap" class="w-6 h-6 md:w-7 md:h-7"></i>
+                <span class="text-xs font-bold tracking-[0.2em] uppercase angora-font">Stage 03</span>
+            </div>
+            <h2 class="angora-font text-3xl md:text-5xl text-white mb-5">The Heartbeat</h2>
+            <p class="text-gray-300 leading-relaxed text-base md:text-lg mb-5 italic">"Unleashing the raw power of
+                visual excellence."</p>
+            <p class="text-gray-400 leading-relaxed text-sm md:text-lg">Power delivery is never an afterthought. We use
+                80+ Gold and Platinum rated PSUs. Our GPU selection focuses on triple-fan monsters, reinforced with
+                custom anti-sag brackets for longevity.</p>
+        </div>
+    </section>
+
+    <section id="stage4" class="h-[120vh] flex items-center justify-end px-5 md:px-24">
+        <div class="glass-card reveal from-right max-w-xl w-full p-8 md:p-14">
+            <div class="text-red-300 mb-4 flex items-center gap-3">
+                <i data-lucide="snowflake" class="w-6 h-6 md:w-7 md:h-7"></i>
+                <span class="text-xs font-bold tracking-[0.2em] uppercase angora-font">Stage 04</span>
+            </div>
+            <h2 class="angora-font text-3xl md:text-5xl text-white mb-5">Thermal Mastery</h2>
+            <p class="text-gray-300 leading-relaxed text-base md:text-lg mb-5 italic">"Silent performance, aggressive
+                cooling."</p>
+            <p class="text-gray-400 leading-relaxed text-sm md:text-lg">Our signature "Vortex Airflow" configuration
+                utilizes positive pressure to keep dust out. Every fan curve is meticulously tuned to provide a
+                whisper-quiet experience without sacrificing stability.</p>
+        </div>
+    </section>
+
+    <section id="stage5" class="min-h-[100vh] flex flex-col justify-center items-center text-center px-5 py-20">
+        <div class="glass-card reveal from-bottom w-full max-w-[95%] md:max-w-5xl lg:max-w-6xl p-8 md:p-16 lg:p-20">
+            <div class="text-red-400 mb-6 flex justify-center items-center gap-3">
+                <i data-lucide="award" class="w-7 h-7 md:w-8 md:h-8"></i>
+                <span class="text-xs font-bold tracking-[0.3em] uppercase angora-font">Final Stage</span>
+            </div>
+            <h2 class="angora-font text-5xl md:text-7xl text-white mb-8 leading-none">ASCENSION</h2>
+            <p class="text-gray-400 text-lg md:text-2xl mb-10 md:mb-12 angora-font leading-relaxed">
+                Your legacy is forged.<br class="md:hidden">Every cable hidden, every LED synced,<br>every component
+                tested for 24 hours.
+            </p>
+            <a href="https://forms.gle/FYTjVcSxD6S12Fan9" target="_blank" rel="noopener"
+                class="inline-flex items-center gap-3 bg-gradient-to-r from-red-600 to-purple-600 text-white px-7 py-4 rounded-full font-bold text-base md:text-lg hover:scale-105 active:scale-95 transition-transform duration-200 angora-font shadow-lg shadow-red-900/40">
+                BOOK YOUR BUILD <i data-lucide="arrow-right" class="w-5 h-5 md:w-6 md:h-6"></i>
+            </a>
+            <br>
+            <button id="restart-btn" onclick="location.reload()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="1 4 1 10 7 10" />
+                    <path d="M3.51 15a9 9 0 1 0 .49-3.28" />
+                </svg>
+                RESTART ANIMATION
+            </button>
+        </div>
+    </section>
+
+    <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-800/70 to-transparent"></div>
+    <footer
+        class="angora-footer pt-14 px-4 sm:px-8 lg:px-16 relative bg-gradient-to-t from-black via-gray-950/90 to-transparent z-20">
+        <div class="max-w-7xl mx-auto flex flex-col items-center text-center gap-10">
+            <div class="flex flex-col items-center max-w-md">
+                <a href="#"
+                    class="angora-font text-2xl tracking-widest text-white hover:text-red-400 transition-colors duration-300 mb-4">NEVARK</a>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Accelerate your team's workflow.<br>
+                    Connect » Automate » Monitor your workspace.<br>
+                    All from one powerful hub.
+                </p>
+            </div>
+        </div>
+        <div class="mt-10 mb-6 w-full h-px bg-gradient-to-r from-transparent via-gray-800/60 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 pb-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-5">
+                <div
+                    class="flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-2 text-xs text-gray-500 text-center md:text-left">
+                    <span>© 2026 Nevark Technologies LLP. All Rights Reserved</span>
+                    <span class="hidden sm:inline">&bull;</span>
+                    <a href="privacy.html" class="hover:underline hover:text-gray-300 transition-colors">Privacy
+                        Policy</a>
+                    <span class="hidden sm:inline">&bull;</span>
+                    <a href="terms-condition.html" class="hover:underline hover:text-gray-300 transition-colors">Terms
+                        of Service</a>
+                    <span class="hidden sm:inline">&bull;</span>
+                    <span class="relative group cursor-default">
+                        <span class="inline-flex items-center gap-1 hover:text-gray-300">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>Status
+                        </span>
+                        <span
+                            class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:flex whitespace-nowrap text-[10px] px-2 py-1 rounded-md bg-black/80 border border-white/10 text-gray-300 backdrop-blur-md">Website
+                            Online</span>
+                    </span>
+                </div>
+                <!-- Social icons -->
+                <div class="flex items-center gap-3">
+
+                    <!-- Email -->
+                    <a id="emailLink" href="#" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+          hover:bg-red-600/80 transition-all duration-300
+          hover:-translate-y-0.5" aria-label="Email">
+
+                        <svg data-lucide="mail" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    </a>
+
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/company/nevark-technologies" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+                   hover:bg-blue-600/80
+                   transition-all duration-300
+                   hover:-translate-y-0.5" aria-label="LinkedIn">
+                        <svg data-lucide="linkedin" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/nevark.in" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+                    hover:bg-pink-600 
+                    transition-all duration-300
+                    hover:-translate-y-0.5" aria-label="Instagram">
+                        <svg data-lucide="instagram" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    </a>
+
+                </div>
+
+                <!-- Startup India Logo (Bottom Right) -->
+                <div
+                    class="mt-6 md:mt-0 opacity-70 transition-all duration-500 hover:opacity-100 hover:brightness-110 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+                    <img src="assests/dpiit_logo_startupindia.png" alt="Startup India Logo"
+                        class="h-10 md:h-12 brightness-110" />
+                </div>
+
+
+            </div>
+
+    </footer>
+    <script>
+        (function () {
+            const email = "office@nevark.in";
+            const subject = "Nevark Technologies - Website Mailer";
+
+            const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+            const gmailWeb = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}`;
+
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+            const link = document.getElementById("emailLink");
+            link.href = isMobile ? mailto : gmailWeb;
+        })();
+        lucide.createIcons();
+
+        const video = document.getElementById('bg-video');
+        const veil = document.getElementById('video-veil');
+        const loadScreen = document.getElementById('load-screen');
+        const loadBar = document.getElementById('load-bar');
+        const tapOverlay = document.getElementById('tap-overlay');
+        const scrollBar = document.getElementById('scroll-bar');
+        const stageChip = document.getElementById('stage-chip');
+        const unlockFlash = document.getElementById('unlock-flash');
+        const restartBtn = document.getElementById('restart-btn');
+
+        const stages = [
+            { pct: 0.00, label: '' },
+            { pct: 0.08, label: 'STAGE 01 — THE FOUNDATION' },
+            { pct: 0.28, label: 'STAGE 02 — NEURAL PATHWAYS' },
+            { pct: 0.48, label: 'STAGE 03 — THE HEARTBEAT' },
+            { pct: 0.66, label: 'STAGE 04 — THERMAL MASTERY' },
+            { pct: 0.86, label: 'FINAL — ASCENSION' },
+        ];
+
+        // Card fly-in: maps section id → card reveal class
+        const sectionCards = ['stage1', 'stage2', 'stage3', 'stage4', 'stage5'];
+
+        let chipCurrent = '';
+        let currentSectionIdx = -1;
+
+        let fake = 0;
+        const fakeT = setInterval(() => {
+            fake = Math.min(fake + Math.random() * 9, 88);
+            loadBar.style.width = fake + '%';
+        }, 120);
+
+        function hideLoadScreen() {
+            clearInterval(fakeT);
+            loadBar.style.width = '100%';
+            setTimeout(() => {
+                loadScreen.classList.add('hidden');
+                setTimeout(() => loadScreen.style.display = 'none', 900);
+            }, 350);
+        }
+
+        function revealVideo() {
+            video.classList.add('visible');
+            veil.classList.add('visible');
+        }
+
+        function unlockPage() {
+            unlockFlash.classList.add('flash');
+            setTimeout(() => unlockFlash.classList.remove('flash'), 500);
+
+            stageChip.classList.remove('visible');
+
+            // Fade out video, fade in PC setup image
+            video.style.transition = 'opacity 1.4s ease';
+            video.style.opacity = '0';
+            veil.style.transition = 'opacity 1.4s ease';
+            veil.style.opacity = '0';
+            const setupWrap = document.getElementById('setup-image-wrap');
+            setupWrap.classList.add('visible');
+
+            // Spawn floating particles
+            const particleContainer = document.getElementById('setup-particles');
+            for (let i = 0; i < 18; i++) {
+                const p = document.createElement('div');
+                p.className = 'sp';
+                const size = Math.random() * 3 + 1;
+                p.style.cssText = `
+                    width:${size}px; height:${size}px;
+                    left:${Math.random() * 100}%;
+                    bottom:${Math.random() * 30}%;
+                    --dx:${(Math.random() - 0.5) * 120}px;
+                    animation-duration:${6 + Math.random() * 10}s;
+                    animation-delay:${Math.random() * 8}s;
+                `;
+                particleContainer.appendChild(p);
+            }
+
+            document.documentElement.style.cssText = 'overflow: auto !important';
+            document.body.style.cssText = document.body.style.cssText + '; overflow: auto !important; overflow-y: auto !important';
+            document.body.style.pointerEvents = '';
+            document.querySelectorAll('[data-locked-off]').forEach(el => {
+                el.style.pointerEvents = '';
+                el.removeAttribute('data-locked-off');
+            });
+
+            scrollBar.style.width = '100%';
+            document.querySelectorAll('.reveal').forEach(c => c.classList.add('in-view'));
+            restartBtn.classList.add('visible');
+        }
+
+        function onTimeUpdate() {
+            const dur = video.duration;
+            if (!dur) return;
+            const p = video.currentTime / dur;
+
+            const sectionTargets = [
+                { pct: 0.00, top: 0 },
+                { pct: 0.08, top: document.getElementById('stage1').offsetTop },
+                { pct: 0.28, top: document.getElementById('stage2').offsetTop },
+                { pct: 0.48, top: document.getElementById('stage3').offsetTop },
+                { pct: 0.66, top: document.getElementById('stage4').offsetTop },
+                { pct: 0.86, top: document.getElementById('stage5').offsetTop },
+            ];
+
+            let idx = 0;
+            for (let i = 0; i < sectionTargets.length; i++) {
+                if (p >= sectionTargets[i].pct) idx = i;
+            }
+
+            if (idx !== currentSectionIdx) {
+                currentSectionIdx = idx;
+                window.scrollTo({ top: sectionTargets[idx].top, behavior: 'smooth' });
+
+                // Fly in the card for this section (delayed slightly so scroll settles first)
+                const secId = sectionCards[idx - 1]; // idx 0 = hero (no card), idx 1 = stage1, etc.
+                if (secId) {
+                    const card = document.querySelector(`#${secId} .reveal`);
+                    if (card) setTimeout(() => card.classList.add('in-view'), 350);
+                }
+            }
+
+            scrollBar.style.width = (p * 100) + '%';
+
+            let label = '';
+            for (const s of stages) { if (p >= s.pct) label = s.label; }
+            if (label !== chipCurrent) {
+                chipCurrent = label;
+                stageChip.classList.remove('visible');
+                setTimeout(() => {
+                    stageChip.textContent = label;
+                    if (label) stageChip.classList.add('visible');
+                }, 220);
+            }
+        }
+
+        function startPlay() {
+            tapOverlay.style.opacity = '0';
+            setTimeout(() => tapOverlay.style.display = 'none', 500);
+            revealVideo();
+            video.playbackRate = 1;
+            video.addEventListener('timeupdate', onTimeUpdate);
+            video.addEventListener('ended', unlockPage, { once: true });
+            video.play().catch(() => unlockPage());
+        }
+
+        function onVideoReady() {
+            hideLoadScreen();
+            video.play()
+                .then(() => {
+                    video.playbackRate = 1;
+                    revealVideo();
+                    document.documentElement.style.overflow = 'hidden';
+                    document.body.style.overflowY = 'hidden';
+                    document.body.style.pointerEvents = 'none';
+                    document.querySelectorAll('nav, nav *').forEach(el => {
+                        el.style.pointerEvents = 'auto';
+                        el.setAttribute('data-locked-off', '');
+                    });
+                    video.addEventListener('timeupdate', onTimeUpdate);
+                    video.addEventListener('ended', unlockPage, { once: true });
+                })
+                .catch(() => {
+                    tapOverlay.style.display = 'flex';
+                    requestAnimationFrame(() => tapOverlay.classList.add('visible'));
+                    document.body.style.overflowY = 'hidden';
+                    document.body.style.pointerEvents = 'none';
+                    tapOverlay.style.pointerEvents = 'auto';
+                    tapOverlay.addEventListener('click', () => {
+                        document.querySelectorAll('nav, nav *').forEach(el => {
+                            el.style.pointerEvents = 'auto';
+                            el.setAttribute('data-locked-off', '');
+                        });
+                        startPlay();
+                    }, { once: true });
+                });
+        }
+
+        video.addEventListener('error', () => {
+            hideLoadScreen();
+            document.body.style.overflowY = 'auto';
+            document.body.style.pointerEvents = '';
+        }, { once: true });
+
+        if (video.readyState >= 3) {
+            onVideoReady();
+        } else {
+            video.addEventListener('canplay', onVideoReady, { once: true });
+        }
+
+        const navIndicator = document.getElementById('nav-indicator');
+        const navLinks = document.querySelectorAll('.nav-link');
+        function updateIndicator(el) {
+            if (!el || !navIndicator) return;
+            const r = el.getBoundingClientRect();
+            const pr = el.parentElement.getBoundingClientRect();
+            navIndicator.style.width = `${r.width + 24}px`;
+            navIndicator.style.height = `${r.height + 12}px`;
+            navIndicator.style.left = `${r.left - pr.left - 54}px`;
+            navIndicator.style.top = `${r.top - pr.top - 6}px`;
+            navIndicator.style.opacity = '1';
+        }
+        navLinks.forEach(l => {
+            l.addEventListener('mouseenter', e => updateIndicator(e.target));
+            l.parentElement.addEventListener('mouseleave', () => {
+                const a = document.querySelector('.nav-link.active');
+                if (a) updateIndicator(a);
+            });
+        });
+        window.addEventListener('load', () => { const a = document.querySelector('.nav-link.active'); if (a) updateIndicator(a); });
+        window.addEventListener('resize', () => { const a = document.querySelector('.nav-link.active'); if (a) updateIndicator(a); });
+
+        const toggleBtn = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (toggleBtn && mobileMenu) {
+            toggleBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.classList.toggle('flex');
+            });
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', function (e) {
+                e.preventDefault();
+                const t = document.querySelector(this.getAttribute('href'));
+                if (t) window.scrollTo({ top: t.offsetTop, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -3,13 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
     <title>Nevark • Build Your PC</title>
     <script src="scripts/tailwind.js"></script>
-    <script src="scripts/lucide.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
-    <script src="scripts/gsap.min.js"></script>
-    <script src="scripts/scrolltrigger.min.js"></script>
+    <script src="scripts/lucide.min.js"></script>
     <style>
         @font-face {
             font-family: 'Angora';
@@ -18,8 +16,28 @@
             font-style: normal;
         }
 
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         html {
             scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Angora', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .angora-font {
+            font-family: 'Angora', sans-serif;
         }
 
         .angora-footer,
@@ -27,52 +45,393 @@
             font-family: 'Angora', sans-serif !important;
         }
 
-        .angora-font {
-            font-family: 'Angora', sans-serif;
-        }
-
-        body {
-            background-color: #000;
-            color: #fff;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-            transition: all 0.3s ease;
-        }
-
-        .glass-card:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        #build-canvas {
+        #setup-image-wrap {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 3s ease;
+            will-change: opacity;
+            overflow: hidden;
+        }
+
+        #setup-image-wrap.visible {
+            opacity: 0.8;
+        }
+
+        #setup-image {
+            position: absolute;
+            inset: -4%;
+            width: 108%;
+            height: 108%;
+            object-fit: cover;
+            object-position: center center;
+            animation: kenBurns 22s ease-in-out infinite alternate;
+            will-change: transform;
+        }
+
+        @keyframes kenBurns {
+            0% {
+                transform: scale(1.00) translate(0%, 0%);
+            }
+
+            25% {
+                transform: scale(1.04) translate(-1.2%, 0.8%);
+            }
+
+            50% {
+                transform: scale(1.07) translate(0.8%, 1.5%);
+            }
+
+            75% {
+                transform: scale(1.04) translate(1.5%, -0.5%);
+            }
+
+            100% {
+                transform: scale(1.00) translate(0%, 0%);
+            }
+        }
+
+        #setup-image-wrap::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background: radial-gradient(ellipse at 70% 60%, rgba(239, 68, 68, 0.18) 0%, transparent 65%),
+                radial-gradient(ellipse at 30% 40%, rgba(139, 92, 246, 0.14) 0%, transparent 60%);
+            animation: rgbPulse 5s ease-in-out infinite alternate;
+            mix-blend-mode: screen;
+        }
+
+        @keyframes rgbPulse {
+            0% {
+                opacity: 0.5;
+                filter: hue-rotate(0deg) brightness(1.0);
+            }
+
+            33% {
+                opacity: 0.9;
+                filter: hue-rotate(30deg) brightness(1.1);
+            }
+
+            66% {
+                opacity: 0.7;
+                filter: hue-rotate(-20deg) brightness(0.95);
+            }
+
+            100% {
+                opacity: 1.0;
+                filter: hue-rotate(50deg) brightness(1.05);
+            }
+        }
+
+        #setup-image-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.55) 100%);
             pointer-events: none;
         }
 
-        section {
+        #setup-scanline {
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+            background: repeating-linear-gradient(to bottom, transparent 0px, transparent 3px, rgba(0, 0, 0, 0.04) 3px, rgba(0, 0, 0, 0.04) 4px);
+            animation: scanlineMove 8s linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes scanlineMove {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 0 200px;
+            }
+        }
+
+        #setup-particles {
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .sp {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.55);
+            animation: floatUp linear infinite;
+            filter: blur(0.5px);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+
+            90% {
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translateY(-80vh) translateX(var(--dx)) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        #bg-video {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+            will-change: opacity;
+        }
+
+        #bg-video.visible {
+            opacity: 0.55;
+        }
+
+        #video-veil {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.18) 22%, rgba(0, 0, 0, 0.18) 78%, rgba(0, 0, 0, 0.80) 100%);
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        #video-veil.visible {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            #bg-video {
+                object-position: 65% center;
+            }
+
+            #bg-video.visible {
+                opacity: 0.45;
+            }
+
+            #video-veil {
+                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.28) 22%, rgba(0, 0, 0, 0.28) 78%, rgba(0, 0, 0, 0.85) 100%);
+            }
+        }
+
+        #load-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9000;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 22px;
+            transition: opacity 0.9s ease;
+        }
+
+        #load-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .ls-brand {
+            font-size: clamp(20px, 5vw, 30px);
+            letter-spacing: 0.5em;
+            color: #fff;
+        }
+
+        .ls-hint {
+            font-size: 10px;
+            letter-spacing: 0.3em;
+            color: #444;
+            text-transform: uppercase;
+        }
+
+        #load-bar-wrap {
+            width: min(220px, 60vw);
+            height: 6px;
+            background: #1a1a1a;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        #load-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ef4444, #a855f7);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        #tap-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 8999;
+            background: rgba(0, 0, 0, 0.82);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            cursor: pointer;
+        }
+
+        #tap-overlay.visible {
+            display: flex;
+            opacity: 1;
+        }
+
+        .tap-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            border: 2px solid rgba(239, 68, 68, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: tapPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes tapPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4), 0 0 0 0 rgba(239, 68, 68, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 0 14px rgba(239, 68, 68, 0), 0 0 0 28px rgba(239, 68, 68, 0);
+            }
+        }
+
+        .tap-label {
+            font-size: clamp(13px, 3vw, 16px);
+            letter-spacing: 0.35em;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .tap-sub {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        #scroll-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            width: 0%;
+            background: linear-gradient(90deg, #b70808, #0303a2);
+            z-index: 200;
+            pointer-events: none;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.55);
+            transition: width 0.4s linear;
+        }
+
+        #stage-chip {
+            position: fixed;
+            bottom: 28px;
+            right: 20px;
+            z-index: 50;
+            font-size: clamp(8px, 1.5vw, 10px);
+            letter-spacing: 0.22em;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(0, 0, 0, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            padding: 5px 14px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            #stage-chip {
+                display: block;
+            }
+        }
+
+        #stage-chip.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #unlock-flash {
+            position: fixed;
+            inset: 0;
+            z-index: 7000;
+            background: rgba(239, 68, 68, 0.12);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        #unlock-flash.flash {
+            opacity: 1;
+        }
+
+        section,
+        nav,
+        footer {
             position: relative;
             z-index: 10;
         }
 
-        .animate-fade-in {
-            animation: fadeIn 1.5s ease-out forwards;
+        .glass-card {
+            background: rgba(0, 0, 0, 0.52);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 24px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: border-color 0.35s ease, background 0.35s ease, transform 0.35s ease;
         }
 
-        @keyframes fadeIn {
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.18);
+            background: rgba(0, 0, 0, 0.62);
+        }
+
+        .animate-fade-in {
+            opacity: 0;
+            animation: fadeUp 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+        }
+
+        @keyframes fadeUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(28px);
             }
 
             to {
@@ -83,9 +442,9 @@
 
         #nav-indicator {
             position: absolute;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.09);
             border-radius: 999px;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1.5);
+            transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1.5);
             z-index: 0;
             pointer-events: none;
             opacity: 0;
@@ -94,15 +453,15 @@
         .nav-link {
             position: relative;
             z-index: 1;
+            transition: color 0.25s;
         }
 
         .nav-link.active {
             color: #8e1af4;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
         }
 
         ::-webkit-scrollbar-track {
@@ -110,52 +469,121 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(to bottom, #6366f1, #a855f7);
-            border-radius: 10px;
+            background: linear-gradient(180deg, #6366f1, #8b5cf6);
+            /* indigo to purple */
+            border-radius: 6px;
         }
 
-        .part-glow {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 5;
+        .reveal {
             opacity: 0;
-            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), var(--color, rgba(99, 102, 241, 0.45)) 0%, transparent 80%);
-            mix-blend-mode: screen;
-            filter: blur(60px);
-            transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-            will-change: opacity;
-            transform: translateZ(0);
-            /* Hardware acceleration hint */
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.from-left {
+            transform: translateX(-60px);
+        }
+
+        .reveal.from-right {
+            transform: translateX(60px);
+        }
+
+        .reveal.from-bottom {
+            transform: translateY(50px);
+        }
+
+        .reveal.in-view {
+            opacity: 1;
+            transform: translateX(0) translateY(0);
+        }
+
+        #restart-btn {
+            display: none;
+            margin-top: 32px;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: rgba(255, 255, 255, 0.55);
+            font-family: 'Angora', sans-serif;
+            font-size: clamp(10px, 2vw, 12px);
+            letter-spacing: 0.3em;
+            padding: 10px 26px;
+            border-radius: 999px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: border-color 0.3s, color 0.3s, background 0.3s;
+        }
+
+        #restart-btn:hover {
+            border-color: rgba(239, 68, 68, 0.5);
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        #restart-btn.visible {
+            display: inline-flex;
+        }
+
+        footer {
+            padding-bottom: max(2rem, env(safe-area-inset-bottom));
+        }
+
+        nav {
+            top: max(1.5rem, env(safe-area-inset-top));
         }
     </style>
 </head>
 
 <body class="bg-black text-white antialiased overflow-x-hidden">
-    <canvas id="build-canvas"></canvas>
-    <div id="glow-container"></div>
 
-    <!-- Navigation -->
-    <nav
-        class="fixed top-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50 bg-white/5 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md md:w-auto transition-all duration-300">
+    <div id="load-screen">
+        <div class="ls-brand angora-font">NEVARK</div>
+        <div id="load-bar-wrap">
+            <div id="load-bar"></div>
+        </div>
+        <div class="ls-hint">Preparing your build</div>
+    </div>
+
+    <div id="tap-overlay" role="button" aria-label="Tap to start">
+        <div class="tap-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
+        </div>
+        <div class="tap-label">TAP TO START</div>
+        <div class="tap-sub">Experience the build</div>
+    </div>
+
+    <div id="unlock-flash"></div>
+    <div id="scroll-bar"></div>
+    <div id="stage-chip"></div>
+
+    <video id="bg-video" muted playsinline preload="auto">
+        <source src="video/Nevark_PC Build.mp4" type="video/mp4">
+    </video>
+    <div id="video-veil"></div>
+
+    <div id="setup-image-wrap">
+        <img id="setup-image" src="video/PC-setup.png" alt="PC Setup">
+        <div id="setup-scanline"></div>
+        <div id="setup-particles"></div>
+    </div>
+
+    <nav class="fixed left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50 bg-white/5 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md md:w-auto transition-all duration-300"
+        style="top: max(1.5rem, env(safe-area-inset-top, 1.5rem))">
         <div class="flex items-center justify-between md:justify-center">
-            <!-- Mobile Logo -->
-            <div id="mobile-logo-nav"
-                class="md:hidden text-white text-sm tracking-widest angora-font transition-opacity duration-300">
-                NEVARK
-            </div>
-
-            <!-- Links -->
+            <div class="md:hidden text-white text-sm tracking-widest angora-font">NEVARK</div>
             <div
                 class="relative hidden md:flex items-center space-x-10 text-gray-300 text-sm font-medium tracking-wide angora-font">
-                <a href="index.html" class="nav-link hover:text-white transition-colors">Home</a>
-                <a href="projects.html" class="nav-link hover:text-white transition-colors">Projects</a>
-                <a href="build-pc.html" class="nav-link active hover:text-white transition-colors">Build Your PC</a>
-                <a href="about.html" class="nav-link hover:text-white transition-colors">About</a>
-                <a href="bookMeeting.html" class="nav-link hover:text-white transition-colors">Bookings</a>
+                <a href="index.html" class="nav-link hover:text-white">Home</a>
+                <a href="projects.html" class="nav-link hover:text-white">Projects</a>
+                <a href="build-pc.html" class="nav-link active hover:text-white">Build Your PC</a>
+                <a href="about.html" class="nav-link hover:text-white">About</a>
+                <a href="bookMeeting.html" class="nav-link hover:text-white">Bookings</a>
                 <div id="nav-indicator"></div>
             </div>
-            <button id="mobile-menu-toggle" class="md:hidden text-white p-2">
+            <button id="mobile-menu-toggle" class="md:hidden text-white p-2" aria-label="Menu">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
@@ -169,217 +597,182 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="h-[100vh] flex flex-col justify-center items-center text-center px-6">
+    <a href="index.html"
+        class="hidden md:block fixed top-8 left-16 z-50 angora-font text-xl tracking-widest text-white hover:text-red-400 transition-colors duration-300">NEVARK</a>
+
+    <section id="start" class="h-[100vh] flex flex-col justify-center items-center text-center px-6">
         <div class="space-y-6 max-w-4xl animate-fade-in">
-            <h1 class="angora-font text-5xl md:text-8xl font-bold tracking-tighter text-white">
-                BUILD YOUR <span
-                    class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">LEGACY</span>
+            <h1 class="angora-font text-5xl md:text-8xl font-bold tracking-tighter leading-none">
+                BUILD YOUR<br>
+                <span
+                    class="bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-orange-400 to-purple-500">LEGACY</span>
             </h1>
-            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed angora-font">
-                Witness the birth of performance. Scroll down to see how we craft the ultimate gaming machines, part by
-                part, with surgical precision.
+            <p class="text-gray-300 text-base md:text-xl max-w-2xl mx-auto leading-relaxed">
+                Witness the birth of performance. Watch how we craft the ultimate gaming machines — part by part, with
+                surgical precision.
             </p>
-            <div class="flex justify-center gap-4 pt-10">
-                <div class="animate-bounce text-gray-500">
-                    <a href="#stage1"><i data-lucide="chevron-down" class="w-10 h-10"></i></a>
+            <div class="flex justify-center pt-6">
+                <div class="text-gray-400 animate-bounce">
+                    <a href="#stage1">
+                        <i data-lucide="chevron-down" class="w-9 h-9"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Stage 1: Foundation -->
-    <section id="stage1" class="h-[120vh] flex items-center px-6 md:px-24">
-        <div class="glass-card max-w-xl p-10 md:p-14">
-            <div class="text-blue-500 mb-4 flex items-center gap-3">
-                <i data-lucide="cpu" class="w-7 h-7"></i>
-                <span class="text-sm font-bold tracking-[0.2em] uppercase angora-font">Stage 01</span>
+    <section id="stage1" class="h-[120vh] flex items-center px-5 md:px-24">
+        <div class="glass-card reveal from-left max-w-xl w-full p-8 md:p-14">
+            <div class="text-red-400 mb-4 flex items-center gap-3">
+                <i data-lucide="cpu" class="w-6 h-6 md:w-7 md:h-7"></i>
+                <span class="text-xs font-bold tracking-[0.2em] uppercase">Stage 01</span>
             </div>
-            <h2 class="angora-font text-4xl md:text-5xl text-white mb-6">The Foundation</h2>
-            <p class="text-gray-300 leading-relaxed text-lg mb-8 italic">
-                "A masterpiece is only as stable as its core."
-            </p>
-            <p class="text-gray-400 leading-relaxed text-lg">
-                We hand-select overbuilt motherboards with premium VRMs to ensure rock-solid stability. Our CPU
-                installation includes thermal paste application techniques that guarantee 100% surface contact for
-                maximum heat dissipation.
-            </p>
+            <h2 class="text-3xl md:text-5xl text-white mb-5">The Foundation</h2>
+            <p class="text-gray-300 leading-relaxed text-base md:text-lg mb-5 italic">"A masterpiece is only as stable
+                as its core."</p>
+            <p class="text-gray-400 leading-relaxed text-sm md:text-lg">We hand-select overbuilt motherboards with
+                premium VRMs to ensure rock-solid stability. Our CPU installation includes thermal paste application
+                techniques that guarantee 100% surface contact for maximum heat dissipation.</p>
         </div>
     </section>
 
-    <!-- Stage 2: Memory -->
-    <section id="stage2" class="h-[120vh] flex items-center justify-end px-6 md:px-24">
-        <div class="glass-card max-w-xl p-10 md:p-14">
-            <div class="text-purple-500 mb-4 flex items-center gap-3">
-                <i data-lucide="brain" class="w-7 h-7"></i>
-                <span class="text-sm font-bold tracking-[0.2em] uppercase angora-font">Stage 02</span>
+    <section id="stage2" class="h-[120vh] flex items-center justify-end px-5 md:px-24">
+        <div class="glass-card reveal from-right max-w-xl w-full p-8 md:p-14">
+            <div class="text-orange-400 mb-4 flex items-center gap-3">
+                <i data-lucide="brain" class="w-6 h-6 md:w-7 md:h-7"></i>
+                <span class="text-xs font-bold tracking-[0.2em] uppercase">Stage 02</span>
             </div>
-            <h2 class="angora-font text-4xl md:text-5xl text-white mb-6">Neural Pathways</h2>
-            <p class="text-gray-300 leading-relaxed text-lg mb-8 italic">
-                "Speed is the bridge between thought and action."
-            </p>
-            <p class="text-gray-400 leading-relaxed text-lg">
-                We utilize high-frequency, low-latency RAM kits, tuned for XMP/EXPO profiles out of the box. Our NVMe
-                storage solutions are paired with custom heat-spreaders, ensuring your load times remain instantaneous.
-            </p>
+            <h2 class="text-3xl md:text-5xl text-white mb-5">Neural Pathways</h2>
+            <p class="text-gray-300 leading-relaxed text-base md:text-lg mb-5 italic">"Speed is the bridge between
+                thought and action."</p>
+            <p class="text-gray-400 leading-relaxed text-sm md:text-lg">We utilize high-frequency, low-latency RAM kits,
+                tuned for XMP/EXPO profiles out of the box. Our NVMe storage solutions are paired with custom
+                heat-spreaders, ensuring your load times remain instantaneous.</p>
         </div>
     </section>
 
-    <!-- Stage 3: GPU -->
-    <section id="stage3" class="h-[120vh] flex items-center px-6 md:px-24">
-        <div class="glass-card max-w-xl p-10 md:p-14">
-            <div class="text-emerald-500 mb-4 flex items-center gap-3">
-                <i data-lucide="zap" class="w-7 h-7"></i>
-                <span class="text-sm font-bold tracking-[0.2em] uppercase angora-font">Stage 03</span>
+    <section id="stage3" class="h-[120vh] flex items-center px-5 md:px-24">
+        <div class="glass-card reveal from-left max-w-xl w-full p-8 md:p-14">
+            <div class="text-purple-400 mb-4 flex items-center gap-3">
+                <i data-lucide="zap" class="w-6 h-6 md:w-7 md:h-7"></i>
+                <span class="text-xs font-bold tracking-[0.2em] uppercase">Stage 03</span>
             </div>
-            <h2 class="angora-font text-4xl md:text-5xl text-white mb-6">The Heartbeat</h2>
-            <p class="text-gray-300 leading-relaxed text-lg mb-8 italic">
-                "Unleashing the raw power of visual excellence."
-            </p>
-            <p class="text-gray-400 leading-relaxed text-lg">
-                Power delivery is never an afterthought. We use 80+ Gold and Platinum rated PSUs. Our GPU selection
-                focuses on triple-fan monsters, reinforced with custom anti-sag brackets for longevity.
-            </p>
+            <h2 class="text-3xl md:text-5xl text-white mb-5">The Heartbeat</h2>
+            <p class="text-gray-300 leading-relaxed text-base md:text-lg mb-5 italic">"Unleashing the raw power of
+                visual excellence."</p>
+            <p class="text-gray-400 leading-relaxed text-sm md:text-lg">Power delivery is never an afterthought. We use
+                80+ Gold and Platinum rated PSUs. Our GPU selection focuses on triple-fan monsters, reinforced with
+                custom anti-sag brackets for longevity.</p>
         </div>
     </section>
 
-    <!-- Stage 4: Cooling -->
-    <section id="stage4" class="h-[120vh] flex items-center justify-end px-6 md:px-24">
-        <div class="glass-card max-w-xl p-10 md:p-14">
-            <div class="text-cyan-400 mb-4 flex items-center gap-3">
-                <i data-lucide="snowflake" class="w-7 h-7"></i>
-                <span class="text-sm font-bold tracking-[0.2em] uppercase angora-font">Stage 04</span>
+    <section id="stage4" class="h-[120vh] flex items-center justify-end px-5 md:px-24">
+        <div class="glass-card reveal from-right max-w-xl w-full p-8 md:p-14">
+            <div class="text-red-300 mb-4 flex items-center gap-3">
+                <i data-lucide="snowflake" class="w-6 h-6 md:w-7 md:h-7"></i>
+                <span class="text-xs font-bold tracking-[0.2em] uppercase">Stage 04</span>
             </div>
-            <h2 class="angora-font text-4xl md:text-5xl text-white mb-6">Thermal Mastery</h2>
-            <p class="text-gray-300 leading-relaxed text-lg mb-8 italic">
-                "Silent performance, aggressive cooling."
-            </p>
-            <p class="text-gray-400 leading-relaxed text-lg">
-                Our signature "Vortex Airflow" configuration utilizes positive pressure to keep dust out. Every fan
-                curve is meticulously tuned to provide a whisper-quiet experience without sacrificing stability.
-            </p>
+            <h2 class="text-3xl md:text-5xl text-white mb-5">Thermal Mastery</h2>
+            <p class="text-gray-300 leading-relaxed text-base md:text-lg mb-5 italic">"Silent performance, aggressive
+                cooling."</p>
+            <p class="text-gray-400 leading-relaxed text-sm md:text-lg">Our signature "Vortex Airflow" configuration
+                utilizes positive pressure to keep dust out. Every fan curve is meticulously tuned to provide a
+                whisper-quiet experience without sacrificing stability.</p>
         </div>
     </section>
 
-    <!-- Final Stage -->
-    <section id="stage5" class="h-[100vh] flex flex-col justify-center items-center text-center px-6">
-        <div class="glass-card w-full max-w-[95%] md:max-w-5xl lg:max-w-6xl p-8 md:p-16 lg:p-20">
-
-            <div class="text-rose-500 mb-6 flex justify-center items-center gap-3">
-                <i data-lucide="award" class="w-8 h-8"></i>
-                <span class="text-sm font-bold tracking-[0.3em] uppercase angora-font">Final Stage</span>
+    <section id="stage5" class="min-h-[100vh] flex flex-col justify-center items-center text-center px-5 py-20">
+        <div class="glass-card reveal from-bottom w-full max-w-[95%] md:max-w-5xl lg:max-w-6xl p-8 md:p-16 lg:p-20">
+            <div class="text-red-400 mb-6 flex justify-center items-center gap-3">
+                <i data-lucide="award" class="w-7 h-7 md:w-8 md:h-8"></i>
+                <span class="text-xs font-bold tracking-[0.3em] uppercase">Final Stage</span>
             </div>
-            <h2 class="angora-font text-5xl md:text-7xl text-white mb-8">ASCENSION</h2>
-            <p class="text-gray-400 text-xl md:text-2xl mb-12 angora-font">
-                Your legacy is forged. Every cable hidden, every LED synced, every component tested for 24 hours.
+            <h2 class="text-5xl md:text-7xl text-white mb-8 leading-none">ASCENSION</h2>
+            <p class="text-gray-400 text-lg md:text-2xl mb-10 md:mb-12 leading-relaxed">
+                Your legacy is forged.<br class="md:hidden"> Every cable hidden, every LED synced,<br>every component
+                tested for 24 hours.
             </p>
-            <a href="https://forms.gle/FYTjVcSxD6S12Fan9" target="_blank"
-                class="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-5 py-3 rounded-full font-bold text-lg hover:scale-105 transition-transform angora-font">
-                BOOK YOUR BUILD <i data-lucide="arrow-right" class="w-6 h-6"></i>
+            <a href="https://forms.gle/FYTjVcSxD6S12Fan9" target="_blank" rel="noopener"
+                class="inline-flex items-center gap-3 bg-gradient-to-r from-red-600 to-purple-600 text-white px-7 py-4 rounded-full font-bold text-base md:text-lg hover:scale-105 active:scale-95 transition-transform duration-200 shadow-lg shadow-red-900/40">
+                BOOK YOUR BUILD <i data-lucide="arrow-right" class="w-5 h-5 md:w-6 md:h-6"></i>
             </a>
+            <br>
+            <button id="restart-btn" onclick="location.reload()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="1 4 1 10 7 10" />
+                    <path d="M3.51 15a9 9 0 1 0 .49-3.28" />
+                </svg>
+                REPLAY
+            </button>
         </div>
     </section>
 
-    <!-- Footer Divider -->
-    <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-800/70 to-transparent my-0"></div>
-    <style>
-        @font-face {
-            font-family: 'Angora';
-            src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
-            font-weight: normal;
-            font-style: normal;
-        }
-    </style>
-
+    <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-800/70 to-transparent"></div>
     <footer
-        class="angora-footer pt-14 pb-8 px-4 sm:px-8 lg:px-16 relative bg-gradient-to-t from-gray-950 via-gray-900/80 to-transparent z-20">
-        <div class="max-w-7xl mx-auto flex flex-col items-center text-center gap-12">
-
-            <div class="flex flex-col items-center min-w-[240px] max-w-md mb-8">
-                <a href="#"
-                    class="angora-font text-2xl font-normal tracking-widest text-white hover:text-indigo-400 transition-colors duration-300 mb-5">
-                    NEVARK
-                </a>
-
-                <p class="cursor-default mt-3 text-gray-400 text-base leading-relaxed">
-                    Accelerate your team’s workflow.<br>
+        class="angora-footer pt-14 px-4 sm:px-8 lg:px-16 relative bg-gradient-to-t from-black via-gray-950/90 to-transparent z-20">
+        <div class="max-w-7xl mx-auto flex flex-col items-center text-center gap-10">
+            <div class="flex flex-col items-center max-w-md">
+                <a href="#start"
+                    class="text-2xl tracking-widest text-white hover:text-red-400 transition-colors duration-300 mb-4">NEVARK</a>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Accelerate your team's workflow.<br>
                     Connect » Automate » Monitor your workspace.<br>
                     All from one powerful hub.
                 </p>
             </div>
-
         </div>
-
-        <!-- Divider -->
-        <div class="mt-12 mb-8 w-full h-px bg-gradient-to-r from-transparent via-gray-800/60 to-transparent"></div>
-
-        <!-- Bottom Bar -->
-        <div class="max-w-7xl mx-auto px-4 pb-12">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                <!-- Left/Center content -->
+        <div class="mt-10 mb-6 w-full h-px bg-gradient-to-r from-transparent via-gray-800/60 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 pb-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-5">
                 <div
-                    class="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 text-xs text-gray-500 text-center md:text-left">
-                    <span>© 2026 Nevark Technologies LLP. All Rights Reserved </span>
+                    class="flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-2 text-xs text-gray-500 text-center md:text-left">
+                    <span>© 2026 Nevark Technologies LLP. All Rights Reserved</span>
                     <span class="hidden sm:inline">&bull;</span>
-                    <a href="privacy.html" class="hover:underline hover:text-gray-300">Privacy Policy</a>
+                    <a href="privacy.html" class="hover:underline hover:text-gray-300 transition-colors">Privacy
+                        Policy</a>
                     <span class="hidden sm:inline">&bull;</span>
-                    <a href="terms-condition.html" class="hover:underline hover:text-gray-300">Terms of Service</a>
+                    <a href="terms-condition.html" class="hover:underline hover:text-gray-300 transition-colors">Terms
+                        of Service</a>
                     <span class="hidden sm:inline">&bull;</span>
                     <span class="relative group cursor-default">
                         <span class="inline-flex items-center gap-1 hover:text-gray-300">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                            Status
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>Status
                         </span>
-
-                        <!-- Tooltip -->
                         <span
-                            class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block whitespace-nowrap text-[10px] px-2 py-1 rounded-md bg-black/80 border border-white/10 text-gray-300 backdrop-blur-md">
-                            Website Online
-                        </span>
+                            class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:flex whitespace-nowrap text-[10px] px-2 py-1 rounded-md bg-black/80 border border-white/10 text-gray-300 backdrop-blur-md">Website
+                            Online</span>
                     </span>
                 </div>
-
-                <!-- Social icons -->
                 <div class="flex items-center gap-3">
-
-                    <!-- Email -->
-                    <a id="emailLink" href="#" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
-          hover:bg-red-600/80 transition-all duration-300
-          hover:-translate-y-0.5" aria-label="Email">
-
-                        <svg data-lucide="mail" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    <a id="emailLink" href="#" target="_blank"
+                        class="p-2 rounded-lg bg-white/5 backdrop-blur-md hover:bg-red-600/80 transition-all duration-300 hover:-translate-y-0.5"
+                        aria-label="Email">
+                        <svg data-lucide="mail" class="w-4 h-4 text-gray-400"></svg>
                     </a>
-
-                    <!-- LinkedIn -->
-                    <a href="https://www.linkedin.com/company/nevark-technologies" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
-                   hover:bg-blue-600/80
-                   transition-all duration-300
-                   hover:-translate-y-0.5" aria-label="LinkedIn">
-                        <svg data-lucide="linkedin" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    <a href="https://www.linkedin.com/company/nevark-technologies" target="_blank"
+                        class="p-2 rounded-lg bg-white/5 backdrop-blur-md hover:bg-blue-600/80 transition-all duration-300 hover:-translate-y-0.5"
+                        aria-label="LinkedIn">
+                        <svg data-lucide="linkedin" class="w-4 h-4 text-gray-400"></svg>
                     </a>
-
-                    <!-- Instagram -->
-                    <a href="https://www.instagram.com/nevark.in" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
-                    hover:bg-pink-600 
-                    transition-all duration-300
-                    hover:-translate-y-0.5" aria-label="Instagram">
-                        <svg data-lucide="instagram" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+                    <a href="https://www.instagram.com/nevark.in" target="_blank"
+                        class="p-2 rounded-lg bg-white/5 backdrop-blur-md hover:bg-pink-600 transition-all duration-300 hover:-translate-y-0.5"
+                        aria-label="Instagram">
+                        <svg data-lucide="instagram" class="w-4 h-4 text-gray-400"></svg>
                     </a>
-
                 </div>
-
-                <!-- Startup India Logo (Bottom Right) -->
-                <div class="mt-6 md:mt-0 opacity-70 transition-all duration-500 hover:opacity-100 hover:brightness-110 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
-                    <img src="assests/dpiit_logo_startupindia.png" alt="Startup India Logo" 
-                        class="h-10 md:h-12 brightness-110" />
+                <div
+                    class="mt-6 md:mt-0 opacity-70 transition-all duration-500 hover:opacity-100 hover:brightness-110 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+                    <img src="assests/dpiit_logo_startupindia.png" alt="Startup India Logo"
+                        class="h-10 md:h-12 brightness-110">
                 </div>
-
-
             </div>
-
+        </div>
     </footer>
+
     <script>
         (function () {
+            /* ── Email ── */
             const email = "office@nevark.in";
             const subject = "Nevark Technologies - Website Mailer";
 
@@ -390,427 +783,241 @@
 
             const link = document.getElementById("emailLink");
             link.href = isMobile ? mailto : gmailWeb;
-        })();
-    </script>
-    <script>
-        // Lucide
-        lucide.createIcons();
 
-        // WebGL Compatibility Check
-        function isWebGLAvailable() {
-            try {
-                const canvas = document.createElement('canvas');
-                return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
-            } catch (e) {
-                return false;
-            }
-        }
+            lucide.createIcons();
 
-        if (!isWebGLAvailable()) {
-            document.body.innerHTML += '<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;color:#fff;font-family:sans-serif;"><div><h1 style="font-size:24px;margin-bottom:10px;">WebGL Not Supported</h1><p>Your browser or device does not support WebGL, which is required for the 3D PC Build experience. Please enable hardware acceleration in your browser settings or try a different browser.</p></div></div>';
-        }
+            /* ── Elements ── */
+            const video = document.getElementById('bg-video');
+            const veil = document.getElementById('video-veil');
+            const loadScreen = document.getElementById('load-screen');
+            const loadBar = document.getElementById('load-bar');
+            const tapOverlay = document.getElementById('tap-overlay');
+            const scrollBar = document.getElementById('scroll-bar');
+            const stageChip = document.getElementById('stage-chip');
+            const unlockFlash = document.getElementById('unlock-flash');
+            const restartBtn = document.getElementById('restart-btn');
 
-        // 3D Setup
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            /* ── Stage chip labels ── */
+            const stages = [
+                { pct: 0.00, label: '' },
+                { pct: 0.08, label: 'STAGE 01 — THE FOUNDATION' },
+                { pct: 0.28, label: 'STAGE 02 — NEURAL PATHWAYS' },
+                { pct: 0.48, label: 'STAGE 03 — THE HEARTBEAT' },
+                { pct: 0.66, label: 'STAGE 04 — THERMAL MASTERY' },
+                { pct: 0.86, label: 'FINAL — ASCENSION' },
+            ];
 
-        // Optimized Renderer
-        const renderer = new THREE.WebGLRenderer({
-            canvas: document.querySelector('#build-canvas'),
-            antialias: true,
-            alpha: true,
-            powerPreference: 'high-performance',
-            precision: 'highp',
-            stencil: false,
-            depth: true
-        });
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Cap pixel ratio for performance
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.outputColorSpace = THREE.SRGBColorSpace; // Modern color handling
+            const sectionCards = ['stage1', 'stage2', 'stage3', 'stage4', 'stage5'];
+            let chipCurrent = '';
+            let currentSectionIdx = -1;
 
-        // Lights
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-        scene.add(ambientLight);
+            /* ── Fake load bar ── */
+            let fake = 0;
+            const fakeT = setInterval(() => {
+                fake = Math.min(fake + Math.random() * 9, 88);
+                loadBar.style.width = fake + '%';
+            }, 120);
 
-        const mainLight = new THREE.DirectionalLight(0xffffff, 2);
-        mainLight.position.set(5, 5, 10);
-        scene.add(mainLight);
-
-        const blueLight = new THREE.PointLight(0x6366f1, 40, 60);
-        blueLight.position.set(5, 5, 5);
-        scene.add(blueLight);
-
-        const purpleLight = new THREE.PointLight(0x8b5cf6, 40, 60);
-        purpleLight.position.set(-5, -5, 5);
-        scene.add(purpleLight);
-
-        const pcGroup = new THREE.Group();
-        scene.add(pcGroup);
-
-        // Interior RGB Accents
-        const interiorLight1 = new THREE.PointLight(0x6366f1, 0, 15);
-        interiorLight1.position.set(0, 1, 0);
-        pcGroup.add(interiorLight1);
-
-        const interiorLight2 = new THREE.PointLight(0x8b5cf6, 0, 15);
-        interiorLight2.position.set(0, -1, 0);
-        pcGroup.add(interiorLight2);
-
-        const pcLights = [blueLight, purpleLight, interiorLight1, interiorLight2];
-
-        // Materials
-        const darkMetal = new THREE.MeshStandardMaterial({ color: 0x0a0a0a, metalness: 0.9, roughness: 0.1 });
-        const pcbBlack = new THREE.MeshStandardMaterial({ color: 0x050505, roughness: 0.8 });
-        const glassMat = new THREE.MeshPhysicalMaterial({
-            color: 0xffffff,
-            metalness: 0,
-            roughness: 0,
-            transmission: 0.9,
-            thickness: 0.5,
-            transparent: true,
-            opacity: 0.2
-        });
-        const rgbEmissive = new THREE.MeshStandardMaterial({
-            color: 0x6366f1,
-            emissive: 0x6366f1,
-            emissiveIntensity: 10
-        });
-
-        // Track RGB materials for final assembly
-        const rgbMaterials = [rgbEmissive];
-
-        // Light shift for final assembly
-        const caseGlowMaterial = new THREE.MeshStandardMaterial({
-            color: 0x6366f1,
-            emissive: 0x6366f1,
-            emissiveIntensity: 0,
-            transparent: true,
-            opacity: 0.5
-        });
-        rgbMaterials.push(caseGlowMaterial);
-
-        // --- Realistic Procedural Parts ---
-
-        function createMotherboard() {
-            const group = new THREE.Group();
-            // Main board
-            const pcb = new THREE.Mesh(new THREE.BoxGeometry(3.5, 4.5, 0.1), pcbBlack);
-            group.add(pcb);
-
-            // Socket
-            const socket = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 0.05), darkMetal);
-            socket.position.set(0, 0.5, 0.08);
-            group.add(socket);
-
-            // RAM Slots
-            for (let i = 0; i < 4; i++) {
-                const slot = new THREE.Mesh(new THREE.BoxGeometry(0.05, 1.6, 0.15), darkMetal);
-                slot.position.set(0.8 + (i * 0.15), 0.5, 0.1);
-                group.add(slot);
+            function hideLoadScreen() {
+                clearInterval(fakeT);
+                loadBar.style.width = '100%';
+                setTimeout(() => {
+                    loadScreen.classList.add('hidden');
+                    setTimeout(() => loadScreen.style.display = 'none', 900);
+                }, 350);
             }
 
-            // Heatsinks
-            const hs1 = new THREE.Mesh(new THREE.BoxGeometry(1, 4, 0.3), darkMetal);
-            hs1.position.set(-1, 0, 0.2);
-            group.add(hs1);
-
-            return group;
-        }
-
-        function createGPU() {
-            const group = new THREE.Group();
-            // Shroud
-            const shroud = new THREE.Mesh(new THREE.BoxGeometry(3.2, 1, 0.6), darkMetal);
-            group.add(shroud);
-
-            // Fans
-            const fanGeo = new THREE.CylinderGeometry(0.4, 0.4, 0.05, 32);
-            for (let i = 0; i < 3; i++) {
-                const fan = new THREE.Mesh(fanGeo, rgbEmissive);
-                fan.rotation.x = Math.PI / 2;
-                fan.position.set(-0.9 + (i * 0.9), 0, 0.32);
-                group.add(fan);
+            function revealVideo() {
+                video.classList.add('visible');
+                veil.classList.add('visible');
             }
 
-            // RGB Strip
-            const strip = new THREE.Mesh(new THREE.BoxGeometry(3, 0.05, 0.05), rgbEmissive);
-            strip.position.set(0, 0.4, 0.3);
-            group.add(strip);
+            function unlockPage() {
+                unlockFlash.classList.add('flash');
+                setTimeout(() => unlockFlash.classList.remove('flash'), 500);
 
-            return group;
-        }
+                stageChip.classList.remove('visible');
 
-        function createCase() {
-            const group = new THREE.Group();
-            // Frame (Edges)
-            const edgesGeo = new THREE.EdgesGeometry(new THREE.BoxGeometry(4.2, 5.2, 2.2));
-            const line = new THREE.LineSegments(edgesGeo, new THREE.LineBasicMaterial({ color: 0x6366f1, transparent: true, opacity: 0.5 }));
-            group.add(line);
+                /* Fade out video → fade in setup image */
+                video.style.transition = 'opacity 1.4s ease';
+                video.style.opacity = '0';
+                veil.style.transition = 'opacity 1.4s ease';
+                veil.style.opacity = '0';
+                document.getElementById('setup-image-wrap').classList.add('visible');
 
-            // Inner Glow Frame
-            const innerFrame = new THREE.Mesh(new THREE.BoxGeometry(4.1, 5.1, 2.1), caseGlowMaterial);
-            group.add(innerFrame);
+                /* Spawn particles */
+                const pc = document.getElementById('setup-particles');
+                for (let i = 0; i < 18; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'sp';
+                    const sz = Math.random() * 3 + 1;
+                    p.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random() * 100}%;bottom:${Math.random() * 30}%;--dx:${(Math.random() - 0.5) * 120}px;animation-duration:${6 + Math.random() * 10}s;animation-delay:${Math.random() * 8}s;`;
+                    pc.appendChild(p);
+                }
 
-            // Glass Panel
-            const glass = new THREE.Mesh(new THREE.BoxGeometry(4, 5, 0.05), glassMat);
-            glass.position.z = 1.1;
-            group.add(glass);
-
-            // PSU Shroud
-            const shroud = new THREE.Mesh(new THREE.BoxGeometry(4, 1.2, 2), darkMetal);
-            shroud.position.y = -1.9;
-            group.add(shroud);
-
-            return group;
-        }
-
-        function createCables() {
-            const group = new THREE.Group();
-            // 24-pin cable
-            const curve = new THREE.CatmullRomCurve3([
-                new THREE.Vector3(1.2, 0.5, -0.5),
-                new THREE.Vector3(1.8, 0, -0.5),
-                new THREE.Vector3(1.8, -1.5, -0.5)
-            ]);
-            const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 20, 0.05, 8, false), darkMetal);
-            group.add(tube);
-            return group;
-        }
-
-        // --- Streak System ---
-        function createStreak(targetPos, startPos, baseColor) {
-            const group = new THREE.Group();
-            const streakCount = 5;
-            const streakLines = [];
-
-            for (let i = 0; i < streakCount; i++) {
-                const length = 15 + Math.random() * 25;
-                const points = [new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -length)];
-                const geometry = new THREE.BufferGeometry().setFromPoints(points);
-
-                const color = new THREE.Color(baseColor);
-                color.offsetHSL(Math.random() * 0.1 - 0.05, 0.2, 0.1);
-
-                const material = new THREE.LineBasicMaterial({
-                    color: color,
-                    transparent: true,
-                    opacity: 0,
-                    linewidth: 1
+                /* Unlock scroll */
+                document.documentElement.style.cssText = 'overflow: auto !important';
+                document.body.style.cssText = document.body.style.cssText + '; overflow: auto !important; overflow-y: auto !important';
+                document.body.style.cursor = '';
+                document.body.style.pointerEvents = '';
+                document.querySelectorAll('[data-locked-off]').forEach(el => {
+                    el.style.pointerEvents = '';
+                    el.removeAttribute('data-locked-off');
                 });
-                const line = new THREE.Line(geometry, material);
 
-                line.position.set(
-                    (Math.random() - 0.5) * 0.5,
-                    (Math.random() - 0.5) * 0.5,
-                    (Math.random() - 0.5) * 0.5
-                );
-
-                group.add(line);
-                streakLines.push(line);
+                scrollBar.style.width = '100%';
+                document.querySelectorAll('.reveal').forEach(c => c.classList.add('in-view'));
+                restartBtn.classList.add('visible');
             }
 
-            scene.add(group);
+            /* ── timeupdate ── */
+            function onTimeUpdate() {
+                const dur = video.duration;
+                if (!dur) return;
+                const p = video.currentTime / dur;
 
-            // Create dedicated edge glow for this part
-            const glowEl = document.createElement('div');
-            glowEl.className = 'part-glow';
-            document.getElementById('glow-container').appendChild(glowEl);
+                const sectionTargets = [
+                    { pct: 0.00, top: 0 },
+                    { pct: 0.08, top: document.getElementById('stage1').offsetTop },
+                    { pct: 0.28, top: document.getElementById('stage2').offsetTop },
+                    { pct: 0.48, top: document.getElementById('stage3').offsetTop },
+                    { pct: 0.66, top: document.getElementById('stage4').offsetTop },
+                    { pct: 0.86, top: document.getElementById('stage5').offsetTop },
+                ];
 
-            // Pre-calculate corner based on startPos
-            const tempStart = new THREE.Vector3(...startPos);
-            tempStart.project(camera);
-            const edgeX = (Math.sign(tempStart.x) * 50) + 50;
-            const edgeY = (Math.sign(-tempStart.y) * 50) + 50;
+                let idx = 0;
+                for (let i = 0; i < sectionTargets.length; i++) {
+                    if (p >= sectionTargets[i].pct) idx = i;
+                }
 
-            glowEl.style.setProperty('--x', `${edgeX}%`);
-            glowEl.style.setProperty('--y', `${edgeY}%`);
-            glowEl.style.setProperty('--color', `#${baseColor.toString(16).padStart(6, '0')}44`);
-
-            return {
-                group,
-                update: (progress, currentPos) => {
-                    const opacity = Math.sin(progress * Math.PI) * 0.8;
-                    streakLines.forEach((line, i) => {
-                        line.material.opacity = opacity * (1 - (i / streakCount));
-                        line.scale.z = 1 + Math.sin(Date.now() * 0.015 + i) * 0.3; // Slower, more elegant pulse
-                    });
-                    group.position.copy(currentPos);
-                    group.lookAt(targetPos);
-
-                    // Sync Edge Glow
-                    if (progress > 0.02 && progress < 0.85) {
-                        glowEl.style.opacity = Math.sin(progress * Math.PI) * 0.95;
-                    } else {
-                        glowEl.style.opacity = 0;
+                if (idx !== currentSectionIdx) {
+                    currentSectionIdx = idx;
+                    window.scrollTo({ top: sectionTargets[idx].top, behavior: 'smooth' });
+                    const secId = sectionCards[idx - 1];
+                    if (secId) {
+                        const card = document.querySelector(`#${secId} .reveal`);
+                        if (card) setTimeout(() => card.classList.add('in-view'), 350);
                     }
                 }
-            };
-        }
 
-        // --- Component Setup ---
-        const parts = {
-            case: { mesh: createCase(), startPos: [0, 0, 0], targetPos: [0, 0, 0], color: 0x6366f1 },
-            mobo: { mesh: createMotherboard(), startPos: [30, 20, -30], targetPos: [0, 0, -0.8], color: 0x8b5cf6 },
-            gpu: { mesh: createGPU(), startPos: [-40, 0, 40], targetPos: [0, -0.8, -0.3], color: 0x06b6d4 },
-            cooler: { mesh: new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 0.4, 32), rgbEmissive), startPos: [0, -30, 30], targetPos: [0, 0.5, -0.3], color: 0xef4444 },
-            ram1: { mesh: new THREE.Mesh(new THREE.BoxGeometry(0.08, 1.5, 0.2), rgbEmissive), startPos: [30, -20, 10], targetPos: [0.8, 0.5, -0.5], color: 0x6366f1 },
-            ram2: { mesh: new THREE.Mesh(new THREE.BoxGeometry(0.08, 1.5, 0.2), rgbEmissive), startPos: [35, -15, 5], targetPos: [1.0, 0.5, -0.5], color: 0x6366f1 },
-            cables: { mesh: createCables(), startPos: [-20, -20, -20], targetPos: [0, 0, 0], color: 0x444444 }
-        };
+                scrollBar.style.width = (p * 100) + '%';
 
-        Object.values(parts).forEach(p => {
-            p.mesh.position.set(...p.startPos);
-            // Case starts visible, others start at 0
-            if (p === parts.case) {
-                p.mesh.scale.set(1, 1, 1);
+                let label = '';
+                for (const s of stages) { if (p >= s.pct) label = s.label; }
+                if (label !== chipCurrent) {
+                    chipCurrent = label;
+                    stageChip.classList.remove('visible');
+                    setTimeout(() => {
+                        stageChip.textContent = label;
+                        if (label) stageChip.classList.add('visible');
+                    }, 220);
+                }
+            }
+
+            /* ── startPlay (tap-to-start path) ── */
+            function startPlay() {
+                tapOverlay.style.opacity = '0';
+                setTimeout(() => tapOverlay.style.display = 'none', 500);
+                revealVideo();
+                video.playbackRate = 1;
+                video.addEventListener('timeupdate', onTimeUpdate);
+                video.addEventListener('ended', unlockPage, { once: true });
+                video.play().catch(() => unlockPage());
+            }
+
+            /* ── Main init ── */
+            function onVideoReady() {
+                hideLoadScreen();
+                revealVideo();
+                setTimeout(() => {
+                    video.play()
+                        .then(() => {
+                            video.playbackRate = 1;
+                            document.documentElement.style.overflow = 'hidden';
+                            document.body.style.overflowY = 'hidden';
+                            document.body.style.cursor = 'none';
+                            document.body.style.pointerEvents = 'none';
+                            document.querySelectorAll('nav, nav *').forEach(el => {
+                                el.style.pointerEvents = 'auto';
+                                el.setAttribute('data-locked-off', '');
+                            });
+                            video.addEventListener('timeupdate', onTimeUpdate);
+                            video.addEventListener('ended', unlockPage, { once: true });
+                        })
+                        .catch(() => {
+                            tapOverlay.style.display = 'flex';
+                            requestAnimationFrame(() => tapOverlay.classList.add('visible'));
+                            document.body.style.overflowY = 'hidden';
+                            document.body.style.cursor = 'none';
+                            document.body.style.pointerEvents = 'none';
+                            tapOverlay.style.pointerEvents = 'auto';
+                            tapOverlay.addEventListener('click', () => {
+                                document.querySelectorAll('nav, nav *').forEach(el => {
+                                    el.style.pointerEvents = 'auto';
+                                    el.setAttribute('data-locked-off', '');
+                                });
+
+                                startPlay();
+                            }, { once: true });
+                        });
+                }, 1800);
+            }
+
+            video.addEventListener('error', () => {
+                hideLoadScreen();
+                document.body.style.overflowY = 'auto';
+                document.body.style.pointerEvents = '';
+            }, { once: true });
+
+            if (video.readyState >= 3) {
+                onVideoReady();
             } else {
-                p.mesh.scale.set(0, 0, 0);
+                video.addEventListener('canplay', onVideoReady, { once: true });
             }
-            pcGroup.add(p.mesh);
-            p.streak = createStreak(new THREE.Vector3(...p.targetPos), p.startPos, p.color);
-        });
 
-        camera.position.z = 10;
-
-        // --- GSAP Timeline ---
-        gsap.registerPlugin(ScrollTrigger);
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: "body",
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 2.5, // Heavier, more cinematic scrub
-                anticipatePin: 1
+            /* ── Nav indicator ── */
+            const navIndicator = document.getElementById('nav-indicator');
+            const navLinks = document.querySelectorAll('.nav-link');
+            function updateIndicator(el) {
+                if (!el || !navIndicator) return;
+                const r = el.getBoundingClientRect();
+                const pr = el.parentElement.getBoundingClientRect();
+                navIndicator.style.width = `${r.width + 24}px`;
+                navIndicator.style.height = `${r.height + 12}px`;
+                navIndicator.style.left = `${r.left - pr.left - 53}px`;
+                navIndicator.style.top = `${r.top - pr.top - 6}px`;
+                navIndicator.style.opacity = '1';
             }
-        });
-
-        // Animate Parts
-        Object.entries(parts).forEach(([key, p], i) => {
-            const startT = i * 1.5;
-            // Case is already visible, don't scale it from 0
-            if (key !== 'case') {
-                tl.to(p.mesh.scale, { x: 1, y: 1, z: 1, duration: 2 }, startT);
-            }
-            tl.to(p.mesh.position, {
-                x: p.targetPos[0],
-                y: p.targetPos[1],
-                z: p.targetPos[2],
-                duration: 4,
-                ease: "power3.out", // Smoother landing
-                onUpdate: function () {
-                    const progress = this.progress();
-                    p.streak.update(progress, p.mesh.position);
-                }
-            }, startT);
-        });
-
-        // Global rotation and final camera zoom
-        tl.to(pcGroup.rotation, { y: Math.PI * 4, duration: 15, ease: "none" }, 0);
-        tl.to(camera.position, { z: 7, duration: 5 }, ">");
-
-        // RGB Final Flare
-        tl.to(rgbMaterials, {
-            emissiveIntensity: 20,
-            duration: 3,
-            stagger: 0.1
-        }, "-=3");
-
-        tl.to([interiorLight1, interiorLight2], {
-            intensity: 30,
-            duration: 2
-        }, "-=2");
-
-        // --- Render Loop ---
-        let hue = 0;
-        function animate() {
-            requestAnimationFrame(animate);
-            // Spin fans in GPU
-            parts.gpu.mesh.children.forEach(c => {
-                if (c.geometry instanceof THREE.CylinderGeometry) c.rotation.y += 0.2;
-            });
-
-            // Final RGB Hue Shift
-            if (tl.progress() > 0.95) {
-                hue = (hue + 1) % 360;
-                rgbMaterials.forEach(mat => {
-                    mat.color.setHSL(hue / 360, 0.8, 0.5);
-                    mat.emissive.setHSL(hue / 360, 0.8, 0.5);
+            navLinks.forEach(l => {
+                l.addEventListener('mouseenter', e => updateIndicator(e.target));
+                l.parentElement.addEventListener('mouseleave', () => {
+                    const a = document.querySelector('.nav-link.active');
+                    if (a) updateIndicator(a);
                 });
-                pcLights.forEach((light, i) => {
-                    light.color.setHSL((hue + (i * 90)) % 360 / 360, 0.8, 0.5);
+            });
+            window.addEventListener('load', () => { const a = document.querySelector('.nav-link.active'); if (a) updateIndicator(a); });
+            window.addEventListener('resize', () => { const a = document.querySelector('.nav-link.active'); if (a) updateIndicator(a); });
+
+            /* ── Mobile menu ── */
+            const toggleBtn = document.getElementById('mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (toggleBtn && mobileMenu) {
+                toggleBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    mobileMenu.classList.toggle('flex');
                 });
             }
 
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // --- Navigation & Resize ---
-        const navIndicator = document.getElementById('nav-indicator');
-        const navLinks = document.querySelectorAll('.nav-link');
-        function updateIndicator(el) {
-            if (!el || !navIndicator) return;
-            const rect = el.getBoundingClientRect();
-            const parentRect = el.parentElement.getBoundingClientRect();
-            navIndicator.style.width = `${rect.width + 24}px`;
-            navIndicator.style.height = `${rect.height + 12}px`;
-            navIndicator.style.left = `${rect.left - parentRect.left - 56}px`;
-            navIndicator.style.top = `${rect.top - parentRect.top - 6}px`;
-            navIndicator.style.opacity = '1';
-        }
-
-        navLinks.forEach(link => {
-            link.addEventListener('mouseenter', e => updateIndicator(e.target));
-            link.parentElement.addEventListener('mouseleave', () => {
-                const activeLink = document.querySelector('.nav-link.active');
-                if (activeLink) updateIndicator(activeLink);
+            /* ── Anchor scroll ── */
+            document.querySelectorAll('a[href^="#"]').forEach(a => {
+                a.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const t = document.querySelector(this.getAttribute('href'));
+                    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
             });
-        });
-
-        window.addEventListener('load', () => {
-            const activeLink = document.querySelector('.nav-link.active');
-            if (activeLink) updateIndicator(activeLink);
-        });
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            const activeLink = document.querySelector('.nav-link.active');
-            if (activeLink) updateIndicator(activeLink);
-        });
-
-        // Mobile toggle
-        const toggleBtn = document.getElementById('mobile-menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (toggleBtn && mobileMenu) {
-            toggleBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-                mobileMenu.classList.toggle('flex');
-            });
-        }
-
-        // Smooth Scroll for all devices
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
+        })();
     </script>
-    <a href="index.html" class="hidden md:block absolute top-8 left-16">
-        <div class="text-white text-xl md:text-2xl tracking-widest angora-font z-10">
-            NEVARK
-        </div>
-    </a>
 </body>
 
 </html>
