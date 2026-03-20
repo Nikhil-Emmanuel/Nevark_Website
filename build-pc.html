@@ -27,6 +27,7 @@
         html {
             scroll-behavior: smooth;
             -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
         }
 
         body {
@@ -54,6 +55,15 @@
             transition: opacity 3s ease;
             will-change: opacity;
             overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            #setup-image {
+                object-position: 65% center;
+                inset: -2%;
+                width: 104%;
+                height: 104%;
+            }
         }
 
         #setup-image-wrap.visible {
@@ -226,7 +236,7 @@
 
         @media (max-width: 768px) {
             #bg-video {
-                object-position: 65% center;
+                object-position: center center;
             }
 
             #bg-video.visible {
@@ -527,10 +537,6 @@
         footer {
             padding-bottom: max(2rem, env(safe-area-inset-bottom));
         }
-
-        nav {
-            top: max(1.5rem, env(safe-area-inset-top));
-        }
     </style>
 </head>
 
@@ -570,35 +576,47 @@
         <div id="setup-particles"></div>
     </div>
 
-    <nav class="fixed left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50 bg-white/5 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md md:w-auto transition-all duration-300"
-        style="top: max(1.5rem, env(safe-area-inset-top, 1.5rem))">
-        <div class="flex items-center justify-between md:justify-center">
-            <div class="md:hidden text-white text-sm tracking-widest angora-font">NEVARK</div>
-            <div
-                class="relative hidden md:flex items-center space-x-10 text-gray-300 text-sm font-medium tracking-wide angora-font">
-                <a href="index.html" class="nav-link hover:text-white">Home</a>
-                <a href="projects.html" class="nav-link hover:text-white">Projects</a>
-                <a href="build-pc.html" class="nav-link active hover:text-white">Build Your PC</a>
-                <a href="about.html" class="nav-link hover:text-white">About</a>
-                <a href="bookMeeting.html" class="nav-link hover:text-white">Bookings</a>
-                <div id="nav-indicator"></div>
-            </div>
-            <button id="mobile-menu-toggle" class="md:hidden text-white p-2" aria-label="Menu">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
+    <header
+        class="fixed top-6 w-full z-50 px-4 md:px-8 lg:px-16 flex items-start justify-between pointer-events-none transition-all duration-300">
+        <!-- Left: NEVARK text -->
+        <div class="hidden md:flex flex-1 items-center pointer-events-auto mt-3">
         </div>
-        <div id="mobile-menu"
-            class="hidden flex-col space-y-4 mt-4 pb-4 text-gray-300 text-sm font-medium tracking-wide angora-font border-t border-white/10 pt-4 md:hidden">
-            <a href="index.html" class="hover:text-white transition-colors">Home</a>
-            <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
-            <a href="build-pc.html" class="hover:text-white transition-colors">Build Your PC</a>
-            <a href="about.html" class="hover:text-white transition-colors">About</a>
-            <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
-        </div>
-    </nav>
 
-    <a href="index.html"
-        class="hidden md:block fixed top-8 left-16 z-50 angora-font text-xl tracking-widest text-white hover:text-red-400 transition-colors duration-300">NEVARK</a>
+        <!-- Center Nav Pill -->
+        <nav
+            class="w-full md:w-auto pointer-events-auto bg-white/5 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md transition-all duration-300 mx-auto">
+            <div class="flex items-center justify-between md:justify-center">
+                <!-- Mobile Logo -->
+                <div id="mobile-logo-nav"
+                    class="md:hidden text-white text-sm tracking-widest angora-font transition-opacity duration-300">
+                    NEVARK
+                </div>
+                <div
+                    class="relative hidden md:flex items-center space-x-10 text-gray-300 text-sm font-medium tracking-wide angora-font whitespace-nowrap">
+                    <a href="index.html" class="nav-link hover:text-white">Home</a>
+                    <a href="projects.html" class="nav-link hover:text-white">Projects</a>
+                    <a href="build-pc.html" class="nav-link active hover:text-white">Build Your PC</a>
+                    <a href="about.html" class="nav-link hover:text-white">About</a>
+                    <a href="bookMeeting.html" class="nav-link hover:text-white">Bookings</a>
+                    <div id="nav-indicator"></div>
+                </div>
+                <button id="mobile-menu-toggle" class="md:hidden text-white p-2" aria-label="Menu">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div id="mobile-menu"
+                class="hidden flex-col space-y-4 mt-4 pb-4 text-gray-300 text-sm font-medium tracking-wide angora-font border-t border-white/10 pt-4 md:hidden">
+                <a href="index.html" class="hover:text-white transition-colors">Home</a>
+                <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
+                <a href="build-pc.html" class="hover:text-white transition-colors">Build Your PC</a>
+                <a href="about.html" class="hover:text-white transition-colors">About</a>
+                <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
+            </div>
+        </nav>
+
+        <!-- Right: Empty space for balance -->
+        <div class="hidden md:flex flex-1 justify-end items-center pointer-events-auto mt-3"></div>
+    </header>
 
     <section id="start" class="h-[100vh] flex flex-col justify-center items-center text-center px-6">
         <div class="space-y-6 max-w-4xl animate-fade-in">
@@ -682,12 +700,13 @@
     </section>
 
     <section id="stage5" class="min-h-[100vh] flex flex-col justify-center items-center text-center px-5 py-20">
-        <div class="glass-card reveal from-bottom w-full max-w-[95%] md:max-w-5xl lg:max-w-6xl p-8 md:p-16 lg:p-20">
+        <div
+            class="glass-card reveal from-bottom overflow-hidden w-full max-w-[95%] md:max-w-5xl lg:max-w-6xl p-8 md:p-16 lg:p-20">
             <div class="text-red-400 mb-6 flex justify-center items-center gap-3">
                 <i data-lucide="award" class="w-7 h-7 md:w-8 md:h-8"></i>
                 <span class="text-xs font-bold tracking-[0.3em] uppercase">Final Stage</span>
             </div>
-            <h2 class="text-5xl md:text-7xl text-white mb-8 leading-none">ASCENSION</h2>
+            <h2 class="text-4xl sm:text-5xl md:text-7xl text-white mb-8 leading-none">ASCENSION</h2>
             <p class="text-gray-400 text-lg md:text-2xl mb-10 md:mb-12 leading-relaxed">
                 Your legacy is forged.<br class="md:hidden"> Every cable hidden, every LED synced,<br>every component
                 tested for 24 hours.
@@ -856,7 +875,7 @@
                 }
 
                 /* Unlock scroll */
-                document.documentElement.style.cssText = 'overflow: auto !important';
+                document.documentElement.style.cssText = 'overflow-x: hidden !important; overflow-y: auto !important';
                 document.body.style.cssText = document.body.style.cssText + '; overflow: auto !important; overflow-y: auto !important';
                 document.body.style.cursor = '';
                 document.body.style.pointerEvents = '';
@@ -919,7 +938,7 @@
                 tapOverlay.style.opacity = '0';
                 setTimeout(() => tapOverlay.style.display = 'none', 500);
                 revealVideo();
-                video.playbackRate = 1;
+                video.playbackRate = 0.7;
                 video.addEventListener('timeupdate', onTimeUpdate);
                 video.addEventListener('ended', unlockPage, { once: true });
                 video.play().catch(() => unlockPage());
@@ -932,7 +951,7 @@
                 setTimeout(() => {
                     video.play()
                         .then(() => {
-                            video.playbackRate = 1;
+                            video.playbackRate = 0.7;
                             document.documentElement.style.overflow = 'hidden';
                             document.body.style.overflowY = 'hidden';
                             document.body.style.cursor = 'none';
@@ -960,7 +979,7 @@
                                 startPlay();
                             }, { once: true });
                         });
-                }, 1800);
+                }, 2000);
             }
 
             video.addEventListener('error', () => {
@@ -1018,6 +1037,12 @@
             });
         })();
     </script>
+    <!-- Desktop Logo Button -->
+    <a href="index.html" class="hidden md:block absolute top-8 left-1/2 -translate-x-1/2 md:left-16 md:translate-x-0 z-[100] cursor-pointer" style="pointer-events: auto;">
+        <div class="text-white text-xl md:text-2xl tracking-widest angora-font hover:text-red-400 transition-colors duration-300">
+            NEVARK
+        </div>
+    </a>
 </body>
 
 </html>

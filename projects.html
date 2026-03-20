@@ -302,9 +302,15 @@
 
 <body class="font-sans">
     <div id="bg3d-container"></div>
-    <nav
-        class="fixed top-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50 bg-white/6 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md md:w-auto transition-all duration-300">
-        <div class="flex items-center justify-between md:justify-center">
+    <header class="fixed left-0 w-full z-50 px-4 md:px-8 lg:px-16 flex items-start justify-between pointer-events-none transition-all duration-300"
+        style="top: max(1.5rem, env(safe-area-inset-top, 1.5rem))">
+        <!-- Left: NEVARK text -->
+        <div class="hidden md:flex flex-1 items-center pointer-events-auto mt-3">
+        </div>
+
+        <!-- Center Nav Pill -->
+        <nav class="w-full md:w-auto pointer-events-auto bg-white/6 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md transition-all duration-300 mx-auto">
+            <div class="flex items-center justify-between md:justify-center">
             <!-- Mobile Logo -->
             <div id="mobile-logo-nav"
                 class="md:hidden text-white text-sm tracking-widest angora-font transition-opacity duration-300">
@@ -313,7 +319,7 @@
 
             <!-- Links -->
             <div
-                class="relative hidden md:flex items-center space-x-10 text-gray-300 text-sm font-medium tracking-wide nav-font">
+                class="relative hidden md:flex items-center space-x-10 text-gray-300 text-sm font-medium tracking-wide nav-font whitespace-nowrap">
                 <a href="index.html" class="nav-link hover:text-white transition-colors">Home</a>
                 <a href="projects.html" class="nav-link active hover:text-white transition-colors">Projects</a>
                 <a href="build-pc.html" class="nav-link hover:text-white transition-colors">Build Your PC</a>
@@ -338,6 +344,9 @@
             <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
         </div>
     </nav>
+        <!-- Right: Empty space for balance -->
+        <div class="hidden md:flex flex-1 justify-end items-center pointer-events-auto mt-3"></div>
+    </header>
 
 
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 relative text-center md:text-left">
@@ -825,8 +834,8 @@
         });
     </script>
 
-    <a href="index.html" class="absolute top-8 left-1/2 -translate-x-1/2 md:left-16 md:translate-x-0">
-        <div class="text-white text-xl md:text-2xl tracking-widest angora-font z-10">
+    <a href="index.html" class="hidden md:block absolute top-8 left-1/2 -translate-x-1/2 md:left-16 md:translate-x-0 z-[100] cursor-pointer" style="pointer-events: auto;">
+        <div class="text-white text-xl md:text-2xl tracking-widest angora-font hover:text-red-400 transition-colors duration-300">
             NEVARK
         </div>
     </a>

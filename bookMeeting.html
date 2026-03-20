@@ -110,42 +110,53 @@
 
   <!-- 3D ambience -->
   <div id="bg3d-container"></div>
-  <nav
-    class="fixed top-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50 bg-white/6 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md md:w-auto transition-all duration-300">
-    <div class="flex items-center justify-between md:justify-center">
-      <!-- Mobile Logo -->
-      <div id="mobile-logo-nav"
-        class="md:hidden text-white text-sm tracking-widest angora-font transition-opacity duration-300">
-        NEVARK
-      </div>
-
-      <!-- Links -->
-      <div
-        class="relative hidden md:flex items-center space-x-10 text-gray-300 text-sm font-medium tracking-wide nav-font">
-        <a href="index.html" class="nav-link hover:text-white transition-colors">Home</a>
-        <a href="projects.html" class="nav-link hover:text-white transition-colors">Projects</a>
-        <a href="build-pc.html" class="nav-link hover:text-white transition-colors">Build Your PC</a>
-        <a href="about.html" class="nav-link hover:text-white transition-colors">About</a>
-        <a href="bookMeeting.html" class="nav-link active hover:text-white transition-colors">Bookings</a>
-        <div id="nav-indicator"></div>
-      </div>
-
-      <!-- Mobile Menu Toggle -->
-      <button id="mobile-menu-toggle" class="md:hidden text-white p-2">
-        <i data-lucide="menu" class="w-6 h-6"></i>
-      </button>
+  <header
+    class="fixed left-0 w-full z-50 px-4 md:px-8 lg:px-16 flex items-start justify-between pointer-events-none transition-all duration-300"
+    style="top: max(1.5rem, env(safe-area-inset-top, 1.5rem))">
+    <!-- Left: NEVARK text -->
+    <div class="hidden md:flex flex-1 items-center pointer-events-auto mt-3">
     </div>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu"
-      class="hidden flex-col space-y-4 mt-4 pb-4 text-gray-300 text-sm font-medium tracking-wide nav-font border-t border-white/10 pt-4 md:hidden">
-      <a href="index.html" class="hover:text-white transition-colors">Home</a>
-      <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
-      <a href="build-pc.html" class="hover:text-white transition-colors">Build Your PC</a>
-      <a href="about.html" class="hover:text-white transition-colors">About</a>
-      <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
-    </div>
-  </nav>
+    <!-- Center Nav Pill -->
+    <nav
+      class="w-full md:w-auto pointer-events-auto bg-white/6 border border-white/10 rounded-xl px-4 md:px-8 py-3 md:py-4 shadow-xl backdrop-blur-md transition-all duration-300 mx-auto">
+      <div class="flex items-center justify-between md:justify-center">
+        <!-- Mobile Logo -->
+        <div id="mobile-logo-nav"
+          class="md:hidden text-white text-sm tracking-widest angora-font transition-opacity duration-300">
+          NEVARK
+        </div>
+
+        <!-- Links -->
+        <div
+          class="relative hidden md:flex items-center space-x-10 text-gray-300 text-sm font-medium tracking-wide nav-font whitespace-nowrap">
+          <a href="index.html" class="nav-link hover:text-white transition-colors">Home</a>
+          <a href="projects.html" class="nav-link hover:text-white transition-colors">Projects</a>
+          <a href="build-pc.html" class="nav-link hover:text-white transition-colors">Build Your PC</a>
+          <a href="about.html" class="nav-link hover:text-white transition-colors">About</a>
+          <a href="bookMeeting.html" class="nav-link active hover:text-white transition-colors">Bookings</a>
+          <div id="nav-indicator"></div>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-toggle" class="md:hidden text-white p-2">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu"
+        class="hidden flex-col space-y-4 mt-4 pb-4 text-gray-300 text-sm font-medium tracking-wide nav-font border-t border-white/10 pt-4 md:hidden">
+        <a href="index.html" class="hover:text-white transition-colors">Home</a>
+        <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
+        <a href="build-pc.html" class="hover:text-white transition-colors">Build Your PC</a>
+        <a href="about.html" class="hover:text-white transition-colors">About</a>
+        <a href="bookMeeting.html" class="hover:text-white transition-colors">Bookings</a>
+      </div>
+    </nav>
+    <!-- Right: Empty space for balance -->
+    <div class="hidden md:flex flex-1 justify-end items-center pointer-events-auto mt-3"></div>
+  </header>
 
 
 
@@ -279,18 +290,18 @@
             </div>
 
             <!-- Submit -->
-            <div class="col-span-1 md:col-span-2 flex items-center justify-between">
-              <div class="flex items-center space-x-3">
+            <div class="col-span-1 md:col-span-2 flex flex-col items-left gap-4">
+              <div class="flex items-center space-x-3 mb-5">
                 <div class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
                   <i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
                 </div>
-                <p class="text-xs text-gray-400">
+                <p class="text-gray-400">
                   Your data is secure.
                 </p>
               </div>
 
               <button type="submit" class="group relative overflow-hidden bg-white text-black
-      px-3 py-3 rounded-full font-medium shadow-lg">
+      px-5 py-4 flex items-center justify-center rounded-full font-medium shadow-lg">
                 <span class="relative z-10">Book Meeting</span>
                 <span class="absolute inset-0 bg-black/10
       group-hover:opacity-0 transition-opacity duration-300"></span>
@@ -339,104 +350,104 @@
             from-transparent
             via-black/40
             to-black">
-  </div>    <!-- Footer Divider -->
-    <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-800/70 to-transparent my-0"></div>
-    <style>
-        @font-face {
-            font-family: 'Angora';
-            src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
-            font-weight: normal;
-            font-style: normal;
-        }
-    </style>
+  </div> <!-- Footer Divider -->
+  <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-800/70 to-transparent my-0"></div>
+  <style>
+    @font-face {
+      font-family: 'Angora';
+      src: url('./assests/fonts/aquire-font/Aquire-BW0ox.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+  </style>
 
-    <footer
-        class="angora-footer pt-14 pb-8 px-4 sm:px-8 lg:px-16 relative bg-gradient-to-t from-gray-950 via-gray-900/80 to-transparent z-20">
-        <div class="max-w-7xl mx-auto flex flex-col items-center text-center gap-12">
+  <footer
+    class="angora-footer pt-14 pb-8 px-4 sm:px-8 lg:px-16 relative bg-gradient-to-t from-gray-950 via-gray-900/80 to-transparent z-20">
+    <div class="max-w-7xl mx-auto flex flex-col items-center text-center gap-12">
 
-            <div class="flex flex-col items-center min-w-[240px] max-w-md mb-8">
-                <a href="#"
-                    class="angora-font text-2xl font-normal tracking-widest text-white hover:text-indigo-400 transition-colors duration-300 mb-5">
-                    NEVARK
-                </a>
+      <div class="flex flex-col items-center min-w-[240px] max-w-md mb-8">
+        <a href="#"
+          class="angora-font text-2xl font-normal tracking-widest text-white hover:text-indigo-400 transition-colors duration-300 mb-5">
+          NEVARK
+        </a>
 
-                <p class="cursor-default mt-3 text-gray-400 text-base leading-relaxed">
-                    Accelerate your team’s workflow.<br>
-                    Connect » Automate » Monitor your workspace.<br>
-                    All from one powerful hub.
-                </p>
-            </div>
+        <p class="cursor-default mt-3 text-gray-400 text-base leading-relaxed">
+          Accelerate your team’s workflow.<br>
+          Connect » Automate » Monitor your workspace.<br>
+          All from one powerful hub.
+        </p>
+      </div>
 
+    </div>
+
+    <!-- Divider -->
+    <div class="mt-12 mb-8 w-full h-px bg-gradient-to-r from-transparent via-gray-800/60 to-transparent"></div>
+
+    <!-- Bottom Bar -->
+    <div class="max-w-7xl mx-auto px-4 pb-12">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <!-- Left/Center content -->
+        <div
+          class="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 text-xs text-gray-500 text-center md:text-left">
+          <span>© 2026 Nevark Technologies LLP. All Rights Reserved </span>
+          <span class="hidden sm:inline">&bull;</span>
+          <a href="privacy.html" class="hover:underline hover:text-gray-300">Privacy Policy</a>
+          <span class="hidden sm:inline">&bull;</span>
+          <a href="terms-condition.html" class="hover:underline hover:text-gray-300">Terms of Service</a>
+          <span class="hidden sm:inline">&bull;</span>
+          <span class="relative group cursor-default">
+            <span class="inline-flex items-center gap-1 hover:text-gray-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Status
+            </span>
+
+            <!-- Tooltip -->
+            <span
+              class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block whitespace-nowrap text-[10px] px-2 py-1 rounded-md bg-black/80 border border-white/10 text-gray-300 backdrop-blur-md">
+              Website Online
+            </span>
+          </span>
         </div>
 
-        <!-- Divider -->
-        <div class="mt-12 mb-8 w-full h-px bg-gradient-to-r from-transparent via-gray-800/60 to-transparent"></div>
+        <!-- Social icons -->
+        <div class="flex items-center gap-3">
 
-        <!-- Bottom Bar -->
-        <div class="max-w-7xl mx-auto px-4 pb-12">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                <!-- Left/Center content -->
-                <div
-                    class="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 text-xs text-gray-500 text-center md:text-left">
-                    <span>© 2026 Nevark Technologies LLP. All Rights Reserved </span>
-                    <span class="hidden sm:inline">&bull;</span>
-                    <a href="privacy.html" class="hover:underline hover:text-gray-300">Privacy Policy</a>
-                    <span class="hidden sm:inline">&bull;</span>
-                    <a href="terms-condition.html" class="hover:underline hover:text-gray-300">Terms of Service</a>
-                    <span class="hidden sm:inline">&bull;</span>
-                    <span class="relative group cursor-default">
-                        <span class="inline-flex items-center gap-1 hover:text-gray-300">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                            Status
-                        </span>
-
-                        <!-- Tooltip -->
-                        <span
-                            class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block whitespace-nowrap text-[10px] px-2 py-1 rounded-md bg-black/80 border border-white/10 text-gray-300 backdrop-blur-md">
-                            Website Online
-                        </span>
-                    </span>
-                </div>
-
-                <!-- Social icons -->
-                <div class="flex items-center gap-3">
-
-                    <!-- Email -->
-                    <a id="emailLink" href="#" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+          <!-- Email -->
+          <a id="emailLink" href="#" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
           hover:bg-red-600/80 transition-all duration-300
           hover:-translate-y-0.5" aria-label="Email">
 
-                        <svg data-lucide="mail" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
-                    </a>
+            <svg data-lucide="mail" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+          </a>
 
-                    <!-- LinkedIn -->
-                    <a href="https://www.linkedin.com/company/nevark-technologies" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/company/nevark-technologies" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
                    hover:bg-blue-600/80
                    transition-all duration-300
                    hover:-translate-y-0.5" aria-label="LinkedIn">
-                        <svg data-lucide="linkedin" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
-                    </a>
+            <svg data-lucide="linkedin" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+          </a>
 
-                    <!-- Instagram -->
-                    <a href="https://www.instagram.com/nevark.in" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/nevark.in" target="_blank" class="p-2 rounded-lg bg-white/5 backdrop-blur-md
                     hover:bg-pink-600
                     transition-all duration-300
                     hover:-translate-y-0.5" aria-label="Instagram">
-                        <svg data-lucide="instagram" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
-                    </a>
+            <svg data-lucide="instagram" class="w-4 h-4 text-gray-400 group-hover:text-white"></svg>
+          </a>
 
-                </div>
-
-                <!-- Startup India Logo (Bottom Right) -->
-                <div class="mt-6 md:mt-0 opacity-70 transition-all duration-500 hover:opacity-100 hover:brightness-110 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
-                    <img src="assests/dpiit_logo_startupindia.png" alt="Startup India Logo"
-                        class="h-10 md:h-12 brightness-110" />
-                </div>
-
-
-            </div>
         </div>
-    </footer>
+
+        <!-- Startup India Logo (Bottom Right) -->
+        <div
+          class="mt-6 md:mt-0 opacity-70 transition-all duration-500 hover:opacity-100 hover:brightness-110 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+          <img src="assests/dpiit_logo_startupindia.png" alt="Startup India Logo" class="h-10 md:h-12 brightness-110" />
+        </div>
+
+
+      </div>
+    </div>
+  </footer>
   <script>
     (function () {
       const email = "office@nevark.in";
