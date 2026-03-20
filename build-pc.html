@@ -565,7 +565,7 @@
     <div id="scroll-bar"></div>
     <div id="stage-chip"></div>
 
-    <video id="bg-video" muted playsinline preload="auto">
+    <video id="bg-video" muted playsinline preload="metadata">
         <source src="video/Nevark_PC Build.mp4" type="video/mp4">
     </video>
     <div id="video-veil"></div>
@@ -988,10 +988,10 @@
                 document.body.style.pointerEvents = '';
             }, { once: true });
 
-            if (video.readyState >= 3) {
+            if (video.readyState >= 1) {
                 onVideoReady();
             } else {
-                video.addEventListener('canplay', onVideoReady, { once: true });
+                video.addEventListener('loadedmetadata', onVideoReady, { once: true });
             }
 
             /* ── Nav indicator ── */
