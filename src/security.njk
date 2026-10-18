@@ -1,0 +1,9 @@
+---
+permalink: /.well-known/security.txt
+eleventyExcludeFromCollections: true
+---
+Contact: mailto:{{ site.securityContact }}
+Expires: {{ build.year + 1 }}-12-31T23:59:59.000Z
+Preferred-Languages: en
+Canonical: {{ site.url }}/.well-known/security.txt
+Policy: {{ site.url }}/trust#disclosure

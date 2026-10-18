@@ -1,0 +1,15 @@
+# Old file names and casing → canonical URLs
+# (Netlify Pretty URLs already maps /about.html → /about for files that exist)
+/index.html          /                  301
+/home.html           /                  301
+/home                /                  301
+/bookMeeting.html    /bookmeeting       301
+/bookMeeting         /bookmeeting       301
+/bookmeeting.html    /bookmeeting       301
+/Testimonals.html    /#clients          301
+/documentaion.html   /trust             301
+/temp.html           /                  301
+
+# Old video URL
+/video/Nevark_PC%20Build.mp4             /video/pc-build-1080.mp4  301
+/video/PC-setup.png                      /build-pc                 301

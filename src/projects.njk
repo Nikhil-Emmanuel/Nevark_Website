@@ -1,0 +1,64 @@
+---
+layout: layouts/base.njk
+permalink: /projects.html
+title: Projects
+description: Case studies from Nevark Technologies — industrial AI monitoring, mobile plant visibility and agricultural robotics. Dreamt. Designed. Delivered.
+scripts: ["/js/projects-filter.js"]
+breadcrumbs: [{ name: "Home", url: "/" }, { name: "Projects", url: "/projects" }]
+---
+{%- set industriesList = collections.projects | uniqueBy("industry") %}
+<section class="relative px-6 pt-36 md:pt-44 pb-10">
+  <div class="absolute top-24 left-1/2 -translate-x-1/2 w-[560px] max-w-full h-[420px] bg-indigo-600/20 blur-[110px] rounded-full pointer-events-none" aria-hidden="true"></div>
+  <div class="relative max-w-6xl mx-auto">
+    <p class="eyebrow">Dreamt. Designed. Delivered.</p>
+    <div class="mt-6 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight leading-[1.05] text-white">Nevark's Hall of Creations</h1>
+      <p class="max-w-md text-gray-300 leading-relaxed">Proprietary work. Publicly showcased. Each project below is engineered in-house, from the first sensor reading to the screen in an operator's hand.</p>
+    </div>
+
+    <dl class="mt-10 grid grid-cols-3 max-w-xl gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 text-center">
+      <div class="bg-black/60 p-4"><dt class="text-xs text-gray-400">Projects</dt><dd class="mt-1 text-2xl font-semibold">{{ collections.projects.length }}</dd></div>
+      <div class="bg-black/60 p-4"><dt class="text-xs text-gray-400">Industries</dt><dd class="mt-1 text-2xl font-semibold">{{ industriesList.length }}</dd></div>
+      <div class="bg-black/60 p-4"><dt class="text-xs text-gray-400">In production</dt><dd class="mt-1 text-2xl font-semibold">{{ (collections.projects | where("status", "Deployed")).length }}</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="px-6 pb-8" aria-labelledby="work-list-title">
+  <div class="max-w-6xl mx-auto">
+    <h2 id="work-list-title" class="sr-only">All projects</h2>
+    <div class="flex flex-wrap items-center gap-2 mb-10" role="group" aria-label="Filter projects by industry" data-filter-group hidden>
+      <button type="button" class="min-h-11 rounded-full border border-white/15 px-4 text-sm text-gray-300 hover:text-white aria-pressed:bg-white aria-pressed:text-black aria-pressed:border-white transition-colors" data-filter="all" aria-pressed="true">All</button>
+      {%- for ind in industriesList %}
+      <button type="button" class="min-h-11 rounded-full border border-white/15 px-4 text-sm text-gray-300 hover:text-white aria-pressed:bg-white aria-pressed:text-black aria-pressed:border-white transition-colors" data-filter="{{ ind | slugifyIndustry }}" aria-pressed="false">{{ ind }}</button>
+      {%- endfor %}
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-filter-list>
+      {%- for p in collections.projects %}{% include "partials/project-card.njk" %}{% endfor %}
+    </div>
+    <p class="mt-6 text-sm text-gray-400" aria-live="polite" data-filter-status></p>
+  </div>
+</section>
+
+<section class="px-6 py-16" aria-labelledby="by-industry">
+  <div class="max-w-6xl mx-auto card p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+    <div>
+      <h2 id="by-industry" class="text-2xl font-semibold">Explore by industry</h2>
+      <p class="mt-2 text-gray-300">See how our capabilities map to manufacturing, agriculture and technology services.</p>
+    </div>
+    <a href="/industries" class="btn btn-ghost shrink-0">View industries {% icon "arrow-right", "w-4 h-4" %}</a>
+  </div>
+</section>
+
+{%- set ctaTitle = "Have a project in mind?" %}
+{%- set ctaText = "Bring us the problem. We'll design, build and deliver the system that solves it." %}
+{% include "partials/cta.njk" %}
+
+<script type="application/ld+json">{{ {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Nevark's Hall of Creations",
+  "url": site.url + "/projects",
+  "hasPart": collections.projects | projectRefs(site.url)
+} | json | safe }}</script>

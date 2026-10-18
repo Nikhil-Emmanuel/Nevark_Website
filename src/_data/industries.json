@@ -1,0 +1,59 @@
+[
+  {
+    "id": "manufacturing",
+    "industry": "Manufacturing",
+    "title": "Manufacturing & Industrial",
+    "icon": "factory",
+    "iconClass": "text-pink-400",
+    "lead": "Custom-built digital platforms for manufacturing workflows, automation, and real-time operational control.",
+    "challenges": [
+      "Critical equipment drifting toward failure without warning",
+      "Manual checks and delayed feedback causing unplanned downtime",
+      "Plant intelligence locked inside control rooms and desktops"
+    ],
+    "capabilities": [
+      "Predictive maintenance and equipment-life forecasting",
+      "Real-time sensor analytics and anomaly detection",
+      "Spatially mapped, animated plant-floor dashboards",
+      "Mobile companion apps with live alerts over WebSockets"
+    ]
+  },
+  {
+    "id": "agriculture",
+    "industry": "Agriculture",
+    "title": "Agriculture & AgriTech",
+    "icon": "sprout",
+    "iconClass": "text-emerald-400",
+    "lead": "Technology-driven agricultural platforms for monitoring, optimization, and data-led farming operations under one ecosystem.",
+    "challenges": [
+      "Fragmented tooling across sowing, irrigation, harvesting and reaping",
+      "Rising dependency on manual labour",
+      "Disconnected logistics, cold storage and distribution"
+    ],
+    "capabilities": [
+      "Multi-functional field robotics concepts",
+      "Soil, moisture and nutrient sensing",
+      "A central console linking farmers, vendors, storage and distributors",
+      "Data-led planning for yield and supply"
+    ]
+  },
+  {
+    "id": "technology",
+    "industry": "Technology",
+    "title": "Technology & Engineering Services",
+    "icon": "code",
+    "iconClass": "text-cyan-400",
+    "lead": "End-to-end software, AI and infrastructure engineering for teams that need dependable delivery.",
+    "challenges": [
+      "Ideas that need a production-grade system, not a prototype",
+      "Legacy workflows that don't talk to each other",
+      "Apps that must stay online and observable after launch"
+    ],
+    "capabilities": [
+      "Full stack web development with clean system architecture",
+      "AI and ML engineering, from data to deployed model",
+      "Mobile and web app development, hosting and monitoring",
+      "Custom high-performance PC and workstation builds"
+    ]
+  }
+]

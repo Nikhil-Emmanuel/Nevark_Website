@@ -1,0 +1,121 @@
+---
+layout: layouts/base.njk
+permalink: /about.html
+title: About
+description: Nevark Technologies builds intelligent systems at the intersection of AI, machine learning and real-world industrial engineering. Meet the company, our principles and our journey.
+breadcrumbs: [{ name: "Home", url: "/" }, { name: "About", url: "/about" }]
+---
+{%- set chapters = [
+  { title: "Intelligent Foundations", text: "Our work focuses on predictive intelligence, flow-based analytics, and scalable system design, engineered to integrate seamlessly into existing industrial environments.", quote: "Innovation matters only when it solves real problems." },
+  { title: "Built for Industry", text: "From predictive maintenance to real-time monitoring, our solutions reduce downtime, uncover hidden inefficiencies, and enable proactive, data-driven decision-making.", quote: "Data becomes powerful when learning never stops." },
+  { title: "Vision & Purpose", text: "We envision intelligent manufacturing ecosystems powered by transparent data, continuous learning, and technology that scales responsibly with real operational needs.", quote: "Sustainable growth begins with operational clarity." }
+] -%}
+{%- set values = [
+  { icon: "target", title: "Solve real problems", text: "We start from the operation, not the technology. If it doesn't change an outcome on the ground, we don't build it." },
+  { icon: "brain-circuit", title: "Never stop learning", text: "Our systems and our people improve with every data point, every deployment and every honest review." },
+  { icon: "eye", title: "Operational clarity", text: "We turn raw signals into insight people can act on in seconds, on the screen in front of them." },
+  { icon: "users", title: "Trust smart people", text: "We hire people who tell us what to do, and we give them the room to do it." }
+] -%}
+
+<!-- Intro -->
+<section class="relative px-6 pt-36 md:pt-48 pb-16 md:pb-24 overflow-hidden">
+  <div class="absolute -top-10 -left-24 w-96 h-96 bg-indigo-600/20 blur-[120px] rounded-full pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute bottom-0 -right-16 w-72 h-72 bg-purple-500/20 blur-[100px] rounded-full pointer-events-none" aria-hidden="true"></div>
+  <div class="relative max-w-6xl mx-auto">
+    <p class="eyebrow">About us</p>
+    <h1 class="mt-6 text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight leading-[0.95] text-white">About Nevark<br>Technologies</h1>
+    <p class="mt-10 max-w-3xl text-xl md:text-2xl leading-relaxed text-zinc-300 font-medium">We build intelligent systems at the intersection of AI, machine learning, and real-world industrial engineering, turning complex data into decisive operational intelligence.</p>
+    <div class="mt-10 flex flex-wrap items-center gap-6">
+      <a href="/bookmeeting" class="btn btn-primary">Collaborate with us {% icon "arrow-right", "w-4 h-4" %}</a>
+      <a href="https://www.startupindia.gov.in/" target="_blank" rel="noopener" class="inline-flex items-center gap-3 text-sm text-gray-400 hover:text-white">
+        <img src="/assets/img/dpiit-logo-startupindia.png" alt="" class="h-9 w-auto" eleventy:widths="240" sizes="88px">
+        Recognised by DPIIT under Startup India
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Story chapters -->
+<div class="px-6">
+  {%- for c in chapters %}
+  <section class="max-w-6xl mx-auto py-16 md:py-24 border-t border-white/10 grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center" aria-labelledby="chapter-{{ loop.index }}">
+    <div class="reveal from-left">
+      <p class="text-xs font-semibold tracking-[0.2em] uppercase text-brand-400">0{{ loop.index }}</p>
+      <h2 id="chapter-{{ loop.index }}" class="mt-4 text-4xl md:text-6xl font-bold tracking-tight text-white leading-[1.02]">{{ c.title }}</h2>
+      <p class="mt-6 text-lg md:text-xl leading-relaxed text-zinc-300">{{ c.text }}</p>
+    </div>
+    <blockquote class="reveal from-right text-2xl md:text-3xl text-zinc-400 italic font-medium leading-snug md:pl-10 md:border-l md:border-white/10">“{{ c.quote }}”</blockquote>
+  </section>
+  {%- endfor %}
+</div>
+
+<!-- Values -->
+<section class="px-6 py-20 md:py-28 border-t border-white/10" aria-labelledby="values-title">
+  <div class="max-w-6xl mx-auto">
+    <h2 id="values-title" class="section-title">What we stand for</h2>
+    <p class="mt-3 text-gray-400">“Let intelligence lead the way forward.”</p>
+    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {%- for v in values %}
+      <div class="card p-6 reveal">
+        <span class="w-11 h-11 flex items-center justify-center rounded-full bg-white/10 text-indigo-300">{% icon v.icon, "w-5 h-5" %}</span>
+        <h3 class="mt-5 text-lg font-semibold">{{ v.title }}</h3>
+        <p class="mt-2 text-sm text-gray-300 leading-relaxed">{{ v.text }}</p>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Milestones -->
+<section class="px-6 py-20 md:py-28 border-t border-white/10" aria-labelledby="journey-title">
+  <div class="max-w-4xl mx-auto">
+    <h2 id="journey-title" class="section-title">Our journey</h2>
+    <ol class="mt-12 relative border-l border-white/15 ml-2 space-y-10">
+      {%- for m in milestones | sort(false, false, "date") %}
+      <li class="relative pl-8 reveal">
+        <span class="absolute -left-[7px] top-1.5 w-3.5 h-3.5 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 ring-4 ring-black" aria-hidden="true"></span>
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-brand-400"><time datetime="{{ m.date }}">{{ m.label }}</time></p>
+        <h3 class="mt-2 text-lg font-semibold">{{ m.title }}</h3>
+        <p class="mt-1 text-gray-300">{{ m.text }}</p>
+      </li>
+      {%- endfor %}
+    </ol>
+  </div>
+</section>
+
+{%- if team.length %}
+<!-- Leadership -->
+<section id="leadership" class="px-6 py-20 md:py-28 border-t border-white/10" aria-labelledby="leadership-title">
+  <div class="max-w-6xl mx-auto">
+    <h2 id="leadership-title" class="section-title">Leadership</h2>
+    <p class="mt-3 text-gray-400 max-w-2xl">The people accountable for every system we ship.</p>
+    <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {%- for m in team %}
+      <li class="card p-6 reveal">
+        {%- if m.photo %}<img src="{{ m.photo }}" alt="{{ m.name }}" class="w-20 h-20 rounded-2xl object-cover" eleventy:widths="160" sizes="80px">
+        {%- else %}<span class="w-20 h-20 rounded-2xl flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 text-2xl font-semibold" aria-hidden="true">{{ m.name | first }}</span>{% endif %}
+        <h3 class="mt-5 text-lg font-semibold">{{ m.name }}</h3>
+        <p class="text-sm text-brand-400">{{ m.role }}</p>
+        {%- if m.bio %}<p class="mt-3 text-sm text-gray-300 leading-relaxed">{{ m.bio }}</p>{% endif %}
+        {%- if m.linkedin %}<a href="{{ m.linkedin }}" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white">{% icon "linkedin", "w-4 h-4" %} LinkedIn<span class="sr-only"> profile of {{ m.name }}</span></a>{% endif %}
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+{%- endif %}
+
+<!-- Careers teaser -->
+<section class="px-6 py-16" aria-labelledby="join-title">
+  <div class="max-w-6xl mx-auto card gradient-border p-8 md:p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+    <div>
+      <h2 id="join-title" class="text-2xl md:text-3xl font-semibold">Build with us</h2>
+      <p class="mt-2 text-gray-300 max-w-xl">We're always looking for engineers, designers and problem-solvers who want their work to run on real factory floors and real fields.</p>
+    </div>
+    <a href="/careers" class="btn btn-ghost shrink-0">Careers at Nevark {% icon "arrow-right", "w-4 h-4" %}</a>
+  </div>
+</section>
+
+{%- set ctaTitle = "Collaborate With Us" %}
+{%- set ctaText = "Partner with our experts to transform complex challenges into resilient, intelligent, and future-ready solutions." %}
+{% include "partials/cta.njk" %}

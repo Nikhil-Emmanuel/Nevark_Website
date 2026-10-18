@@ -1,0 +1,8 @@
+<section class="relative px-6 pt-36 md:pt-44 pb-12 md:pb-16">
+  <div class="absolute top-24 left-1/2 -translate-x-1/2 w-[520px] max-w-full h-[420px] bg-indigo-600/20 blur-[110px] rounded-full pointer-events-none" aria-hidden="true"></div>
+  <div class="relative max-w-4xl mx-auto text-center">
+    {%- if heroEyebrow %}<p class="eyebrow">{{ heroEyebrow }}</p>{% endif %}
+    <h1 class="mt-6 text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight leading-[1.08] text-white">{{ heroTitle or title }}</h1>
+    {%- if heroLead %}<p class="mt-6 text-base md:text-lg text-gray-300 leading-relaxed max-w-2xl mx-auto">{{ heroLead }}</p>{% endif %}
+  </div>
+</section>

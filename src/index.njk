@@ -1,0 +1,149 @@
+---
+layout: layouts/base.njk
+permalink: /index.html
+title: Nevark
+description: Nevark Technologies provides AI-ready software engineering, strategic IT consulting, and secure digital solutions designed for next-generation enterprises.
+scripts: ["/js/waves.js"]
+---
+<!-- Hero -->
+<section class="relative flex flex-col items-center justify-center text-center min-h-[100svh] px-6 pt-36 pb-16 overflow-hidden">
+  <div class="xl:hidden absolute top-28 inset-x-0 flex justify-center opacity-80">
+    <img src="/assets/img/dpiit-logo-startupindia.png" alt="Startup India — DPIIT recognised" class="h-11 w-auto" eleventy:widths="240" sizes="106px" loading="eager">
+  </div>
+  <div class="absolute top-1/2 left-1/2 w-[600px] max-w-[120vw] h-[600px] -translate-x-1/2 -translate-y-1/2 bg-white opacity-5 blur-[100px] rounded-full pointer-events-none" aria-hidden="true"></div>
+
+  <p class="mt-10 mb-6 md:mb-10 px-3 py-2 text-[11px] md:text-xs font-medium bg-white/10 border border-white/5 rounded-full backdrop-blur-sm">{{ site.tagline }}</p>
+
+  <h1 class="relative group cursor-default font-display text-[clamp(3rem,13vw,6rem)] font-normal leading-tight tracking-[0.2em] sm:tracking-[0.4em] md:tracking-[0.8em] translate-x-[0.1em] sm:translate-x-[0.2em] md:translate-x-[0.4em]">
+    <span class="text-shimmer">NEVARK</span>
+    <span class="sr-only"> Technologies — AI, software and industrial engineering</span>
+  </h1>
+
+  <p class="mt-6 max-w-xl text-sm md:text-base text-gray-400 leading-relaxed">AI, software and industrial engineering that turns complex data into decisive operational intelligence.</p>
+
+  <div class="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center">
+    <span class="glow-btn">
+      <a href="/bookmeeting" class="text-sm px-5 py-3 bg-black/80 border border-white/5 text-white rounded-full backdrop-blur-sm hover:bg-white/10 transition">Book a Consultation</a>
+    </span>
+    <a href="/projects" class="text-sm px-5 py-3 rounded-full text-gray-300 hover:text-white underline-offset-4 hover:underline">See our work</a>
+  </div>
+
+  <a href="#services" class="mt-16 text-white/50 hover:text-white/80 animate-bounce" aria-label="Scroll to services">{% icon "chevron-down", "w-8 h-8" %}</a>
+</section>
+
+<!-- Services -->
+<section id="services" class="relative py-24 px-6" aria-labelledby="services-title">
+  <div class="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-transparent pointer-events-none" aria-hidden="true"></div>
+  <h2 id="services-title" class="section-title text-center mb-16">What we do</h2>
+  <div class="relative max-w-5xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+    {%- for s in services %}
+    <a href="{{ s.url }}" class="card card-hover group p-6 md:p-8 text-center reveal {{ s.hoverClass }}">
+      <span class="w-12 h-12 mb-6 flex items-center justify-center mx-auto rounded-full bg-white/10 {{ s.iconClass }}">{% icon s.icon, "w-6 h-6" %}</span>
+      <h3 class="text-xl font-semibold mb-3">{{ s.title }}</h3>
+      <p class="text-sm text-neutral-300">{{ s.summary }}</p>
+    </a>
+    {%- endfor %}
+  </div>
+</section>
+
+<!-- Featured work -->
+<section class="py-24 px-6 border-t border-white/10" aria-labelledby="work-title">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+      <div>
+        <p class="eyebrow">Dreamt. Designed. Delivered.</p>
+        <h2 id="work-title" class="section-title mt-5">Featured work</h2>
+      </div>
+      <a href="/projects" class="inline-flex items-center gap-2 text-sm text-brand-400 hover:text-white">All projects {% icon "arrow-right", "w-4 h-4" %}</a>
+    </div>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {%- for p in collections.projects | head(3) %}{% include "partials/project-card.njk" %}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Clients & recognition -->
+<section id="clients" class="py-24 px-6 border-t border-white/10 overflow-hidden" aria-labelledby="clients-title">
+  <h2 id="clients-title" class="section-title text-center mb-4">Our Clients &amp; Recognition</h2>
+  <p class="text-center text-sm text-gray-400 mb-14">Trusted by industry and recognised by the Government of India.</p>
+  <ul class="max-w-5xl mx-auto flex flex-wrap items-center justify-center gap-x-16 gap-y-10">
+    {%- for c in clients %}
+    <li class="relative group reveal">
+      <div class="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 via-indigo-600 to-blue-500 opacity-0 group-hover:opacity-40 blur-3xl scale-110 transition-all duration-500 pointer-events-none" aria-hidden="true"></div>
+      {%- if c.url %}<a href="{{ c.url }}" target="_blank" rel="noopener" class="relative block">{% endif %}
+      <img src="{{ c.logo }}" alt="{{ c.name }}" title="{{ c.kind }}: {{ c.name }}" class="relative h-24 md:h-28 w-auto max-w-[260px] object-contain transition-transform duration-700 group-hover:scale-110" eleventy:widths="320,560" sizes="260px">
+      {%- if c.url %}</a>{% endif %}
+    </li>
+    {%- endfor %}
+  </ul>
+</section>
+
+<!-- Impact metrics -->
+<section class="relative overflow-hidden" aria-labelledby="metrics-title" data-waves>
+  <canvas class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
+  <div class="relative z-10 flex items-center justify-center px-4 py-24 md:py-32 min-h-[80svh]">
+    <div class="w-full max-w-md animate-float">
+      <div class="glass gradient-border rounded-3xl overflow-hidden shadow-xl bg-white/5">
+        <div class="p-6 md:p-8 text-center">
+          <h2 id="metrics-title" class="text-2xl md:text-4xl tracking-tight font-semibold text-white">Turn your Dreams into Reality</h2>
+          <p class="text-xs md:text-sm text-white/70 mt-4 max-w-xs mx-auto">We transform groundbreaking ideas into delightful experiences that are powered by measurable results</p>
+        </div>
+        <div class="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" aria-hidden="true"></div>
+        <dl class="grid grid-cols-1 sm:grid-cols-3 gap-6 p-8">
+          {%- for m in metrics %}
+          <div class="flex flex-col-reverse items-center text-center">
+            <dt class="text-xs text-white/60 mt-1">{{ m.label }}</dt>
+            <dd class="mt-4 text-2xl font-semibold text-white tracking-tight" data-count-to="{{ m.value }}" data-suffix="{{ m.suffix }}">{{ m.value }}{{ m.suffix }}</dd>
+            <span class="w-12 h-12 flex items-center justify-center rounded-full glass border border-indigo-400/30 text-indigo-300" aria-hidden="true">{% icon m.icon, "w-5 h-5" %}</span>
+          </div>
+          {%- endfor %}
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- if testimonials.length %}
+<!-- Client voices -->
+<section class="py-24 px-6" aria-labelledby="voices-title">
+  <h2 id="voices-title" class="section-title text-center mb-16">What our clients say</h2>
+  <div class="max-w-5xl mx-auto grid gap-8 md:grid-cols-2">
+    {%- for t in testimonials %}
+    <figure class="card p-6 md:p-10 reveal">
+      <blockquote class="text-lg text-neutral-200">“{{ t.quote }}”</blockquote>
+      <figcaption class="mt-6 flex items-center gap-3">
+        {%- if t.photo %}<img src="{{ t.photo }}" alt="" class="w-10 h-10 rounded-full object-cover" eleventy:widths="96" sizes="40px">{% endif %}
+        <span><span class="block text-sm font-semibold">{{ t.name }}</span><span class="block text-xs text-neutral-400">{{ t.role }}{% if t.company %}, {{ t.company }}{% endif %}</span></span>
+      </figcaption>
+    </figure>
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}
+
+<!-- Voices of Inspiration -->
+<section class="py-24 px-6" aria-labelledby="inspiration-title">
+  <h2 id="inspiration-title" class="section-title text-center">Voices of Inspiration</h2>
+  <p class="mt-4 mb-16 text-center text-sm text-gray-400">The principles Nevark is built on.</p>
+  <div class="max-w-4xl mx-auto space-y-8 md:space-y-12">
+    {%- for q in inspiration %}
+    <figure class="card p-6 md:p-10 reveal transition-transform duration-500 hover:scale-[1.03]">
+      <blockquote class="text-lg md:text-xl text-neutral-200 italic">“{{ q.quote }}”</blockquote>
+      <figcaption class="mt-6 flex items-center gap-3">
+        <img src="{{ q.photo }}" alt="" class="w-10 h-10 rounded-full object-cover object-top" eleventy:widths="96" sizes="40px">
+        <span><span class="block text-sm font-semibold">{{ q.name }}</span><span class="block text-xs text-neutral-400">{{ q.role }}</span></span>
+      </figcaption>
+    </figure>
+    {%- endfor %}
+  </div>
+</section>
+
+{% include "partials/cta.njk" %}
+
+<script type="application/ld+json">{{ {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": site.name,
+  "url": site.url,
+  "publisher": { "@id": site.url + "/#organization" }
+} | json | safe }}</script>

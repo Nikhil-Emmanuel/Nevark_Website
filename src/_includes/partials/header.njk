@@ -1,0 +1,43 @@
+{%- set current = (page.url or "") | string | replace(".html", "") -%}
+<header class="site-header fixed inset-x-0 z-50 px-3 sm:px-4 lg:px-8 flex items-start justify-between gap-4 pointer-events-none">
+  <a href="/" class="hidden xl:flex flex-1 items-center h-14 pointer-events-auto font-display text-white text-lg tracking-[0.35em] hover:text-brand-400 transition-colors" aria-label="{{ site.name }} — home">NEVARK</a>
+
+  <nav aria-label="Primary" class="pointer-events-auto w-full lg:w-auto mx-auto bg-black/40 lg:bg-white/5 border border-white/10 rounded-2xl px-4 lg:px-7 py-2.5 lg:py-3 shadow-xl backdrop-blur-md">
+    <div class="flex items-center justify-between lg:justify-center gap-7">
+      <a href="/" class="lg:hidden font-display text-white text-sm tracking-[0.3em] py-2" aria-label="{{ site.name }} — home">NEVARK</a>
+
+      <div class="relative hidden lg:flex items-center gap-7 text-[13px] text-gray-300 font-display tracking-wide whitespace-nowrap" data-nav-links>
+        {%- for item in site.nav %}
+        {%- set active = (item.url == "/" and current == "/") or (item.url != "/" and current.startsWith(item.url)) %}
+        <a href="{{ item.url }}" class="nav-link hover:text-white"{% if active %} aria-current="page"{% endif %}>{{ item.label }}</a>
+        {%- endfor %}
+        <span id="nav-indicator" aria-hidden="true"></span>
+      </div>
+
+      <a href="{{ site.cta.url }}" class="hidden lg:inline-flex items-center gap-2 rounded-full bg-white text-black text-[13px] font-medium px-4 py-2 hover:bg-gray-200 transition-colors"{% if current.startsWith(site.cta.url) %} aria-current="page"{% endif %}>
+        {{ site.cta.label }} {% icon "arrow-right", "w-4 h-4" %}
+      </a>
+
+      <button type="button" class="lg:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 rounded-xl text-white hover:bg-white/10" aria-controls="mobile-menu" aria-expanded="false" data-menu-toggle>
+        <span class="sr-only" data-menu-label>Open menu</span>
+        <span data-menu-open>{% icon "menu", "w-6 h-6" %}</span>
+        <span data-menu-close hidden>{% icon "x", "w-6 h-6" %}</span>
+      </button>
+    </div>
+
+    <div id="mobile-menu" class="lg:hidden" hidden>
+      <ul class="flex flex-col mt-3 pt-3 pb-2 border-t border-white/10 font-display text-sm tracking-wide text-gray-300">
+        {%- for item in site.nav %}
+        {%- set active = (item.url == "/" and current == "/") or (item.url != "/" and current.startsWith(item.url)) %}
+        <li><a href="{{ item.url }}" class="flex items-center min-h-11 py-2 hover:text-white{% if active %} text-white{% endif %}"{% if active %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
+        {%- endfor %}
+        <li><a href="/contact" class="flex items-center min-h-11 py-2 hover:text-white"{% if current.startsWith('/contact') %} aria-current="page"{% endif %}>Contact</a></li>
+      </ul>
+      <a href="{{ site.cta.url }}" class="btn btn-primary w-full mt-2 mb-1 text-sm">{{ site.cta.label }}</a>
+    </div>
+  </nav>
+
+  <a href="https://www.startupindia.gov.in/" target="_blank" rel="noopener" class="hidden xl:flex flex-1 justify-end items-center h-14 pointer-events-auto opacity-90 hover:opacity-100 transition-opacity" aria-label="Recognised by DPIIT under Startup India">
+    <img src="/assets/img/dpiit-logo-startupindia.png" alt="Startup India — DPIIT recognised" class="h-12 w-auto" eleventy:widths="240" sizes="116px" loading="eager">
+  </a>
+</header>

@@ -1,0 +1,54 @@
+{#- expects optional `roleOptions` (collection) and `fixedRole` (string) -#}
+<form class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5" method="POST"
+      action="{{ site.forms.careers }}"
+      data-ajax-form data-ajax-endpoint="{{ site.forms.careers | replace('formsubmit.co/', 'formsubmit.co/ajax/') }}">
+  <input type="hidden" name="_subject" value="Job application{% if fixedRole %}: {{ fixedRole }}{% endif %} – Nevark Technologies">
+  <input type="hidden" name="_template" value="table">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_next" value="{{ site.url }}/thank-you">
+  <div class="hidden" aria-hidden="true"><label>Leave this empty <input type="text" name="_honey" tabindex="-1" autocomplete="off"></label></div>
+
+  <div>
+    <label for="a-name" class="block text-sm mb-2">Full name <span class="text-red-400" aria-hidden="true">*</span></label>
+    <input id="a-name" name="Full Name" type="text" class="field" autocomplete="name" required>
+  </div>
+  <div>
+    <label for="a-email" class="block text-sm mb-2">Email <span class="text-red-400" aria-hidden="true">*</span></label>
+    <input id="a-email" name="Email" type="email" class="field" autocomplete="email" required>
+  </div>
+  <div>
+    <label for="a-phone" class="block text-sm mb-2">Phone</label>
+    <input id="a-phone" name="Phone" type="tel" inputmode="tel" class="field" autocomplete="tel">
+  </div>
+  <div>
+    <label for="a-role" class="block text-sm mb-2">Role</label>
+    {%- if fixedRole %}
+    <input id="a-role" name="Role" type="text" class="field" value="{{ fixedRole }}" readonly>
+    {%- else %}
+    <select id="a-role" name="Role" class="field">
+      <option>General application</option>
+      {%- for j in roleOptions %}<option>{{ j.data.title }}</option>{% endfor %}
+    </select>
+    {%- endif %}
+  </div>
+  <div class="md:col-span-2">
+    <label for="a-cv" class="block text-sm mb-2">CV or portfolio link <span class="text-red-400" aria-hidden="true">*</span></label>
+    <input id="a-cv" name="CV Link" type="url" class="field" placeholder="https://" required>
+  </div>
+  <div class="md:col-span-2">
+    <label for="a-linkedin" class="block text-sm mb-2">LinkedIn profile</label>
+    <input id="a-linkedin" name="LinkedIn" type="url" class="field" placeholder="https://www.linkedin.com/in/...">
+  </div>
+  <div class="md:col-span-2">
+    <label for="a-note" class="block text-sm mb-2">Why Nevark?</label>
+    <textarea id="a-note" name="Message" rows="4" class="field resize-y" placeholder="Tell us what you'd like to build with us."></textarea>
+  </div>
+  <div class="md:col-span-2 flex items-start gap-3 text-sm text-gray-300">
+    <input id="a-consent" name="Consent" value="Agreed to privacy policy" type="checkbox" class="mt-1 h-5 w-5 shrink-0 accent-indigo-500" required>
+    <label for="a-consent">I agree that Nevark may use these details to assess my application, as described in the <a href="/privacy" class="text-brand-400 underline underline-offset-4">Privacy Policy</a>.</label>
+  </div>
+  <div class="md:col-span-2 flex justify-end">
+    <button type="submit" class="btn btn-primary min-w-44" data-submit>Submit application</button>
+  </div>
+  <p class="md:col-span-2 text-sm" role="status" aria-live="polite" data-form-status></p>
+</form>

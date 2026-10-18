@@ -1,0 +1,18 @@
+---
+layout: layouts/base.njk
+---
+<section class="relative px-4 pt-32 md:pt-40 pb-16">
+  <div class="absolute -top-20 -left-24 w-96 h-96 bg-indigo-600/20 blur-[120px] rounded-full pointer-events-none" aria-hidden="true"></div>
+  <div class="relative max-w-3xl mx-auto">
+    <article class="card rounded-2xl p-6 md:p-10 lg:p-12">
+      <header class="mb-8 border-b border-white/10 pb-6">
+        <p class="eyebrow">{{ heroEyebrow or "Legal" }}</p>
+        <h1 class="mt-5 text-3xl md:text-4xl font-semibold tracking-tight text-white">{{ title }}</h1>
+        {%- if updated %}<p class="mt-3 text-sm text-neutral-400">Last updated: <time datetime="{{ updated | isoDate }}">{{ updated | readableDate }}</time></p>{% endif %}
+      </header>
+      <div class="prose-nevark text-sm md:text-base">
+        {{ content | safe }}
+      </div>
+    </article>
+  </div>
+</section>

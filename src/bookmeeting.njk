@@ -1,0 +1,79 @@
+---
+layout: layouts/base.njk
+permalink: /bookmeeting.html
+title: Book a Meeting
+description: Book a complimentary consultation with Nevark Technologies. Tell us about your project and we'll respond within 24 hours.
+scripts: ["/js/forms.js"]
+breadcrumbs: [{ name: "Home", url: "/" }, { name: "Book a Meeting", url: "/bookmeeting" }]
+---
+<section class="relative px-4 md:px-8 pt-32 md:pt-40 pb-20">
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
+    <div class="w-[580px] max-w-full h-[580px] rounded-full bg-white opacity-5 blur-[120px]"></div>
+  </div>
+
+  <div class="relative max-w-4xl mx-auto card rounded-3xl overflow-hidden shadow-[0_0_40px_rgba(255,255,255,0.08)]">
+    <div class="p-6 sm:p-10 md:px-16 md:py-14">
+      <div class="text-center">
+        <p class="eyebrow">Bookings</p>
+        <h1 class="mt-6 text-4xl md:text-5xl font-medium tracking-tight">Connect With Us</h1>
+        <p class="mt-4 text-base md:text-lg text-gray-300 max-w-xl mx-auto">Let's discuss how we can accelerate your workflow. Tell us a bit about you, and we'll find the perfect time.</p>
+      </div>
+
+      <form class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-5" method="POST"
+            action="{{ site.forms.booking }}"
+            data-ajax-form data-ajax-endpoint="{{ site.forms.booking | replace('formsubmit.co/', 'formsubmit.co/ajax/') }}">
+        <input type="hidden" name="_subject" value="New Booking Request from Website – Nevark Technologies">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="{{ site.url }}/thank-you">
+        <div class="hidden" aria-hidden="true"><label>Leave this empty <input type="text" name="_honey" tabindex="-1" autocomplete="off"></label></div>
+
+        <div>
+          <label for="name" class="block text-sm mb-2">Full name <span class="text-red-400" aria-hidden="true">*</span></label>
+          <input id="name" name="Full Name" type="text" class="field" placeholder="Enter your name" autocomplete="name" required>
+        </div>
+        <div>
+          <label for="email" class="block text-sm mb-2">Work email <span class="text-red-400" aria-hidden="true">*</span></label>
+          <input id="email" name="Email" type="email" class="field" placeholder="name@company.com" autocomplete="email" required>
+        </div>
+        <div>
+          <label for="company" class="block text-sm mb-2">Company</label>
+          <input id="company" name="Company" type="text" class="field" placeholder="Company name" autocomplete="organization">
+        </div>
+        <div>
+          <label for="phone" class="block text-sm mb-2">Contact number <span class="text-red-400" aria-hidden="true">*</span></label>
+          <input id="phone" name="Contact Number" type="tel" inputmode="tel" class="field" placeholder="+91 ..." autocomplete="tel" required>
+        </div>
+        <div class="md:col-span-2">
+          <label for="service" class="block text-sm mb-2">What can we help with?</label>
+          <select id="service" name="Service" class="field">
+            <option value="">Select a service (optional)</option>
+            {%- for s in services %}<option>{{ s.title }}</option>{% endfor %}
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="md:col-span-2">
+          <label for="message" class="block text-sm mb-2">Drop your requirements <span class="text-red-400" aria-hidden="true">*</span></label>
+          <textarea id="message" name="Message" rows="5" class="field resize-y" placeholder="Kindly let us know how we can assist you." required></textarea>
+        </div>
+        <div class="md:col-span-2 flex items-start gap-3 text-sm text-gray-300">
+          <input id="consent" name="Consent" value="Agreed to privacy policy" type="checkbox" class="mt-1 h-5 w-5 shrink-0 accent-indigo-500" required>
+          <label for="consent">I agree that Nevark may use these details to respond to my request, as described in the <a href="/privacy" class="text-brand-400 underline underline-offset-4">Privacy Policy</a>.</label>
+        </div>
+
+        <div class="md:col-span-2 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
+          <p class="flex items-center gap-2 text-xs text-gray-400">{% icon "shield-check", "w-4 h-4 text-green-400" %} We never sell or share your details.</p>
+          <button type="submit" class="btn btn-primary min-w-44" data-submit>Book a Meeting</button>
+        </div>
+        <p class="md:col-span-2 text-sm" role="status" aria-live="polite" data-form-status></p>
+      </form>
+    </div>
+
+    <dl class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 border-t border-white/10 text-center text-xs">
+      <div class="py-5 bg-black/60"><dt class="text-gray-400 mb-1">Response time</dt><dd class="text-base font-medium">&lt; 24 hrs</dd></div>
+      <div class="py-5 bg-black/60"><dt class="text-gray-400 mb-1">Avg. call</dt><dd class="text-base font-medium">30 min</dd></div>
+      <div class="py-5 bg-black/60"><dt class="text-gray-400 mb-1">First consultation</dt><dd class="text-base font-medium">Complimentary</dd></div>
+      <div class="py-5 bg-black/60"><dt class="text-gray-400 mb-1">Prefer email?</dt><dd class="text-base font-medium"><a href="mailto:{{ site.email }}" class="hover:text-brand-400">{{ site.email }}</a></dd></div>
+    </dl>
+  </div>
+</section>

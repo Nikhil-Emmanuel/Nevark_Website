@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Full Stack Development",
+    "summary": "End-to-end web applications with scalable backends, modern frontends, and clean system architecture",
+    "icon": "layers",
+    "iconClass": "text-cyan-400",
+    "hoverClass": "hover:border-cyan-400/70",
+    "url": "/industries#technology"
+  },
+  {
+    "title": "Custom Build PC",
+    "summary": "Design and assemble your dream high-performance workstation using our immersive build experience",
+    "icon": "monitor",
+    "iconClass": "text-blue-400",
+    "hoverClass": "hover:border-blue-400/70",
+    "url": "/build-pc"
+  },
+  {
+    "title": "App Development and Hosting",
+    "summary": "Designing, deploying, and hosting reliable mobile and web applications with continuous monitoring and uptime assurance",
+    "icon": "smartphone",
+    "iconClass": "text-green-400",
+    "hoverClass": "hover:border-green-400/70",
+    "url": "/projects/flame-mobile/"
+  },
+  {
+    "title": "Manufacturing Solutions",
+    "summary": "Custom-built digital platforms for manufacturing workflows, automation, and real-time operational control",
+    "icon": "factory",
+    "iconClass": "text-pink-400",
+    "hoverClass": "hover:border-pink-400/70",
+    "url": "/industries#manufacturing"
+  },
+  {
+    "title": "AI and ML Engineering",
+    "summary": "Crafting AI systems and models that invisibly automate operations, extract insights, and power smarter decisions",
+    "icon": "brain",
+    "iconClass": "text-yellow-400",
+    "hoverClass": "hover:border-yellow-400/70",
+    "url": "/projects/flame/"
+  },
+  {
+    "title": "Agricultural Solutions",
+    "summary": "Technology-driven agricultural platforms for monitoring, optimization, and data-led farming operations under one ecosystem",
+    "icon": "sprout",
+    "iconClass": "text-emerald-400",
+    "hoverClass": "hover:border-emerald-400/70",
+    "url": "/industries#agriculture"
+  }
+]

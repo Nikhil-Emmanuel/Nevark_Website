@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Ashok Leyland",
+    "logo": "/assets/img/ashok-leyland-logo.png",
+    "kind": "Client",
+    "url": ""
+  },
+  {
+    "name": "Startup India — DPIIT Recognised",
+    "logo": "/assets/img/dpiit-logo-startupindia.png",
+    "kind": "Recognition",
+    "url": "https://www.startupindia.gov.in/"
+  }
+]

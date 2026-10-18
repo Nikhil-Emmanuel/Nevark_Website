@@ -1,6 +1,24 @@
 {
+  "name": "nevark-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "eleventy --serve --port 8080 --incremental",
+    "build": "eleventy",
+    "check": "node scripts/check-site.mjs && html-validate \"_site/**/*.html\"",
+    "test": "eleventy && node scripts/check-site.mjs && html-validate \"_site/**/*.html\""
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "devDependencies": {
-    "@tailwindcss/cli": "^4.1.18",
-    "tailwindcss": "^4.1.18"
+    "@11ty/eleventy": "^3.1.7",
+    "@11ty/eleventy-img": "^7.0.0",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@tailwindcss/cli": "^4.3.3",
+    "html-minifier-terser": "^7.2.0",
+    "html-validate": "^11.16.4",
+    "lucide-static": "^1.59.0",
+    "tailwindcss": "^4.3.3"
   }
 }

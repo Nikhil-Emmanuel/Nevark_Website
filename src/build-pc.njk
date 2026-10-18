@@ -1,0 +1,108 @@
+---
+layout: layouts/base.njk
+permalink: /build-pc.html
+title: Build Your PC
+description: Custom high-performance gaming PCs and workstations, hand-built by Nevark Technologies. Watch how we craft every machine, part by part, then book your build.
+background: none
+bodyClass: page-build
+scripts: ["/js/build-pc.js"]
+breadcrumbs: [{ name: "Home", url: "/" }, { name: "Build Your PC", url: "/build-pc" }]
+ogImage: /assets/og/nevark-og.jpg
+---
+{%- set stages = [
+  { id: "stage1", icon: "cpu", color: "text-red-400", n: "01", title: "The Foundation", quote: "A masterpiece is only as stable as its core.", text: "We hand-select overbuilt motherboards with premium VRMs to ensure rock-solid stability. Our CPU installation includes thermal paste application techniques that guarantee 100% surface contact for maximum heat dissipation.", side: "left" },
+  { id: "stage2", icon: "brain", color: "text-orange-400", n: "02", title: "Neural Pathways", quote: "Speed is the bridge between thought and action.", text: "We utilize high-frequency, low-latency RAM kits, tuned for XMP/EXPO profiles out of the box. Our NVMe storage solutions are paired with custom heat-spreaders, ensuring your load times remain instantaneous.", side: "right" },
+  { id: "stage3", icon: "zap", color: "text-purple-400", n: "03", title: "The Heartbeat", quote: "Unleashing the raw power of visual excellence.", text: "Power delivery is never an afterthought. We use 80+ Gold and Platinum rated PSUs. Our GPU selection focuses on triple-fan monsters, reinforced with custom anti-sag brackets for longevity.", side: "left" },
+  { id: "stage4", icon: "snowflake", color: "text-red-300", n: "04", title: "Thermal Mastery", quote: "Silent performance, aggressive cooling.", text: "Our signature \"Vortex Airflow\" configuration utilizes positive pressure to keep dust out. Every fan curve is meticulously tuned to provide a whisper-quiet experience without sacrificing stability.", side: "right" }
+] -%}
+
+<!-- Cinematic layer (decorative) -->
+<div class="pc-stage" aria-hidden="true">
+  <video id="bg-video" class="pc-video" muted playsinline preload="none" disableremoteplayback
+         data-src-hd="/video/pc-build-1080.mp4" data-src-sd="/video/pc-build-720.mp4"></video>
+  <div id="video-veil" class="pc-veil"></div>
+  <div id="setup-image-wrap" class="pc-setup">
+    <img id="setup-image" src="/assets/img/pc-setup.png" alt="" fetchpriority="low" sizes="100vw" eleventy:widths="960,1600,1920">
+    <div class="pc-scanline"></div>
+    <div id="setup-particles" class="pc-particles"></div>
+  </div>
+  <div id="still-wrap" class="pc-still">
+    <img src="/assets/img/pc-build-still.jpg" alt="" sizes="100vw" eleventy:widths="960,1600,1920">
+  </div>
+</div>
+
+<div id="load-screen" class="pc-load" hidden>
+  <p class="font-display text-[clamp(20px,5vw,30px)] tracking-[0.5em] text-white">NEVARK</p>
+  <div class="pc-load-bar" role="progressbar" aria-label="Loading the build video" aria-valuemin="0" aria-valuemax="100"><div id="load-bar"></div></div>
+  <p class="text-[10px] tracking-[0.3em] uppercase text-gray-500">Preparing your build</p>
+  <button type="button" class="mt-4 text-xs tracking-[0.25em] uppercase text-gray-400 hover:text-white underline underline-offset-4" data-skip>Skip intro</button>
+</div>
+
+<div id="tap-overlay" class="pc-tap" hidden>
+  <button type="button" class="flex flex-col items-center gap-6" data-tap-start>
+    <span class="pc-tap-icon">{% icon "play", "w-7 h-7 text-red-500" %}</span>
+    <span class="font-display text-[clamp(13px,3vw,16px)] tracking-[0.35em] text-white/80">TAP TO START</span>
+    <span class="text-[11px] tracking-[0.2em] text-white/40">Experience the build</span>
+  </button>
+  <button type="button" class="mt-10 text-xs tracking-[0.25em] uppercase text-gray-400 hover:text-white underline underline-offset-4" data-skip>Skip intro</button>
+</div>
+
+<div id="unlock-flash" class="pc-flash" aria-hidden="true"></div>
+<div id="scroll-bar" class="pc-progress" aria-hidden="true"></div>
+<div id="stage-chip" class="pc-chip" aria-hidden="true"></div>
+<button type="button" id="skip-btn" class="pc-skip" hidden data-skip>Skip intro {% icon "arrow-right", "w-3.5 h-3.5" %}</button>
+
+<!-- Content -->
+<section id="start" class="relative z-10 min-h-[100svh] flex flex-col justify-center items-center text-center px-6 pt-24">
+  <div class="space-y-6 max-w-4xl pc-fade-in">
+    <h1 class="font-display text-5xl md:text-8xl font-bold tracking-tighter leading-none">
+      BUILD YOUR<br>
+      <span class="bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-orange-400 to-purple-500">LEGACY</span>
+    </h1>
+    <p class="text-gray-300 text-base md:text-xl max-w-2xl mx-auto leading-relaxed">Witness the birth of performance. Watch how we craft the ultimate gaming machines — part by part, with surgical precision.</p>
+    <div class="flex justify-center pt-6">
+      <a href="#stage1" class="text-gray-400 animate-bounce" aria-label="Scroll to stage one">{% icon "chevron-down", "w-9 h-9" %}</a>
+    </div>
+  </div>
+</section>
+
+{%- for s in stages %}
+<section id="{{ s.id }}" class="relative z-10 min-h-[120svh] flex items-center px-5 md:px-24{% if s.side == 'right' %} justify-end{% endif %}" aria-labelledby="{{ s.id }}-title">
+  <div class="pc-card reveal from-{{ s.side }} max-w-xl w-full p-8 md:p-14">
+    <div class="{{ s.color }} mb-4 flex items-center gap-3">
+      {% icon s.icon, "w-6 h-6 md:w-7 md:h-7" %}
+      <span class="text-xs font-bold tracking-[0.2em] uppercase">Stage {{ s.n }}</span>
+    </div>
+    <h2 id="{{ s.id }}-title" class="font-display text-3xl md:text-5xl text-white mb-5">{{ s.title }}</h2>
+    <p class="text-gray-300 leading-relaxed text-base md:text-lg mb-5 italic">"{{ s.quote }}"</p>
+    <p class="text-gray-400 leading-relaxed text-sm md:text-lg">{{ s.text }}</p>
+  </div>
+</section>
+{%- endfor %}
+
+<section id="stage5" class="relative z-10 min-h-[100svh] flex flex-col justify-center items-center text-center px-5 py-20" aria-labelledby="stage5-title">
+  <div class="pc-card reveal overflow-hidden w-full max-w-[95%] md:max-w-5xl lg:max-w-6xl p-8 md:p-16 lg:p-20">
+    <div class="text-red-400 mb-6 flex justify-center items-center gap-3">
+      {% icon "award", "w-7 h-7 md:w-8 md:h-8" %}
+      <span class="text-xs font-bold tracking-[0.3em] uppercase">Final Stage</span>
+    </div>
+    <h2 id="stage5-title" class="font-display text-4xl sm:text-5xl md:text-7xl text-white mb-8 leading-none">ASCENSION</h2>
+    <p class="text-gray-400 text-lg md:text-2xl mb-10 md:mb-12 leading-relaxed">Your legacy is forged.<br class="md:hidden"> Every cable hidden, every LED synced,<br>every component tested for 24 hours.</p>
+    <a href="{{ site.forms.pcBuild }}" target="_blank" rel="noopener" class="inline-flex items-center gap-3 bg-gradient-to-r from-red-600 to-purple-600 text-white px-7 py-4 rounded-full font-bold text-base md:text-lg hover:scale-105 active:scale-95 transition-transform">
+      BOOK YOUR BUILD {% icon "arrow-right", "w-5 h-5 md:w-6 md:h-6" %}
+    </a>
+    <div>
+      <button type="button" id="restart-btn" class="pc-replay" hidden>{% icon "rotate-ccw", "w-3.5 h-3.5" %} REPLAY</button>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">{{ {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Custom PC and workstation builds",
+  "serviceType": "Custom computer assembly",
+  "provider": { "@id": site.url + "/#organization" },
+  "areaServed": "IN",
+  "url": site.url + "/build-pc"
+} | json | safe }}</script>

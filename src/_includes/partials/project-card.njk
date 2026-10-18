@@ -1,0 +1,17 @@
+{#- expects `p` (a collection item) -#}
+<article class="card card-hover group relative flex flex-col overflow-hidden reveal" data-industry="{{ p.data.industry | slugifyIndustry }}">
+  <div class="relative aspect-[16/10] overflow-hidden {{ 'bg-white p-3' if p.data.coverBg == 'light' else 'bg-gradient-to-br from-white/5 to-white/0' }} {% if p.data.coverFit == 'contain' and p.data.coverBg != 'light' %}p-6{% endif %}">
+    <img src="{{ p.data.cover }}" alt="{{ p.data.coverAlt }}" class="h-full w-full {{ 'object-contain' if p.data.coverFit == 'contain' else 'object-cover' }} transition-transform duration-700 group-hover:scale-105" sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw">
+  </div>
+  <div class="flex flex-1 flex-col p-6">
+    <div class="flex flex-wrap items-center gap-2 text-xs text-gray-400">
+      <span>{{ p.data.industry }}</span><span aria-hidden="true">·</span><span>{{ p.date | monthYear }}</span>
+      <span class="ml-auto">{% set status = p.data.status %}{% include "partials/status-badge.njk" %}</span>
+    </div>
+    <h3 class="mt-4 text-xl font-semibold text-white">
+      <a href="{{ p.url }}" class="after:absolute after:inset-0 focus-visible:outline-none">{{ p.data.title }}</a>
+    </h3>
+    <p class="mt-2 text-sm text-gray-300 leading-relaxed">{{ p.data.summary }}</p>
+    <span class="mt-auto pt-6 inline-flex items-center gap-2 text-sm font-medium text-brand-400 group-hover:text-white transition-colors">View case study {% icon "arrow-right", "w-4 h-4 transition-transform group-hover:translate-x-1" %}</span>
+  </div>
+</article>

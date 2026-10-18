@@ -1,0 +1,64 @@
+---
+layout: layouts/page.njk
+permalink: /industries.html
+title: Industries
+description: Nevark Technologies builds AI, software and automation for manufacturing, agriculture and technology teams. See our capabilities and case studies by industry.
+heroEyebrow: Industries
+heroTitle: Where our engineering makes a difference
+heroLead: We focus on sectors where real-time data and dependable software change outcomes on the ground, from the production line to the farm.
+breadcrumbs: [{ name: "Home", url: "/" }, { name: "Industries", url: "/industries" }]
+---
+<nav aria-label="Industries on this page" class="px-6">
+  <ul class="max-w-5xl mx-auto flex flex-wrap justify-center gap-2">
+    {%- for ind in industries %}
+    <li><a href="#{{ ind.id }}" class="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 text-sm text-gray-200 hover:bg-white/10">{% icon ind.icon, "w-4 h-4 " + ind.iconClass %}{{ ind.title }}</a></li>
+    {%- endfor %}
+  </ul>
+</nav>
+
+<div class="px-6 py-16 md:py-24 space-y-20 md:space-y-28">
+  {%- for ind in industries %}
+  {%- set work = collections.projects | where("industry", ind.industry) %}
+  <section id="{{ ind.id }}" class="max-w-6xl mx-auto" aria-labelledby="{{ ind.id }}-title">
+    <div class="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-start">
+      <div class="reveal from-left">
+        <span class="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 {{ ind.iconClass }}">{% icon ind.icon, "w-6 h-6" %}</span>
+        <h2 id="{{ ind.id }}-title" class="section-title mt-6">{{ ind.title }}</h2>
+        <p class="mt-4 text-gray-300 leading-relaxed">{{ ind.lead }}</p>
+
+        <h3 class="mt-8 text-sm font-semibold uppercase tracking-[0.18em] text-gray-400">The problems we solve</h3>
+        <ul class="mt-4 space-y-3">
+          {%- for c in ind.challenges %}
+          <li class="flex gap-3 text-gray-200">{% icon "target", "w-5 h-5 mt-0.5 shrink-0 text-red-400" %}<span>{{ c }}</span></li>
+          {%- endfor %}
+        </ul>
+      </div>
+
+      <div class="card p-7 md:p-8 reveal from-right">
+        <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-gray-400">Our capabilities</h3>
+        <ul class="mt-5 grid gap-3 sm:grid-cols-2">
+          {%- for c in ind.capabilities %}
+          <li class="flex gap-3 rounded-xl border border-white/10 bg-black/30 p-4 text-sm text-gray-200">{% icon "check", "w-5 h-5 shrink-0 text-emerald-400" %}<span>{{ c }}</span></li>
+          {%- endfor %}
+        </ul>
+        {%- if ind.id == "technology" %}
+        <a href="/build-pc" class="mt-6 inline-flex items-center gap-2 text-sm text-brand-400 hover:text-white">Explore custom PC builds {% icon "arrow-right", "w-4 h-4" %}</a>
+        {%- endif %}
+      </div>
+    </div>
+
+    {%- if work.length %}
+    <div class="mt-10">
+      <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-gray-400">Case studies</h3>
+      <div class="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {%- for p in work %}{% include "partials/project-card.njk" %}{% endfor %}
+      </div>
+    </div>
+    {%- endif %}
+  </section>
+  {%- endfor %}
+</div>
+
+{%- set ctaTitle = "Don't see your industry?" %}
+{%- set ctaText = "Our engineering travels well. Tell us about your operation and we'll tell you honestly whether we can help." %}
+{% include "partials/cta.njk" %}

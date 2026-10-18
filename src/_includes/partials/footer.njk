@@ -1,0 +1,59 @@
+{%- set gmail = "https://mail.google.com/mail/?view=cm&fs=1&to=" + site.email + "&su=" + (site.emailSubject | urlencode) -%}
+{%- set mailto = "mailto:" + site.email + "?subject=" + (site.emailSubject | urlencode) -%}
+<footer class="relative z-20 mt-16 border-t border-white/10 bg-gradient-to-t from-gray-950 via-gray-950/90 to-transparent px-5 sm:px-8 lg:px-16 pt-16 pb-[max(2rem,env(safe-area-inset-bottom))]">
+  <div class="max-w-7xl mx-auto grid gap-12 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
+    <div class="max-w-sm">
+      <a href="/" class="font-display text-2xl tracking-[0.3em] text-white hover:text-brand-400 transition-colors">NEVARK</a>
+      <p class="mt-4 text-sm text-gray-400 leading-relaxed">{{ site.tagline }} We engineer intelligent software, AI and industrial systems that turn complex data into decisive operational clarity.</p>
+      <div class="mt-6 flex items-center gap-3">
+        <a href="{{ mailto }}" data-gmail="{{ gmail }}" class="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-white/5 text-gray-300 hover:bg-red-600/80 hover:text-white transition" aria-label="Email {{ site.email }}" data-email-link>{% icon "mail", "w-4 h-4" %}</a>
+        <a href="{{ site.social.linkedin }}" target="_blank" rel="noopener" class="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-white/5 text-gray-300 hover:bg-blue-600/80 hover:text-white transition" aria-label="Nevark on LinkedIn">{% icon "linkedin", "w-4 h-4" %}</a>
+        <a href="{{ site.social.instagram }}" target="_blank" rel="noopener" class="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-white/5 text-gray-300 hover:bg-pink-600 hover:text-white transition" aria-label="Nevark on Instagram">{% icon "instagram", "w-4 h-4" %}</a>
+      </div>
+    </div>
+
+    <nav aria-label="Company">
+      <h2 class="text-sm font-semibold text-white">Company</h2>
+      <ul class="mt-4 space-y-1 text-sm text-gray-400">
+        <li><a href="/about" class="inline-flex min-h-9 items-center hover:text-white">About</a></li>
+        <li><a href="/careers" class="inline-flex min-h-9 items-center hover:text-white">Careers</a></li>
+        <li><a href="/contact" class="inline-flex min-h-9 items-center hover:text-white">Contact</a></li>
+        <li><a href="/bookmeeting" class="inline-flex min-h-9 items-center hover:text-white">Book a Meeting</a></li>
+      </ul>
+    </nav>
+
+    <nav aria-label="Work">
+      <h2 class="text-sm font-semibold text-white">Work</h2>
+      <ul class="mt-4 space-y-1 text-sm text-gray-400">
+        <li><a href="/projects" class="inline-flex min-h-9 items-center hover:text-white">Projects</a></li>
+        <li><a href="/industries" class="inline-flex min-h-9 items-center hover:text-white">Industries</a></li>
+        <li><a href="/build-pc" class="inline-flex min-h-9 items-center hover:text-white">Build Your PC</a></li>
+      </ul>
+    </nav>
+
+    <nav aria-label="Trust and legal">
+      <h2 class="text-sm font-semibold text-white">Trust &amp; Legal</h2>
+      <ul class="mt-4 space-y-1 text-sm text-gray-400">
+        <li><a href="/trust" class="inline-flex min-h-9 items-center hover:text-white">Trust &amp; Security</a></li>
+        <li><a href="/privacy" class="inline-flex min-h-9 items-center hover:text-white">Privacy Policy</a></li>
+        <li><a href="/terms-condition" class="inline-flex min-h-9 items-center hover:text-white">Terms of Service</a></li>
+        <li><a href="/accessibility" class="inline-flex min-h-9 items-center hover:text-white">Accessibility</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/10 flex flex-col-reverse md:flex-row md:items-end md:justify-between gap-6 text-xs text-gray-500">
+    <div class="space-y-1.5">
+      <p>© {{ build.year }} {{ site.legalName }}. All Rights Reserved.</p>
+      {%- set ids = [("LLPIN " + site.legal.llpin) if site.legal.llpin, ("GSTIN " + site.legal.gstin) if site.legal.gstin, ("DPIIT Certificate " + site.legal.dpiitCertificate) if site.legal.dpiitCertificate] | select %}
+      {%- if ids | length %}<p>{{ ids | join(" · ") }}</p>{% endif %}
+      <p>
+        {%- if site.address.street %}Registered office: {{ site.address.street }}, {% endif -%}
+        {{ site.city }}, {{ site.region }}{% if site.address.postalCode %} {{ site.address.postalCode }}{% endif %}, {{ site.countryName }}
+      </p>
+    </div>
+    <a href="https://www.startupindia.gov.in/" target="_blank" rel="noopener" class="self-start md:self-auto opacity-75 hover:opacity-100 transition-opacity" aria-label="Recognised by DPIIT under Startup India">
+      <img src="/assets/img/dpiit-logo-startupindia.png" alt="Startup India — DPIIT recognised" class="h-11 w-auto" eleventy:widths="240" sizes="106px">
+    </a>
+  </div>
+</footer>

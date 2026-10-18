@@ -1,0 +1,33 @@
+---
+layout: layouts/base.njk
+---
+<article class="px-6 pt-36 md:pt-44 pb-16">
+  <div class="max-w-3xl mx-auto">
+    <nav aria-label="Breadcrumb" class="text-xs text-gray-400">
+      <ol class="flex flex-wrap items-center gap-2">
+        <li><a href="/careers" class="hover:text-white">Careers</a></li><li aria-hidden="true">/</li><li aria-current="page" class="text-gray-200">{{ title }}</li>
+      </ol>
+    </nav>
+    <h1 class="mt-6 text-4xl md:text-5xl font-semibold tracking-tight">{{ title }}</h1>
+    <p class="mt-4 text-lg text-gray-300">{{ summary }}</p>
+    <ul class="mt-6 flex flex-wrap gap-2 text-sm">
+      {%- for v in [department, location, type, experience] %}{% if v %}<li class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-gray-200">{{ v }}</li>{% endif %}{% endfor %}
+    </ul>
+    <div class="mt-10 card p-6 md:p-10 prose-nevark">{{ content | safe }}</div>
+    <section class="mt-10 card p-6 md:p-10" aria-labelledby="apply-title">
+      <h2 id="apply-title" class="text-2xl font-semibold">Apply for this role</h2>
+      {% set fixedRole = title %}{% include "partials/apply-form.njk" %}
+    </section>
+  </div>
+</article>
+<script type="application/ld+json">{{ {
+  "@context": "https://schema.org",
+  "@type": "JobPosting",
+  "title": title,
+  "description": summary,
+  "datePosted": page.date | isoDate,
+  "validThrough": validThrough | isoDate if validThrough,
+  "employmentType": type | upper | replace("-", "_"),
+  "hiringOrganization": { "@type": "Organization", "name": site.legalName, "sameAs": site.url },
+  "jobLocation": { "@type": "Place", "address": { "@type": "PostalAddress", "addressLocality": site.city, "addressRegion": site.region, "addressCountry": site.country } }
+} | json | safe }}</script>

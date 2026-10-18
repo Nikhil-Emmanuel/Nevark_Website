@@ -1,0 +1,80 @@
+---
+layout: layouts/page.njk
+permalink: /contact.html
+title: Contact
+description: Contact Nevark Technologies — email, phone, office location and social channels. Book a meeting or send us your requirements.
+heroEyebrow: Contact
+heroTitle: Let's talk
+heroLead: Whether it's a new project, a partnership, a press enquiry or a job, we'll get back to you within one business day.
+breadcrumbs: [{ name: "Home", url: "/" }, { name: "Contact", url: "/contact" }]
+---
+{%- set gmail = "https://mail.google.com/mail/?view=cm&fs=1&to=" + site.email + "&su=" + (site.emailSubject | urlencode) -%}
+<section class="px-6 pb-16">
+  <div class="max-w-5xl mx-auto grid gap-6 md:grid-cols-3">
+    <a href="/bookmeeting" class="card card-hover p-7 md:col-span-1 reveal">
+      <span class="w-11 h-11 flex items-center justify-center rounded-full bg-white/10 text-indigo-300">{% icon "calendar", "w-5 h-5" %}</span>
+      <h2 class="mt-5 text-lg font-semibold">Book a meeting</h2>
+      <p class="mt-2 text-sm text-gray-300">A complimentary 30-minute strategy session with our team.</p>
+      <span class="mt-5 inline-flex items-center gap-2 text-sm text-brand-400">Choose a time {% icon "arrow-right", "w-4 h-4" %}</span>
+    </a>
+    <a href="mailto:{{ site.email }}?subject={{ site.emailSubject | urlencode }}" data-email-link data-gmail="{{ gmail }}" class="card card-hover p-7 reveal">
+      <span class="w-11 h-11 flex items-center justify-center rounded-full bg-white/10 text-red-300">{% icon "mail", "w-5 h-5" %}</span>
+      <h2 class="mt-5 text-lg font-semibold">Email</h2>
+      <p class="mt-2 text-sm text-gray-300 break-all">{{ site.email }}</p>
+      <span class="mt-5 inline-flex items-center gap-2 text-sm text-brand-400">Write to us {% icon "arrow-right", "w-4 h-4" %}</span>
+    </a>
+    {%- if site.phone %}
+    <a href="tel:{{ site.phone | replace(' ', '') }}" class="card card-hover p-7 reveal">
+      <span class="w-11 h-11 flex items-center justify-center rounded-full bg-white/10 text-emerald-300">{% icon "phone", "w-5 h-5" %}</span>
+      <h2 class="mt-5 text-lg font-semibold">Phone</h2>
+      <p class="mt-2 text-sm text-gray-300">{{ site.phone }}</p>
+      <span class="mt-5 inline-flex items-center gap-2 text-sm text-brand-400">Call us {% icon "arrow-right", "w-4 h-4" %}</span>
+    </a>
+    {%- else %}
+    <a href="{{ site.social.linkedin }}" target="_blank" rel="noopener" class="card card-hover p-7 reveal">
+      <span class="w-11 h-11 flex items-center justify-center rounded-full bg-white/10 text-blue-300">{% icon "linkedin", "w-5 h-5" %}</span>
+      <h2 class="mt-5 text-lg font-semibold">LinkedIn</h2>
+      <p class="mt-2 text-sm text-gray-300">Follow our work and company updates.</p>
+      <span class="mt-5 inline-flex items-center gap-2 text-sm text-brand-400">Nevark on LinkedIn {% icon "external-link", "w-4 h-4" %}</span>
+    </a>
+    {%- endif %}
+  </div>
+</section>
+
+<section class="px-6 pb-20" aria-labelledby="office-title">
+  <div class="max-w-5xl mx-auto grid gap-6 md:grid-cols-2">
+    <div class="card p-7 md:p-8 reveal">
+      <h2 id="office-title" class="text-lg font-semibold flex items-center gap-2">{% icon "map-pin", "w-5 h-5 text-pink-300" %} Office</h2>
+      <address class="mt-4 not-italic text-gray-300 leading-relaxed">
+        {{ site.legalName }}<br>
+        {%- if site.address.street %}{{ site.address.street }}<br>{% endif %}
+        {{ site.city }}, {{ site.region }}{% if site.address.postalCode %} {{ site.address.postalCode }}{% endif %}<br>
+        {{ site.countryName }}
+      </address>
+      <p class="mt-5 text-sm text-gray-400 flex items-center gap-2">{% icon "clock", "w-4 h-4" %} {{ site.hours }}</p>
+      {%- if site.address.street %}
+      <a href="https://www.google.com/maps/search/?api=1&query={{ (site.legalName + ', ' + site.address.street + ', ' + site.city) | urlencode }}" target="_blank" rel="noopener" class="mt-5 inline-flex items-center gap-2 text-sm text-brand-400 hover:text-white">Open in Google Maps {% icon "external-link", "w-4 h-4" %}</a>
+      {%- endif %}
+    </div>
+    <div class="card p-7 md:p-8 reveal">
+      <h2 class="text-lg font-semibold">Talk to the right team</h2>
+      <ul class="mt-4 space-y-4 text-sm text-gray-300">
+        <li class="flex gap-3">{% icon "briefcase", "w-5 h-5 shrink-0 text-indigo-300" %}<span><strong class="text-white font-medium">New projects &amp; partnerships</strong><br><a href="/bookmeeting" class="text-brand-400 hover:text-white">Book a meeting</a> or email {{ site.email }}</span></li>
+        <li class="flex gap-3">{% icon "monitor", "w-5 h-5 shrink-0 text-blue-300" %}<span><strong class="text-white font-medium">Custom PC builds</strong><br><a href="{{ site.forms.pcBuild }}" target="_blank" rel="noopener" class="text-brand-400 hover:text-white">Request a build</a></span></li>
+        <li class="flex gap-3">{% icon "users", "w-5 h-5 shrink-0 text-emerald-300" %}<span><strong class="text-white font-medium">Careers</strong><br><a href="/careers" class="text-brand-400 hover:text-white">See open roles</a></span></li>
+        <li class="flex gap-3">{% icon "shield-check", "w-5 h-5 shrink-0 text-amber-300" %}<span><strong class="text-white font-medium">Security &amp; privacy</strong><br><a href="/trust#disclosure" class="text-brand-400 hover:text-white">Report a vulnerability</a> · <a href="/privacy" class="text-brand-400 hover:text-white">Data requests</a></span></li>
+      </ul>
+      <div class="mt-6 flex gap-3">
+        <a href="{{ site.social.linkedin }}" target="_blank" rel="noopener" class="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-white/5 hover:bg-blue-600/80" aria-label="Nevark on LinkedIn">{% icon "linkedin", "w-4 h-4" %}</a>
+        <a href="{{ site.social.instagram }}" target="_blank" rel="noopener" class="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-white/5 hover:bg-pink-600" aria-label="Nevark on Instagram">{% icon "instagram", "w-4 h-4" %}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">{{ {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "url": site.url + "/contact",
+  "mainEntity": { "@id": site.url + "/#organization" }
+} | json | safe }}</script>

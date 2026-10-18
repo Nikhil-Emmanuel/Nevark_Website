@@ -1,0 +1,72 @@
+{
+  "name": "Nevark Technologies",
+  "shortName": "Nevark",
+  "legalName": "Nevark Technologies LLP",
+  "tagline": "Dream. Create. Innovate.",
+  "description": "Nevark Technologies provides AI-ready software engineering, strategic IT consulting, and secure digital solutions designed for next-generation enterprises.",
+  "url": "https://nevark.in",
+  "locale": "en_IN",
+  "themeColor": "#000000",
+  "email": "office@nevark.in",
+  "emailSubject": "Nevark Technologies - Website Mailer",
+  "phone": "",
+  "city": "Hosur",
+  "region": "Tamil Nadu",
+  "country": "IN",
+  "countryName": "India",
+  "address": {
+    "street": "",
+    "postalCode": ""
+  },
+  "hours": "Monday – Saturday, 9:30 AM – 6:30 PM IST",
+  "legal": {
+    "llpin": "",
+    "gstin": "",
+    "dpiitCertificate": "",
+    "jurisdiction": "Hosur, Tamil Nadu"
+  },
+  "grievanceOfficer": {
+    "name": "",
+    "email": "office@nevark.in"
+  },
+  "securityContact": "office@nevark.in",
+  "forms": {
+    "booking": "https://formsubmit.co/office@nevark.in",
+    "careers": "https://formsubmit.co/office@nevark.in",
+    "pcBuild": "https://forms.gle/FYTjVcSxD6S12Fan9"
+  },
+  "social": {
+    "linkedin": "https://www.linkedin.com/company/nevark-technologies",
+    "instagram": "https://www.instagram.com/nevark_groups__"
+  },
+  "nav": [
+    {
+      "label": "Home",
+      "url": "/"
+    },
+    {
+      "label": "Projects",
+      "url": "/projects"
+    },
+    {
+      "label": "Industries",
+      "url": "/industries"
+    },
+    {
+      "label": "Build Your PC",
+      "url": "/build-pc"
+    },
+    {
+      "label": "About",
+      "url": "/about"
+    },
+    {
+      "label": "Careers",
+      "url": "/careers"
+    }
+  ],
+  "cta": {
+    "label": "Book a Meeting",
+    "url": "/bookmeeting"
+  }
+}
