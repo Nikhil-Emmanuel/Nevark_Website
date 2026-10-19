@@ -4,9 +4,10 @@ fullTitle: "Reimagining Agriculture Through Intelligent Automation, Robotics, an
 description: "Nevark's concept for a multi-functional agricultural robot and a connected platform linking farmers, equipment vendors, cold storage and food distributors."
 summary: "A multi-functional agricultural robot and a connected platform that augments farmers across the whole farming lifecycle."
 date: 2025-12-10
-order: 3
+order: 7
 industry: Agriculture
 status: "Concept / R&D"
+kind: product
 release: v1.0.0
 client: ""
 deliverables: ["Robotics", "IoT Sensing", "Platform Engineering"]

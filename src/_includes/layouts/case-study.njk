@@ -25,7 +25,10 @@ layout: layouts/base.njk
         {%- if release %}<span class="eyebrow">Release {{ release }}</span>{% endif %}
       </div>
 
-      <h1 class="mt-6 text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight leading-[1.05] text-white">{{ title }}</h1>
+      <div class="mt-6 flex items-center gap-4 md:gap-5">
+        {%- if logo %}<img src="{{ logo }}" alt="" class="w-14 h-14 md:w-16 md:h-16 shrink-0 rounded-2xl object-contain bg-white/5 ring-1 ring-white/10" loading="eager" eleventy:widths="128" sizes="64px">{% endif %}
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight leading-[1.05] text-white">{{ title }}</h1>
+      </div>
       {%- if fullTitle %}<p class="mt-4 text-lg md:text-xl text-gray-300">{{ fullTitle }}</p>{% endif %}
       <p class="mt-6 max-w-3xl text-base md:text-lg text-gray-400 leading-relaxed">{{ summary }}</p>
 
@@ -37,7 +40,13 @@ layout: layouts/base.njk
         <div class="bg-black/60 p-4 md:p-5"><dt class="text-gray-400 text-xs uppercase tracking-wider">Industry</dt><dd class="mt-1 text-white">{{ industry }}</dd></div>
         <div class="bg-black/60 p-4 md:p-5"><dt class="text-gray-400 text-xs uppercase tracking-wider">Released</dt><dd class="mt-1 text-white"><time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time></dd></div>
         <div class="bg-black/60 p-4 md:p-5"><dt class="text-gray-400 text-xs uppercase tracking-wider">Status</dt><dd class="mt-1 text-white">{{ status }}</dd></div>
-        <div class="bg-black/60 p-4 md:p-5"><dt class="text-gray-400 text-xs uppercase tracking-wider">{{ "Client" if client else "Version" }}</dt><dd class="mt-1 text-white">{{ client or release }}</dd></div>
+        {%- if client %}
+        <div class="bg-black/60 p-4 md:p-5"><dt class="text-gray-400 text-xs uppercase tracking-wider">Client</dt><dd class="mt-1 text-white">{{ client }}</dd></div>
+        {%- elif kind == "product" %}
+        <div class="bg-black/60 p-4 md:p-5"><dt class="text-gray-400 text-xs uppercase tracking-wider">Built by</dt><dd class="mt-1 text-white">Nevark <span class="text-gray-400">(in-house product)</span></dd></div>
+        {%- else %}
+        <div class="bg-black/60 p-4 md:p-5"><dt class="text-gray-400 text-xs uppercase tracking-wider">Version</dt><dd class="mt-1 text-white">{{ release }}</dd></div>
+        {%- endif %}
       </dl>
     </div>
   </header>
@@ -77,6 +86,7 @@ layout: layouts/base.njk
         {%- for g in gallery %}
         <figure class="card overflow-hidden reveal {% if g.wide %}sm:col-span-full bg-white{% else %}p-6 bg-gradient-to-br from-indigo-500/10 to-purple-500/5{% endif %}">
           <img src="{{ g.src }}" alt="{{ g.alt }}" class="w-full {{ 'h-auto' if g.wide else 'max-h-[520px] object-contain' }}" sizes="{{ '(min-width: 1024px) 1024px, 100vw' if g.wide else '(min-width: 640px) 33vw, 100vw' }}">
+          {%- if g.caption %}<figcaption class="mt-4 text-center text-xs uppercase tracking-[0.18em] text-gray-400">{{ g.caption }}</figcaption>{% endif %}
         </figure>
         {%- endfor %}
       </div>
@@ -126,7 +136,7 @@ layout: layouts/base.njk
   "alternativeHeadline": fullTitle,
   "description": description,
   "datePublished": page.date | isoDate,
-  "image": cover | absoluteUrl(site.url),
+  "image": ogImage | absoluteUrl(site.url),
   "url": page.url | absoluteUrl(site.url),
   "creator": { "@id": site.url + "/#organization" },
   "about": industry,

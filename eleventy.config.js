@@ -111,6 +111,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("breadcrumbList", (crumbs, base) =>
     crumbs.map((c, i) => ({ "@type": "ListItem", position: i + 1, name: c.name, item: new URL(c.url, base).href })));
   eleventyConfig.addFilter("where", (arr, key, value) => (arr || []).filter((x) => x.data?.[key] === value || x[key] === value));
+  eleventyConfig.addFilter("statusIncludes", (arr, text) => (arr || []).filter((x) => String(x.data.status || "").includes(text)));
   eleventyConfig.addFilter("bySlugs", (arr, slugs = []) => slugs.map((s) => (arr || []).find((x) => x.fileSlug === s)).filter(Boolean));
   eleventyConfig.addFilter("uniqueBy", (arr, key) => [...new Set((arr || []).map((x) => x.data[key]))]);
   eleventyConfig.addFilter("slugifyIndustry", (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""));

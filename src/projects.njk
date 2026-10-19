@@ -19,7 +19,7 @@ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Projects", url: "/projects" }
     <dl class="mt-10 grid grid-cols-3 max-w-xl gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 text-center">
       <div class="bg-black/60 p-4"><dt class="text-xs text-gray-400">Projects</dt><dd class="mt-1 text-2xl font-semibold">{{ collections.projects.length }}</dd></div>
       <div class="bg-black/60 p-4"><dt class="text-xs text-gray-400">Industries</dt><dd class="mt-1 text-2xl font-semibold">{{ industriesList.length }}</dd></div>
-      <div class="bg-black/60 p-4"><dt class="text-xs text-gray-400">In production</dt><dd class="mt-1 text-2xl font-semibold">{{ (collections.projects | where("status", "Deployed")).length }}</dd></div>
+      <div class="bg-black/60 p-4"><dt class="text-xs text-gray-400">In production</dt><dd class="mt-1 text-2xl font-semibold">{{ (collections.projects | statusIncludes("Deployed")).length }}</dd></div>
     </dl>
   </div>
 </section>
@@ -45,7 +45,7 @@ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Projects", url: "/projects" }
   <div class="max-w-6xl mx-auto card p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
     <div>
       <h2 id="by-industry" class="text-2xl font-semibold">Explore by industry</h2>
-      <p class="mt-2 text-gray-300">See how our capabilities map to manufacturing, agriculture and technology services.</p>
+      <p class="mt-2 text-gray-300">See how our capabilities map to manufacturing, logistics, smart homes, food, agriculture and technology services.</p>
     </div>
     <a href="/industries" class="btn btn-ghost shrink-0">View industries {% icon "arrow-right", "w-4 h-4" %}</a>
   </div>

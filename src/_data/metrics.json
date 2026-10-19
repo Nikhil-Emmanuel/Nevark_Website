@@ -1,5 +1,5 @@
 [
   { "value": 2, "suffix": "", "label": "Years in AI Market", "icon": "brain-circuit" },
-  { "value": 1, "suffix": "", "label": "Business Partners", "icon": "handshake" },
+  { "value": 2, "suffix": "", "label": "Business Partners", "icon": "handshake" },
   { "value": 300, "suffix": "+", "label": "Products Installed", "icon": "package" }
 ]

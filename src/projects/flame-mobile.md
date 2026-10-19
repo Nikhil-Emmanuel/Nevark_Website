@@ -4,9 +4,10 @@ fullTitle: "Real-Time Industrial Visibility, From the Industrial Floor to the Pa
 description: "F.L.A.M.E Mobile brings live plant conditions, alerts and equipment status from the F.L.A.M.E platform to engineers' and leaders' phones in real time."
 summary: "The mobile companion to F.L.A.M.E: live plant conditions, equipment status and anomaly alerts streamed straight to handheld devices."
 date: 2025-11-30
-order: 2
+order: 4
 industry: Manufacturing
 status: Deployed
+kind: client
 release: v1.2.0
 client: ""
 partOf: "flame"

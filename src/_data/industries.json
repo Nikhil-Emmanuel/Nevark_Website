@@ -19,6 +19,63 @@
     ]
   },
   {
+    "id": "logistics",
+    "industry": "Logistics",
+    "title": "Logistics & Transportation",
+    "icon": "truck",
+    "iconClass": "text-sky-400",
+    "lead": "Digital freight platforms that match loads to trucks, keep every trip visible and settle payments only when delivery is proven.",
+    "challenges": [
+      "Loads matched to trucks over phone calls and middlemen",
+      "No live view of a truck once it leaves the yard",
+      "Payment disputes over what was delivered, and when"
+    ],
+    "capabilities": [
+      "Load marketplaces with instant accept or reverse-auction bidding",
+      "Driver apps with live GPS tracking and route maps",
+      "OTP-verified proof of delivery",
+      "Escrow-style payments with automatic carrier payouts"
+    ]
+  },
+  {
+    "id": "smart-home",
+    "industry": "Smart Home",
+    "title": "Smart Home & IoT",
+    "icon": "house-wifi",
+    "iconClass": "text-amber-300",
+    "lead": "Local-first home automation that fits the wiring people already have, from the board behind the switch to the app in their hand.",
+    "challenges": [
+      "Smart devices that stop working when the internet drops",
+      "Retrofits that mean replacing every switch",
+      "No clear picture of where the electricity goes"
+    ],
+    "capabilities": [
+      "ESP32-based boards that mesh over their own Wi-Fi",
+      "Room-by-room control of lights, fans, ACs, sockets and locks",
+      "Live energy monitoring with limits and alerts",
+      "Guided, secure device setup"
+    ]
+  },
+  {
+    "id": "food",
+    "industry": "Food",
+    "title": "Food & Consumer",
+    "icon": "utensils",
+    "iconClass": "text-orange-300",
+    "lead": "Ordering, commerce and traceability platforms for canteens, food brands and the people they feed.",
+    "challenges": [
+      "Peak-hour queues at canteens and food counters",
+      "Shoppers who can't tell where a pack came from",
+      "Small vendors without the tools to see their own sales"
+    ],
+    "capabilities": [
+      "Order-ahead apps with in-app UPI payments and pickup tokens",
+      "Vendor dashboards with live order queues and sales exports",
+      "QR traceability for every pack",
+      "Direct-to-home commerce apps for food brands"
+    ]
+  },
+  {
     "id": "agriculture",
     "industry": "Agriculture",
     "title": "Agriculture & AgriTech",

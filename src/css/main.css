@@ -292,6 +292,9 @@
   .page-about main { font-family: var(--font-display); }
   .about-scene { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -10; background: #0a0a0a; pointer-events: none; }
   .about-chapter { min-height: 100svh; display: flex; align-items: center; justify-content: center; padding-inline: 1.5rem; }
+  /* The hero clears the fixed nav, so the amber title never sits under it */
+  .about-hero { padding-top: 7.5rem; padding-bottom: 3rem; }
+  @media (min-width: 768px) { .about-hero { padding-top: 9.5rem; } }
   .about-quote { min-height: 24rem; display: flex; align-items: center; justify-content: center; padding-inline: 1.5rem; }
   @media (min-width: 768px) { .about-chapter, .about-quote { padding-inline: 2rem; } }
   .text-backdrop {

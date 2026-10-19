@@ -7,6 +7,7 @@ date: 2025-08-30
 order: 1
 industry: Manufacturing
 status: Deployed
+kind: client
 release: v5.0.1
 # Client name: fill in only if the client has agreed to be named publicly
 client: ""

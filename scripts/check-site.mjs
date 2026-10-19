@@ -57,6 +57,13 @@ for (const file of htmlFiles) {
     if (target && !fs.readFileSync(target, "utf8").includes(`id="${m[2]}"`)) errors.push(`${rel}: link to missing anchor ${m[1]}#${m[2]}`);
   }
 
+  // Link previews: og:image must point at a file we actually publish
+  for (const m of html.matchAll(/<meta[^>]*property="og:image"[^>]*>/g)) {
+    const url = (m[0].match(/content="([^"]+)"/) || [])[1] || "";
+    const local = url.replace(/^https:\/\/(www\.)?nevark\.in/, "");
+    if (local.startsWith("/") && !resolves(local)) errors.push(`${rel}: og:image not published ${local}`);
+  }
+
   // CSP-safe markup
   for (const m of html.matchAll(/<script(?![^>]*\bsrc=)([^>]*)>/g)) {
     if (!/type="application\/ld\+json"/.test(m[1])) errors.push(`${rel}: inline <script> blocked by CSP`);
