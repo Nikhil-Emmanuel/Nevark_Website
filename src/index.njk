@@ -131,7 +131,7 @@ scripts: ["/js/waves.js"]
     <figure class="card p-6 md:p-10 reveal transition-transform duration-500 hover:scale-[1.03]">
       <blockquote class="text-lg md:text-xl text-neutral-200 italic">“{{ q.quote }}”</blockquote>
       <figcaption class="mt-6 flex items-center gap-3">
-        <img src="{{ q.photo }}" alt="" class="w-10 h-10 rounded-full object-cover object-top" eleventy:widths="96" sizes="40px">
+        <img src="{{ q.photo }}" alt="" class="w-10 h-10 rounded-full object-cover {{ q.photoClass or 'object-top' }}" eleventy:widths="96" sizes="40px">
         <span><span class="block text-sm font-semibold">{{ q.name }}</span><span class="block text-xs text-neutral-400">{{ q.role }}</span></span>
       </figcaption>
     </figure>
