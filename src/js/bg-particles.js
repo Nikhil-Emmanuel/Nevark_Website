@@ -1,7 +1,8 @@
 /* Nevark — lightweight particle background.
    Same look as the original background-3d.js, with fixes for phones and low-end devices:
    fewer particles on weak hardware (the old code gave them 500), ~30fps on mobile,
-   pauses when hidden/off-screen, and a static frame for prefers-reduced-motion. */
+   pauses when the tab is hidden. It animates even when the OS asks for reduced motion,
+   as the original site did (Windows turns that on with "Animation effects" off). */
 (function () {
   const container = document.getElementById("bg3d-container");
   if (!container) return;
@@ -11,7 +12,6 @@
   if (!ctx) return;
   container.appendChild(canvas);
 
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const lowEnd = (navigator.deviceMemory && navigator.deviceMemory < 4) ||
     (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4);
   let isMobile = window.innerWidth < 768;
@@ -102,23 +102,19 @@
   }
 
   function start() {
-    if (running || reduceMotion) return;
+    if (running) return;
     running = true;
     rafId = requestAnimationFrame(loop);
   }
   function stop() { running = false; cancelAnimationFrame(rafId); }
 
   resize();
-  if (reduceMotion) {
-    for (let i = 0; i < 40; i++) draw(); // settle into a still frame
-  } else {
-    start();
-  }
+  start();
 
   let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => { resize(); if (reduceMotion) draw(); }, 250);
+    resizeTimer = setTimeout(resize, 250);
   }, { passive: true });
 
   document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));

@@ -84,5 +84,6 @@
   <script src="{{ '/js/site.js' | hashed }}" defer></script>
   {%- if background != "none" %}<script src="{{ '/js/bg-particles.js' | hashed }}" defer></script>{% endif %}
   {%- for s in scripts %}<script src="{{ s | hashed }}" defer></script>{% endfor %}
+  {%- for s in moduleScripts %}<script type="module" src="{{ s | hashed }}"></script>{% endfor %}
 </body>
 </html>

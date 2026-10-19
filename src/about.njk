@@ -4,11 +4,16 @@ permalink: /about.html
 title: About
 description: Nevark Technologies builds intelligent systems at the intersection of AI, machine learning and real-world industrial engineering. Meet the company, our principles and our journey.
 breadcrumbs: [{ name: "Home", url: "/" }, { name: "About", url: "/about" }]
+background: none
+bodyClass: page-about
+moduleScripts: ["/js/about-scene.js"]
 ---
+{#- The original cinematic About page: Three.js wireframe parallax behind full-screen chapters.
+    Scene and scroll animations live in src/_scripts/about-scene.js (bundled to /js/about-scene.js). -#}
 {%- set chapters = [
-  { title: "Intelligent Foundations", text: "Our work focuses on predictive intelligence, flow-based analytics, and scalable system design, engineered to integrate seamlessly into existing industrial environments.", quote: "Innovation matters only when it solves real problems." },
-  { title: "Built for Industry", text: "From predictive maintenance to real-time monitoring, our solutions reduce downtime, uncover hidden inefficiencies, and enable proactive, data-driven decision-making.", quote: "Data becomes powerful when learning never stops." },
-  { title: "Vision & Purpose", text: "We envision intelligent manufacturing ecosystems powered by transparent data, continuous learning, and technology that scales responsibly with real operational needs.", quote: "Sustainable growth begins with operational clarity." }
+  { title: "Intelligent<br>Foundations", text: "Our work focuses on predictive intelligence, flow-based analytics, and scalable system design—engineered to integrate seamlessly into existing industrial environments.", quote: "Data becomes powerful when learning never stops.", quoteClass: "text-cyan-400" },
+  { title: "Built for<br>Industry", text: "From predictive maintenance to real-time monitoring, our solutions reduce downtime, uncover hidden inefficiencies, and enable proactive, data-driven decision-making.", quote: "Sustainable growth begins with operational clarity.", quoteClass: "text-rose-400" },
+  { title: "Vision<br>&amp; Purpose", text: "We envision intelligent manufacturing ecosystems powered by transparent data, continuous learning, and technology that scales responsibly with real operational needs.", quote: "Let intelligence lead the way forward.", quoteClass: "text-emerald-400" }
 ] -%}
 {%- set values = [
   { icon: "target", title: "Solve real problems", text: "We start from the operation, not the technology. If it doesn't change an outcome on the ground, we don't build it." },
@@ -17,105 +22,108 @@ breadcrumbs: [{ name: "Home", url: "/" }, { name: "About", url: "/about" }]
   { icon: "users", title: "Trust smart people", text: "We hire people who tell us what to do, and we give them the room to do it." }
 ] -%}
 
-<!-- Intro -->
-<section class="relative px-6 pt-36 md:pt-48 pb-16 md:pb-24 overflow-hidden">
-  <div class="absolute -top-10 -left-24 w-96 h-96 bg-indigo-600/20 blur-[120px] rounded-full pointer-events-none" aria-hidden="true"></div>
-  <div class="absolute bottom-0 -right-16 w-72 h-72 bg-purple-500/20 blur-[100px] rounded-full pointer-events-none" aria-hidden="true"></div>
-  <div class="relative max-w-6xl mx-auto">
-    <p class="eyebrow">About us</p>
-    <h1 class="mt-6 text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight leading-[0.95] text-white">About Nevark<br>Technologies</h1>
-    <p class="mt-10 max-w-3xl text-xl md:text-2xl leading-relaxed text-zinc-300 font-medium">We build intelligent systems at the intersection of AI, machine learning, and real-world industrial engineering, turning complex data into decisive operational intelligence.</p>
-    <div class="mt-10 flex flex-wrap items-center gap-6">
-      <a href="/bookmeeting" class="btn btn-primary">Collaborate with us {% icon "arrow-right", "w-4 h-4" %}</a>
-      <a href="https://www.startupindia.gov.in/" target="_blank" rel="noopener" class="inline-flex items-center gap-3 text-sm text-gray-400 hover:text-white">
-        <img src="/assets/img/dpiit-logo-startupindia.png" alt="" class="h-9 w-auto" eleventy:widths="240" sizes="88px">
-        Recognised by DPIIT under Startup India
-      </a>
-    </div>
-  </div>
-</section>
+<canvas id="about-scene" class="about-scene" aria-hidden="true"></canvas>
 
-<!-- Story chapters -->
-<div class="px-6">
-  {%- for c in chapters %}
-  <section class="max-w-6xl mx-auto py-16 md:py-24 border-t border-white/10 grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center" aria-labelledby="chapter-{{ loop.index }}">
-    <div class="reveal from-left">
-      <p class="text-xs font-semibold tracking-[0.2em] uppercase text-brand-400">0{{ loop.index }}</p>
-      <h2 id="chapter-{{ loop.index }}" class="mt-4 text-4xl md:text-6xl font-bold tracking-tight text-white leading-[1.02]">{{ c.title }}</h2>
-      <p class="mt-6 text-lg md:text-xl leading-relaxed text-zinc-300">{{ c.text }}</p>
-    </div>
-    <blockquote class="reveal from-right text-2xl md:text-3xl text-zinc-400 italic font-medium leading-snug md:pl-10 md:border-l md:border-white/10">“{{ c.quote }}”</blockquote>
-  </section>
-  {%- endfor %}
+<div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+  <div class="w-96 h-96 bg-indigo-600/20 blur-[120px] rounded-full absolute -top-20 -left-24"></div>
+  <div class="w-72 h-72 bg-purple-500/20 blur-[100px] rounded-full absolute bottom-10 -right-16"></div>
 </div>
 
-<!-- Values -->
-<section class="px-6 py-20 md:py-28 border-t border-white/10" aria-labelledby="values-title">
-  <div class="max-w-6xl mx-auto">
-    <h2 id="values-title" class="section-title">What we stand for</h2>
-    <p class="mt-3 text-gray-400">“Let intelligence lead the way forward.”</p>
-    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {%- for v in values %}
-      <div class="card p-6 reveal">
-        <span class="w-11 h-11 flex items-center justify-center rounded-full bg-white/10 text-indigo-300">{% icon v.icon, "w-5 h-5" %}</span>
-        <h3 class="mt-5 text-lg font-semibold">{{ v.title }}</h3>
-        <p class="mt-2 text-sm text-gray-300 leading-relaxed">{{ v.text }}</p>
+<div class="about-story relative">
+
+  <!-- Section 1 -->
+  <section class="about-chapter" data-fx>
+    <div class="max-w-7xl">
+      <h1 class="fx text-backdrop hero-title text-4xl sm:text-6xl md:text-9xl font-bold leading-tight mb-8 md:mb-12 tracking-tight">About Nevark<br>Technologies</h1>
+      <p class="fx fx-sub text-backdrop hero-subtext text-lg sm:text-xl md:text-3xl leading-relaxed max-w-4xl font-medium">We build intelligent systems at the intersection of AI, machine learning, and real-world industrial engineering—turning complex data into decisive operational intelligence.</p>
+    </div>
+  </section>
+
+  <!-- Quote 1 -->
+  <div class="about-quote" data-fx>
+    <p class="fx fx-quote text-backdrop text-violet-400 text-2xl sm:text-3xl md:text-4xl text-center max-w-5xl italic font-medium">“Innovation matters only when it solves real problems.”</p>
+  </div>
+
+  {%- for c in chapters %}
+  <section class="about-chapter" data-fx aria-labelledby="chapter-{{ loop.index }}">
+    <div class="max-w-7xl">
+      <h2 id="chapter-{{ loop.index }}" class="fx text-backdrop text-4xl sm:text-6xl md:text-9xl font-bold leading-tight mb-8 md:mb-12 text-white tracking-tight">{{ c.title | safe }}</h2>
+      <p class="fx fx-sub text-backdrop text-lg sm:text-xl md:text-3xl leading-relaxed max-w-4xl text-zinc-300 font-medium">{{ c.text }}</p>
+    </div>
+  </section>
+
+  <div class="about-quote" data-fx>
+    <p class="fx fx-quote text-backdrop {{ c.quoteClass }} text-2xl sm:text-3xl md:text-4xl text-center max-w-5xl italic font-medium">“{{ c.quote }}”</p>
+  </div>
+  {%- endfor %}
+
+  <!-- Values -->
+  <section class="px-6 md:px-8 py-24 md:py-32" data-fx aria-labelledby="values-title">
+    <div class="max-w-7xl mx-auto">
+      <h2 id="values-title" class="fx text-backdrop inline-block text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white">What we<br>stand for</h2>
+      <div class="fx fx-sub mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {%- for v in values %}
+        <div class="about-card p-6">
+          <span class="w-11 h-11 flex items-center justify-center rounded-full bg-white/10 text-indigo-300">{% icon v.icon, "w-5 h-5" %}</span>
+          <h3 class="mt-5 text-lg text-white">{{ v.title }}</h3>
+          <p class="mt-2 font-sans text-sm text-gray-300 leading-relaxed">{{ v.text }}</p>
+        </div>
+        {%- endfor %}
       </div>
-      {%- endfor %}
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Milestones -->
-<section class="px-6 py-20 md:py-28 border-t border-white/10" aria-labelledby="journey-title">
-  <div class="max-w-4xl mx-auto">
-    <h2 id="journey-title" class="section-title">Our journey</h2>
-    <ol class="mt-12 relative border-l border-white/15 ml-2 space-y-10">
-      {%- for m in milestones | sort(false, false, "date") %}
-      <li class="relative pl-8 reveal">
-        <span class="absolute -left-[7px] top-1.5 w-3.5 h-3.5 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 ring-4 ring-black" aria-hidden="true"></span>
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-brand-400"><time datetime="{{ m.date }}">{{ m.label }}</time></p>
-        <h3 class="mt-2 text-lg font-semibold">{{ m.title }}</h3>
-        <p class="mt-1 text-gray-300">{{ m.text }}</p>
-      </li>
-      {%- endfor %}
-    </ol>
-  </div>
-</section>
-
-{%- if team.length %}
-<!-- Leadership -->
-<section id="leadership" class="px-6 py-20 md:py-28 border-t border-white/10" aria-labelledby="leadership-title">
-  <div class="max-w-6xl mx-auto">
-    <h2 id="leadership-title" class="section-title">Leadership</h2>
-    <p class="mt-3 text-gray-400 max-w-2xl">The people accountable for every system we ship.</p>
-    <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {%- for m in team %}
-      <li class="card p-6 reveal">
-        {%- if m.photo %}<img src="{{ m.photo }}" alt="{{ m.name }}" class="w-20 h-20 rounded-2xl object-cover" eleventy:widths="160" sizes="80px">
-        {%- else %}<span class="w-20 h-20 rounded-2xl flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 text-2xl font-semibold" aria-hidden="true">{{ m.name | first }}</span>{% endif %}
-        <h3 class="mt-5 text-lg font-semibold">{{ m.name }}</h3>
-        <p class="text-sm text-brand-400">{{ m.role }}</p>
-        {%- if m.bio %}<p class="mt-3 text-sm text-gray-300 leading-relaxed">{{ m.bio }}</p>{% endif %}
-        {%- if m.linkedin %}<a href="{{ m.linkedin }}" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white">{% icon "linkedin", "w-4 h-4" %} LinkedIn<span class="sr-only"> profile of {{ m.name }}</span></a>{% endif %}
-      </li>
-      {%- endfor %}
-    </ul>
-  </div>
-</section>
-{%- endif %}
-
-<!-- Careers teaser -->
-<section class="px-6 py-16" aria-labelledby="join-title">
-  <div class="max-w-6xl mx-auto card gradient-border p-8 md:p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-    <div>
-      <h2 id="join-title" class="text-2xl md:text-3xl font-semibold">Build with us</h2>
-      <p class="mt-2 text-gray-300 max-w-xl">We're always looking for engineers, designers and problem-solvers who want their work to run on real factory floors and real fields.</p>
+  <!-- Milestones -->
+  <section class="px-6 md:px-8 py-24 md:py-32" data-fx aria-labelledby="journey-title">
+    <div class="max-w-4xl mx-auto">
+      <h2 id="journey-title" class="fx text-backdrop inline-block text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white">Our journey</h2>
+      <ol class="fx fx-sub mt-12 about-card p-8 md:p-10 space-y-10">
+        {%- for m in milestones | sort(false, false, "date") %}
+        <li class="relative pl-8 border-l border-white/15">
+          <span class="absolute -left-[7px] top-1.5 w-3.5 h-3.5 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 ring-4 ring-black" aria-hidden="true"></span>
+          <p class="text-xs uppercase tracking-[0.18em] text-amber-300"><time datetime="{{ m.date }}">{{ m.label }}</time></p>
+          <h3 class="mt-2 text-lg text-white">{{ m.title }}</h3>
+          <p class="mt-1 font-sans text-gray-300">{{ m.text }}</p>
+        </li>
+        {%- endfor %}
+      </ol>
     </div>
-    <a href="/careers" class="btn btn-ghost shrink-0">Careers at Nevark {% icon "arrow-right", "w-4 h-4" %}</a>
-  </div>
-</section>
+  </section>
 
-{%- set ctaTitle = "Collaborate With Us" %}
-{%- set ctaText = "Partner with our experts to transform complex challenges into resilient, intelligent, and future-ready solutions." %}
-{% include "partials/cta.njk" %}
+  {%- if team.length %}
+  <!-- Leadership -->
+  <section id="leadership" class="px-6 md:px-8 py-24 md:py-32" data-fx aria-labelledby="leadership-title">
+    <div class="max-w-7xl mx-auto">
+      <h2 id="leadership-title" class="fx text-backdrop inline-block text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white">Leadership</h2>
+      <ul class="fx fx-sub mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {%- for m in team %}
+        <li class="about-card p-6">
+          {%- if m.photo %}<img src="{{ m.photo }}" alt="{{ m.name }}" class="w-20 h-20 rounded-2xl object-cover" eleventy:widths="160" sizes="80px">
+          {%- else %}<span class="w-20 h-20 rounded-2xl flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 text-2xl" aria-hidden="true">{{ m.name | first }}</span>{% endif %}
+          <h3 class="mt-5 text-lg text-white">{{ m.name }}</h3>
+          <p class="text-sm text-amber-300">{{ m.role }}</p>
+          {%- if m.bio %}<p class="mt-3 font-sans text-sm text-gray-300 leading-relaxed">{{ m.bio }}</p>{% endif %}
+          {%- if m.linkedin %}<a href="{{ m.linkedin }}" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 font-sans text-sm text-gray-400 hover:text-white">{% icon "linkedin", "w-4 h-4" %} LinkedIn<span class="sr-only"> profile of {{ m.name }}</span></a>{% endif %}
+        </li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </section>
+  {%- endif %}
+
+  <!-- Section 5 -->
+  <section class="about-chapter" data-fx aria-labelledby="collaborate-title">
+    <div class="max-w-7xl text-center md:text-left">
+      <h2 id="collaborate-title" class="fx text-backdrop text-4xl sm:text-6xl md:text-9xl font-bold leading-tight mb-8 md:mb-12 text-white tracking-tight">Collaborate<br>With Us</h2>
+      <p class="fx fx-sub text-backdrop text-lg sm:text-xl md:text-3xl leading-relaxed max-w-4xl text-zinc-300 font-medium">Partner with our experts to transform complex challenges into resilient, intelligent, and future-ready solutions.</p>
+      <div class="fx fx-sub mt-12 flex flex-wrap items-center justify-center md:justify-start gap-4">
+        <a href="/bookmeeting" class="about-cta group">
+          <span>Book a Meeting</span>
+          {% icon "arrow-right", "w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" %}
+        </a>
+        <a href="/careers" class="font-sans text-sm text-gray-400 hover:text-white underline-offset-4 hover:underline">Careers at Nevark</a>
+      </div>
+    </div>
+  </section>
+
+</div>

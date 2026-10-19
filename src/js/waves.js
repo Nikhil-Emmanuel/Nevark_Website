@@ -1,12 +1,11 @@
 /* Nevark — animated wave lines behind the home-page metrics card.
-   Only animates while the section is on screen; static under prefers-reduced-motion. */
+   Only animates while the section is on screen. */
 (function () {
   const section = document.querySelector("[data-waves]");
   const canvas = section && section.querySelector("canvas");
   const ctx = canvas && canvas.getContext("2d");
   if (!ctx) return;
 
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const waves = Array.from({ length: 8 }, () => ({
     val: Math.random() * 0.5 + 0.2,
     tgt: Math.random() * 0.5 + 0.2,
@@ -49,7 +48,7 @@
     raf = requestAnimationFrame(loop);
   }
   function update() {
-    const should = visible && !document.hidden && !reduceMotion;
+    const should = visible && !document.hidden;
     if (should && !running) { running = true; raf = requestAnimationFrame(loop); }
     if (!should && running) { running = false; cancelAnimationFrame(raf); }
   }

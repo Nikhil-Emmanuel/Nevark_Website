@@ -4,7 +4,7 @@
    - play() is called straight away (iOS won't load media before that) and a hard timeout
      falls back to a still image if playback hasn't started;
    - the page always stays scrollable and clickable; any scroll/touch/key hands control to the visitor;
-   - "Skip intro" is always available; reduced-motion and Save-Data skip the video entirely. */
+   - "Skip intro" is always available; Save-Data skips the video entirely. */
 (function () {
   const $ = (id) => document.getElementById(id);
   const video = $("bg-video");
@@ -32,7 +32,6 @@
     { pct: 0.86, label: "FINAL — ASCENSION", section: "stage5" },
   ];
 
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const conn = navigator.connection || {};
   const saveData = conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || "");
   const small = window.matchMedia("(max-width: 768px)").matches || /3g$/.test(conn.effectiveType || "");
@@ -70,7 +69,7 @@
 
   function spawnParticles() {
     const box = $("setup-particles");
-    if (!box || box.childElementCount || reduceMotion) return;
+    if (!box || box.childElementCount) return;
     for (let i = 0; i < 18; i++) {
       const p = document.createElement("div");
       const sz = Math.random() * 3 + 1;
@@ -98,7 +97,7 @@
     hide(video); hide(veil); hide(chip);
     if (progress) progress.style.width = "100%";
     if (useStill) { show(stillWrap); } else { show(setupWrap); spawnParticles(); }
-    if (flash && !reduceMotion && !useStill) {
+    if (flash && !useStill) {
       flash.classList.add("flash");
       setTimeout(() => flash.classList.remove("flash"), 500);
     }
@@ -207,7 +206,7 @@
     video.play().catch(() => finish({ useStill: true }));
   });
 
-  if (reduceMotion || saveData) {
+  if (saveData) {
     finish({ useStill: true });
   } else {
     start();

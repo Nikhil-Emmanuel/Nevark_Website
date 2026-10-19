@@ -62,14 +62,6 @@
 
   [id] { scroll-margin-top: 7rem; }
 
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
 }
 
 /* ---------- Components ---------- */
@@ -294,6 +286,47 @@
   .pc-replay[hidden] { display: none; }
   .pc-replay:hover { border-color: rgb(239 68 68 / 0.5); color: #fff; background: rgb(239 68 68 / 0.08); }
   .page-build footer { position: relative; z-index: 20; }
+
+  /* ---------- About: the original cinematic page (Three.js scene in about-scene.js) ---------- */
+  .page-about { background: #0a0a0a; }
+  .page-about main { font-family: var(--font-display); }
+  .about-scene { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -10; background: #0a0a0a; pointer-events: none; }
+  .about-chapter { min-height: 100svh; display: flex; align-items: center; justify-content: center; padding-inline: 1.5rem; }
+  .about-quote { min-height: 24rem; display: flex; align-items: center; justify-content: center; padding-inline: 1.5rem; }
+  @media (min-width: 768px) { .about-chapter, .about-quote { padding-inline: 2rem; } }
+  .text-backdrop {
+    background: linear-gradient(180deg, rgb(0 0 0 / 0.55), rgb(0 0 0 / 0.15));
+    padding: 1.5rem 2rem; border-radius: 1.5rem;
+    -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  }
+  @media (min-width: 768px) { .text-backdrop { padding: 2.5rem 3rem; } }
+  .hero-title { color: #d5b357; text-shadow: 0 2px 8px rgb(0 0 0 / 0.45), 0 0 1px rgb(255 255 255 / 0.15); }
+  .hero-subtext { color: #d1d5db; line-height: 1.65; letter-spacing: 0.02em; text-shadow: 0 1px 6px rgb(0 0 0 / 0.6); }
+  .about-card {
+    border-radius: 1.5rem; border: 1px solid rgb(255 255 255 / 0.1);
+    background: linear-gradient(180deg, rgb(0 0 0 / 0.6), rgb(0 0 0 / 0.3));
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  }
+  .about-cta {
+    display: inline-flex; align-items: center; gap: 0.75rem; padding: 1rem 2rem; border-radius: 9999px;
+    background: rgb(255 255 255 / 0.1); border: 1px solid rgb(255 255 255 / 0.2); color: #fff;
+    font-size: 1.125rem; letter-spacing: 0.025em; box-shadow: 0 10px 40px rgb(0 0 0 / 0.35);
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    transition: all 0.3s ease-out;
+  }
+  .about-cta:hover {
+    background: rgb(255 255 255 / 0.2); border-color: rgb(255 255 255 / 0.3); transform: translateY(-0.25rem);
+    box-shadow: 0 0 0 2px rgb(34 211 238 / 0.3), 0 20px 60px rgb(0 0 0 / 0.55);
+  }
+  /* Chapter fade-ins (GSAP timings from the original: 0.9s power3.out, text +0.25s, quotes 1.3s) */
+  .fx-ready .fx { opacity: 0; transform: translateY(3rem); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fx-ready .fx-sub, .fx-ready .fx-quote { transform: translateY(2rem); }
+  .fx-ready .fx.fx-in {
+    opacity: 1; transform: none;
+    transition: opacity 0.9s cubic-bezier(0.215, 0.61, 0.355, 1), transform 0.9s cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  .fx-ready .fx-sub.fx-in { transition-delay: 0.25s; }
+  .fx-ready .fx-quote.fx-in { transition-duration: 1.3s; transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94); }
   .page-build .site-header { z-index: 70; }
 }
 

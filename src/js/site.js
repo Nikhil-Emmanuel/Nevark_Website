@@ -1,14 +1,13 @@
 /* Nevark — shared behaviour: nav, mobile menu, email links, reveal-on-scroll, counters */
 (function () {
   const doc = document.documentElement;
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---- Reveal on scroll (content stays visible if this script never runs) ---- */
   const reveals = [...document.querySelectorAll(".reveal")];
   const vh = window.innerHeight;
   reveals.forEach((el) => {
     const r = el.getBoundingClientRect();
-    if (reduceMotion || (r.top < vh && r.bottom > 0)) el.classList.add("in-view");
+    if (r.top < vh && r.bottom > 0) el.classList.add("in-view");
   });
   doc.classList.add("js"); // same task as above, so nothing already on screen flickers
   if ("IntersectionObserver" in window) {
@@ -76,7 +75,7 @@
 
   /* ---- Count-up numbers (final value is already in the HTML) ---- */
   const counters = document.querySelectorAll("[data-count-to]");
-  if (counters.length && !reduceMotion && "IntersectionObserver" in window) {
+  if (counters.length && "IntersectionObserver" in window) {
     const run = (el) => {
       const target = Number(el.dataset.countTo);
       const suffix = el.dataset.suffix || "";

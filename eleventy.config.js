@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
+import { buildSync } from "esbuild";
 import { minify } from "html-minifier-terser";
 
 const require = createRequire(import.meta.url);
@@ -36,6 +37,20 @@ function buildCss() {
   });
 }
 
+/* Bundle the few scripts that import npm packages (src/_scripts/*.js -> /js/*.js) */
+function buildScripts() {
+  buildSync({
+    entryPoints: ["src/_scripts/about-scene.js"],
+    outdir: `${OUTPUT}/js`,
+    bundle: true,
+    minify: true,
+    format: "esm",
+    target: ["es2020", "safari15"],
+    legalComments: "none",
+    logLevel: "warning",
+  });
+}
+
 const hashCache = new Map();
 function fileHash(file) {
   if (!isServe && hashCache.has(file)) return hashCache.get(file);
@@ -46,8 +61,10 @@ function fileHash(file) {
 
 export default function (eleventyConfig) {
   eleventyConfig.on("eleventy.before", buildCss);
+  eleventyConfig.on("eleventy.before", buildScripts);
   eleventyConfig.addWatchTarget("src/css/");
-  eleventyConfig.setServerOptions({ watch: [`${OUTPUT}/css/main.css`] });
+  eleventyConfig.addWatchTarget("src/_scripts/");
+  eleventyConfig.setServerOptions({ watch: [`${OUTPUT}/css/main.css`, `${OUTPUT}/js/about-scene.js`] });
 
   /* Static files */
   eleventyConfig.addPassthroughCopy({ "src/assets/fonts/*.woff2": "assets/fonts" });
@@ -77,7 +94,8 @@ export default function (eleventyConfig) {
     return readIcon(name).replace("<svg", `<svg class="${cls}" ${a11y}`);
   });
   eleventyConfig.addFilter("hashed", (url) => {
-    const file = url.startsWith("/css/") ? path.join(OUTPUT, url) : path.join("src", url);
+    const src = path.join("src", url);
+    const file = url.startsWith("/css/") || !fs.existsSync(src) ? path.join(OUTPUT, url) : src; // built files live in _site
     return `${url}?v=${fileHash(file)}`;
   });
   eleventyConfig.addFilter("absoluteUrl", (url, base) => new URL(url, base).href);
