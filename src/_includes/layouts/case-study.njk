@@ -19,11 +19,11 @@ layout: layouts/base.njk
         </ol>
       </nav>
 
-      <div class="mt-8 flex flex-wrap items-center gap-3">
+      <p class="mt-8 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm text-gray-400">
         {% include "partials/status-badge.njk" %}
-        <span class="eyebrow">{{ industry }}</span>
-        {%- if release %}<span class="eyebrow">Release {{ release }}</span>{% endif %}
-      </div>
+        <span aria-hidden="true">·</span><span>{{ "Nevark product" if kind == "product" else ("Client work" if kind == "client" else "") }}{{ " · " if kind }}{{ industry }}</span>
+        {%- if release %}<span aria-hidden="true">·</span><span>Release {{ release }}</span>{% endif %}
+      </p>
 
       <div class="mt-6 flex items-center gap-4 md:gap-5">
         {%- if logo %}<img src="{{ logo }}" alt="" class="w-14 h-14 md:w-16 md:h-16 shrink-0 rounded-2xl object-contain bg-white/5 ring-1 ring-white/10" loading="eager" eleventy:widths="128" sizes="64px">{% endif %}
@@ -82,7 +82,7 @@ layout: layouts/base.njk
     {%- if gallery and gallery.length %}
     <section class="max-w-5xl mx-auto mt-16" aria-labelledby="gallery">
       <h2 id="gallery" class="section-title">Gallery</h2>
-      <div class="mt-8 grid gap-6 {{ 'sm:grid-cols-3' if gallery.length >= 3 else 'sm:grid-cols-2' }}">
+      <div class="mt-8 grid gap-6 {{ 'sm:grid-cols-2 lg:grid-cols-4' if gallery.length == 4 else ('sm:grid-cols-3' if gallery.length >= 3 else 'sm:grid-cols-2') }}">
         {%- for g in gallery %}
         <figure class="card overflow-hidden reveal {% if g.wide %}sm:col-span-full bg-white{% else %}p-6 bg-gradient-to-br from-indigo-500/10 to-purple-500/5{% endif %}">
           <img src="{{ g.src }}" alt="{{ g.alt }}" class="w-full {{ 'h-auto' if g.wide else 'max-h-[520px] object-contain' }}" sizes="{{ '(min-width: 1024px) 1024px, 100vw' if g.wide else '(min-width: 640px) 33vw, 100vw' }}">

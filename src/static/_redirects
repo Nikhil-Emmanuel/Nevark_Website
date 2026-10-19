@@ -13,3 +13,7 @@
 # Old video URL
 /video/Nevark_PC%20Build.mp4             /video/pc-build-1080.mp4  301
 /video/PC-setup.png                      /build-pc                 301
+
+# Logistics product renamed Artics -> Arktics (Oct 2026)
+/projects/artics                         /projects/arktics/        301
+/projects/artics/*                       /projects/arktics/:splat  301

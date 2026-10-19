@@ -103,7 +103,8 @@ for (const file of htmlFiles) {
 // URLs that existed before this rebuild must keep working
 const legacy = ["/", "/build-pc", "/about", "/projects", "/bookmeeting", "/privacy", "/terms-condition",
   "/index.html", "/projects.html", "/build-pc.html", "/about.html", "/bookMeeting.html", "/privacy.html", "/terms-condition.html",
-  "/Testimonals.html", "/documentaion.html", "/home.html", "/favicon.ico", "/sitemap.xml", "/robots.txt"];
+  "/Testimonals.html", "/documentaion.html", "/home.html", "/favicon.ico", "/sitemap.xml", "/robots.txt",
+  "/projects/artics", "/projects/artics/"];
 for (const u of legacy) if (!resolves(u)) errors.push(`legacy URL no longer resolves: ${u}`);
 
 console.log("\nFirst-load weight (gzip, eager assets only):");

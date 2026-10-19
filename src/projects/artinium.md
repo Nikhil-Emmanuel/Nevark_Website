@@ -12,12 +12,13 @@ kind: product
 client: ""
 deliverables: ["Product Design", "Mobile App", "Embedded Hardware", "Energy Monitoring"]
 stack: ["Flutter", "Riverpod", "ESP32", "Firebase Auth"]
-cover: /assets/img/projects/artinium/artinium-rooms.png
-coverAlt: "Artinium Rooms screen: Living Room, Bedroom, Kitchen, Porch and Garage tiles with their boards and the number of appliances on"
+cover: /assets/img/projects/artinium/artinium-logo.png
+coverAlt: "Artinium logo: a gold A with a lit doorway on a dark background"
 coverFit: contain
-ogSource: /assets/img/projects/artinium/artinium-logo.png
 logo: /assets/img/projects/artinium/artinium-logo.png
 gallery:
+  - src: /assets/img/projects/artinium/artinium-rooms.png
+    alt: "Artinium Rooms screen: Living Room, Bedroom, Kitchen, Porch and Garage tiles with their boards and the number of appliances on"
   - src: /assets/img/projects/artinium/artinium-room.png
     alt: "Artinium Living Room screen with one-tap controls for a floor lamp, TV backlight, ceiling fan and TV speakers"
   - src: /assets/img/projects/artinium/artinium-energy.png

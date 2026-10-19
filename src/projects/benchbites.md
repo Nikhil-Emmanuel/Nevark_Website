@@ -13,9 +13,9 @@ client: "KNS Eat 'N Treat"
 deliverables: ["App Development", "Payments Integration", "Vendor Dashboard", "Backend & Hosting"]
 stack: ["Flutter", "Node.js", "Express", "MongoDB", "Redis", "Firebase", "Razorpay"]
 cover: /assets/img/projects/benchbites/benchbites-logo.png
-coverAlt: "BenchBites logo: a spoon, a fork and a steaming food box on a blue background"
+coverAlt: "BenchBites logo: a white plate with a crossed fork, spatula and flame on a blue tile"
 coverFit: contain
-logo: /assets/img/projects/benchbites/benchbites-icon.png
+logo: /assets/img/projects/benchbites/benchbites-logo.png
 gallery: []
 sections:
   - label: "The Challenge"

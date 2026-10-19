@@ -1,7 +1,7 @@
 ---
-title: "Artics"
+title: "Arktics"
 fullTitle: "A Freight Marketplace That Connects Every Load to the Right Truck"
-description: "Artics is Nevark's logistics platform: shippers post loads, carriers win them by instant accept or reverse auction, and every trip is tracked live to an OTP-verified delivery."
+description: "Arktics is Nevark's logistics platform: shippers post loads, carriers win them by instant accept or reverse auction, and every trip is tracked live to an OTP-verified delivery."
 summary: "Nevark's logistics marketplace: post a load, let carriers bid it down, assign a driver, track the truck live and confirm delivery with a one-time code."
 date: 2026-09-14
 order: 3
@@ -12,10 +12,10 @@ kind: product
 client: ""
 deliverables: ["Marketplace Platform", "Agency & Driver Apps", "Live GPS Tracking", "Escrow Payments"]
 stack: ["Flutter", "Node.js", "Express", "PostgreSQL", "Google Maps", "OSRM", "Firebase Cloud Messaging", "Razorpay Route"]
-cover: /assets/img/projects/artics/artics-icon.jpg
-coverAlt: "Artics app icon: a glowing blue truck with a forward arrow on a navy background"
+cover: /assets/img/projects/arktics/arktics-icon.jpg
+coverAlt: "Arktics app icon: a glowing blue truck with a forward arrow on a navy background"
 coverFit: contain
-logo: /assets/img/projects/artics/artics-icon.jpg
+logo: /assets/img/projects/arktics/arktics-icon.jpg
 gallery: []
 sections:
   - label: "The Challenge"
