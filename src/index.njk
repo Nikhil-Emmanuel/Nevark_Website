@@ -2,6 +2,7 @@
 layout: layouts/base.njk
 permalink: /index.html
 title: Nevark
+seoTitle: "Nevark Technologies | AI, Software & Industrial Engineering"
 description: Nevark Technologies provides AI-ready software engineering, strategic IT consulting, and secure digital solutions designed for next-generation enterprises.
 scripts: ["/js/waves.js"]
 ---
@@ -16,7 +17,7 @@ scripts: ["/js/waves.js"]
 
   <h1 class="relative group cursor-default font-display text-[clamp(3rem,13vw,6rem)] font-normal leading-tight tracking-[0.2em] sm:tracking-[0.4em] md:tracking-[0.8em] translate-x-[0.1em] sm:translate-x-[0.2em] md:translate-x-[0.4em]">
     <span class="text-shimmer">NEVARK</span>
-    <span class="sr-only"> Technologies — AI, software and industrial engineering</span>
+    <span class="sr-only"> Technologies — AI, Software and Industrial Engineering</span>
   </h1>
 
   <p class="mt-6 max-w-xl text-sm md:text-base text-gray-400 leading-relaxed">AI, software and industrial engineering that turns complex data into decisive operational intelligence.</p>
@@ -25,7 +26,7 @@ scripts: ["/js/waves.js"]
     <span class="glow-btn">
       <a href="/bookmeeting" class="text-sm px-5 py-3 bg-black/80 border border-white/5 text-white rounded-full backdrop-blur-sm hover:bg-white/10 transition">Book a Consultation</a>
     </span>
-    <a href="/projects" class="text-sm px-5 py-3 rounded-full text-gray-300 hover:text-white underline-offset-4 hover:underline">See our work</a>
+    <a href="/projects" class="text-sm px-5 py-3 rounded-full text-gray-300 hover:text-white underline-offset-4 hover:underline">See Our Work</a>
   </div>
 
   <a href="#services" class="mt-16 text-white/50 hover:text-white/80 animate-bounce" aria-label="Scroll to services">{% icon "chevron-down", "w-8 h-8" %}</a>
@@ -34,7 +35,7 @@ scripts: ["/js/waves.js"]
 <!-- Services -->
 <section id="services" class="relative py-24 px-6" aria-labelledby="services-title">
   <div class="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-transparent pointer-events-none" aria-hidden="true"></div>
-  <h2 id="services-title" class="section-title text-center mb-16">What we do</h2>
+  <h2 id="services-title" class="section-title text-center mb-16">What We Do</h2>
   <div class="relative max-w-5xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
     {%- for s in services %}
     <a href="{{ s.url }}" class="card card-hover group p-6 md:p-8 text-center reveal {{ s.hoverClass }}">
@@ -52,9 +53,9 @@ scripts: ["/js/waves.js"]
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
       <div>
         <p class="eyebrow">Dreamt. Designed. Delivered.</p>
-        <h2 id="work-title" class="section-title mt-5">Featured work</h2>
+        <h2 id="work-title" class="section-title mt-5">Featured Work</h2>
       </div>
-      <a href="/projects" class="inline-flex items-center gap-2 text-sm text-brand-400 hover:text-white">All projects {% icon "arrow-right", "w-4 h-4" %}</a>
+      <a href="/projects" class="inline-flex items-center gap-2 text-sm text-brand-400 hover:text-white">All Projects {% icon "arrow-right", "w-4 h-4" %}</a>
     </div>
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {%- for p in collections.projects | head(3) %}{% include "partials/project-card.njk" %}{% endfor %}
@@ -85,7 +86,7 @@ scripts: ["/js/waves.js"]
     <div class="w-full max-w-md animate-float">
       <div class="glass gradient-border rounded-3xl overflow-hidden shadow-xl bg-white/5">
         <div class="p-6 md:p-8 text-center">
-          <h2 id="metrics-title" class="text-2xl md:text-4xl tracking-tight font-semibold text-white">Turn your Dreams into Reality</h2>
+          <h2 id="metrics-title" class="text-2xl md:text-4xl tracking-tight font-semibold text-white">Turn Your Dreams into Reality</h2>
           <p class="text-xs md:text-sm text-white/70 mt-4 max-w-xs mx-auto">We transform groundbreaking ideas into delightful experiences that are powered by measurable results</p>
         </div>
         <div class="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" aria-hidden="true"></div>
@@ -144,6 +145,8 @@ scripts: ["/js/waves.js"]
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": site.name,
+  "alternateName": [site.shortName, site.legalName],
   "url": site.url,
+  "inLanguage": "en-IN",
   "publisher": { "@id": site.url + "/#organization" }
 } | json | safe }}</script>

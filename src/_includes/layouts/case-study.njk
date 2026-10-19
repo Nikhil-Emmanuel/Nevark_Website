@@ -21,7 +21,7 @@ layout: layouts/base.njk
 
       <p class="mt-8 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm text-gray-400">
         {% include "partials/status-badge.njk" %}
-        <span aria-hidden="true">·</span><span>{{ "Nevark product" if kind == "product" else ("Client work" if kind == "client" else "") }}{{ " · " if kind }}{{ industry }}</span>
+        <span aria-hidden="true">·</span><span>{{ "Nevark Product" if kind == "product" else ("Client Work" if kind == "client" else "") }}{{ " · " if kind }}{{ industry }}</span>
         {%- if release %}<span aria-hidden="true">·</span><span>Release {{ release }}</span>{% endif %}
       </p>
 
@@ -43,7 +43,7 @@ layout: layouts/base.njk
         {%- if client %}
         <div class="bg-black/60 p-4 md:p-5"><dt class="text-gray-400 text-xs uppercase tracking-wider">Client</dt><dd class="mt-1 text-white">{{ client }}</dd></div>
         {%- elif kind == "product" %}
-        <div class="bg-black/60 p-4 md:p-5"><dt class="text-gray-400 text-xs uppercase tracking-wider">Built by</dt><dd class="mt-1 text-white">Nevark <span class="text-gray-400">(in-house product)</span></dd></div>
+        <div class="bg-black/60 p-4 md:p-5"><dt class="text-gray-400 text-xs uppercase tracking-wider">Built By</dt><dd class="mt-1 text-white">Nevark <span class="text-gray-400">(In-House Product)</span></dd></div>
         {%- else %}
         <div class="bg-black/60 p-4 md:p-5"><dt class="text-gray-400 text-xs uppercase tracking-wider">Version</dt><dd class="mt-1 text-white">{{ release }}</dd></div>
         {%- endif %}
@@ -95,7 +95,7 @@ layout: layouts/base.njk
 
     <section class="max-w-5xl mx-auto mt-16 grid gap-6 md:grid-cols-2" aria-label="Capabilities">
       <div class="card p-7 reveal">
-        <h2 class="text-sm font-semibold uppercase tracking-[0.18em] text-gray-400">What we delivered</h2>
+        <h2 class="text-sm font-semibold uppercase tracking-[0.18em] text-gray-400">What We Delivered</h2>
         <ul class="mt-4 flex flex-wrap gap-2">
           {%- for s in deliverables %}<li class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-gray-200">{{ s }}</li>{% endfor %}
         </ul>
@@ -117,7 +117,7 @@ layout: layouts/base.njk
 {%- if related.length %}
 <section class="px-6 pb-8" aria-labelledby="related">
   <div class="max-w-5xl mx-auto">
-    <h2 id="related" class="section-title">Related work</h2>
+    <h2 id="related" class="section-title">Related Work</h2>
     <div class="mt-8 grid gap-6 sm:grid-cols-2">
       {%- for p in related %}{% include "partials/project-card.njk" %}{% endfor %}
     </div>
@@ -125,7 +125,7 @@ layout: layouts/base.njk
 </section>
 {%- endif %}
 
-{%- set ctaTitle = "Have a similar challenge?" %}
+{%- set ctaTitle = "Have a Similar Challenge?" %}
 {%- set ctaText = "Tell us about your operation. We'll show you what intelligent, real-time systems could do for it." %}
 {% include "partials/cta.njk" %}
 

@@ -51,6 +51,21 @@ function buildScripts() {
   });
 }
 
+/* Last commit date of a source file, for honest <lastmod> values in the sitemap
+   (file mtimes are reset on every Netlify clone). Falls back to null outside git. */
+const gitDateCache = new Map();
+function gitLastModified(inputPath) {
+  if (!inputPath) return null;
+  if (gitDateCache.has(inputPath)) return gitDateCache.get(inputPath);
+  let date = null;
+  try {
+    const out = execFileSync("git", ["log", "-1", "--format=%cI", "--", inputPath], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+    if (out) date = new Date(out);
+  } catch {}
+  gitDateCache.set(inputPath, date);
+  return date;
+}
+
 const hashCache = new Map();
 function fileHash(file) {
   if (!isServe && hashCache.has(file)) return hashCache.get(file);
@@ -98,6 +113,7 @@ export default function (eleventyConfig) {
     const file = url.startsWith("/css/") || !fs.existsSync(src) ? path.join(OUTPUT, url) : src; // built files live in _site
     return `${url}?v=${fileHash(file)}`;
   });
+  eleventyConfig.addFilter("gitLastModified", gitLastModified);
   eleventyConfig.addFilter("absoluteUrl", (url, base) => new URL(url, base).href);
   eleventyConfig.addFilter("isoDate", (d) => new Date(d).toISOString().slice(0, 10));
   eleventyConfig.addFilter("readableDate", (d) =>

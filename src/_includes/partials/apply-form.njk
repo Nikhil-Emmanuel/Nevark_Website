@@ -6,10 +6,10 @@
   <input type="hidden" name="_template" value="table">
   <input type="hidden" name="_captcha" value="false">
   <input type="hidden" name="_next" value="{{ site.url }}/thank-you">
-  <div class="hidden" aria-hidden="true"><label>Leave this empty <input type="text" name="_honey" tabindex="-1" autocomplete="off"></label></div>
+  <div class="hidden" aria-hidden="true"><label>Leave This Empty <input type="text" name="_honey" tabindex="-1" autocomplete="off"></label></div>
 
   <div>
-    <label for="a-name" class="block text-sm mb-2">Full name <span class="text-red-400" aria-hidden="true">*</span></label>
+    <label for="a-name" class="block text-sm mb-2">Full Name <span class="text-red-400" aria-hidden="true">*</span></label>
     <input id="a-name" name="Full Name" type="text" class="field" autocomplete="name" required>
   </div>
   <div>
@@ -26,17 +26,17 @@
     <input id="a-role" name="Role" type="text" class="field" value="{{ fixedRole }}" readonly>
     {%- else %}
     <select id="a-role" name="Role" class="field">
-      <option>General application</option>
+      <option>General Application</option>
       {%- for j in roleOptions %}<option>{{ j.data.title }}</option>{% endfor %}
     </select>
     {%- endif %}
   </div>
   <div class="md:col-span-2">
-    <label for="a-cv" class="block text-sm mb-2">CV or portfolio link <span class="text-red-400" aria-hidden="true">*</span></label>
+    <label for="a-cv" class="block text-sm mb-2">CV or Portfolio Link <span class="text-red-400" aria-hidden="true">*</span></label>
     <input id="a-cv" name="CV Link" type="url" class="field" placeholder="https://" required>
   </div>
   <div class="md:col-span-2">
-    <label for="a-linkedin" class="block text-sm mb-2">LinkedIn profile</label>
+    <label for="a-linkedin" class="block text-sm mb-2">LinkedIn Profile</label>
     <input id="a-linkedin" name="LinkedIn" type="url" class="field" placeholder="https://www.linkedin.com/in/...">
   </div>
   <div class="md:col-span-2">
@@ -48,7 +48,7 @@
     <label for="a-consent">I agree that Nevark may use these details to assess my application, as described in the <a href="/privacy" class="text-brand-400 underline underline-offset-4">Privacy Policy</a>.</label>
   </div>
   <div class="md:col-span-2 flex justify-end">
-    <button type="submit" class="btn btn-primary min-w-44" data-submit>Submit application</button>
+    <button type="submit" class="btn btn-primary min-w-44" data-submit>Submit Application</button>
   </div>
   <p class="md:col-span-2 text-sm" role="status" aria-live="polite" data-form-status></p>
 </form>

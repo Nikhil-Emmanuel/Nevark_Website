@@ -40,11 +40,11 @@
     "url": "/projects/flame/"
   },
   {
-    "title": "Agricultural Solutions",
-    "summary": "Technology-driven agricultural platforms for monitoring, optimization, and data-led farming operations under one ecosystem",
-    "icon": "sprout",
-    "iconClass": "text-emerald-400",
-    "hoverClass": "hover:border-emerald-400/70",
-    "url": "/industries#agriculture"
+    "title": "Logistics Solutions",
+    "summary": "Freight marketplaces, live fleet tracking and verified deliveries that keep every load moving and accounted for",
+    "icon": "truck",
+    "iconClass": "text-sky-400",
+    "hoverClass": "hover:border-sky-400/70",
+    "url": "/industries#logistics"
   }
 ]

@@ -1,12 +1,13 @@
 ---
 title: "Artinium"
+seoTitle: "Artinium: Local-First Smart Home Automation | Nevark"
 fullTitle: "Smart Home. Futuristic Living. Local-First Control Behind Every Switchboard."
 description: "Artinium is Nevark's local-first smart home system: compact boards that sit behind existing switchboards and are controlled room by room from one app."
 summary: "Nevark's local-first smart home system: retrofit boards that sit behind existing switchboards, link up over their own Wi-Fi mesh, and are controlled room by room from one app."
 date: 2026-10-09
 order: 5
 industry: Smart Home
-status: "In development"
+status: "In Development"
 release: v1.0.0
 kind: product
 client: ""

@@ -2,6 +2,7 @@
 layout: layouts/base.njk
 permalink: /build-pc.html
 title: Build Your PC
+seoTitle: "Custom PC & Workstation Builds | Nevark Technologies"
 description: Custom high-performance gaming PCs and workstations, hand-built by Nevark Technologies. Watch how we craft every machine, part by part, then book your build.
 background: none
 bodyClass: page-build
@@ -34,23 +35,23 @@ ogImage: /assets/og/nevark-og.jpg
 <div id="load-screen" class="pc-load" hidden>
   <p class="font-display text-[clamp(20px,5vw,30px)] tracking-[0.5em] text-white">NEVARK</p>
   <div class="pc-load-bar" role="progressbar" aria-label="Loading the build video" aria-valuemin="0" aria-valuemax="100"><div id="load-bar"></div></div>
-  <p class="text-[10px] tracking-[0.3em] uppercase text-gray-500">Preparing your build</p>
-  <button type="button" class="mt-4 text-xs tracking-[0.25em] uppercase text-gray-400 hover:text-white underline underline-offset-4" data-skip>Skip intro</button>
+  <p class="text-[10px] tracking-[0.3em] uppercase text-gray-500">Preparing Your Build</p>
+  <button type="button" class="mt-4 text-xs tracking-[0.25em] uppercase text-gray-400 hover:text-white underline underline-offset-4" data-skip>Skip Intro</button>
 </div>
 
 <div id="tap-overlay" class="pc-tap" hidden>
   <button type="button" class="flex flex-col items-center gap-6" data-tap-start>
     <span class="pc-tap-icon">{% icon "play", "w-7 h-7 text-red-500" %}</span>
     <span class="font-display text-[clamp(13px,3vw,16px)] tracking-[0.35em] text-white/80">TAP TO START</span>
-    <span class="text-[11px] tracking-[0.2em] text-white/40">Experience the build</span>
+    <span class="text-[11px] tracking-[0.2em] text-white/40">Experience the Build</span>
   </button>
-  <button type="button" class="mt-10 text-xs tracking-[0.25em] uppercase text-gray-400 hover:text-white underline underline-offset-4" data-skip>Skip intro</button>
+  <button type="button" class="mt-10 text-xs tracking-[0.25em] uppercase text-gray-400 hover:text-white underline underline-offset-4" data-skip>Skip Intro</button>
 </div>
 
 <div id="unlock-flash" class="pc-flash" aria-hidden="true"></div>
 <div id="scroll-bar" class="pc-progress" aria-hidden="true"></div>
 <div id="stage-chip" class="pc-chip" aria-hidden="true"></div>
-<button type="button" id="skip-btn" class="pc-skip" hidden data-skip>Skip intro {% icon "arrow-right", "w-3.5 h-3.5" %}</button>
+<button type="button" id="skip-btn" class="pc-skip" hidden data-skip>Skip Intro {% icon "arrow-right", "w-3.5 h-3.5" %}</button>
 
 <!-- Content -->
 <section id="start" class="relative z-10 min-h-[100svh] flex flex-col justify-center items-center text-center px-6 pt-24">

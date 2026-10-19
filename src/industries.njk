@@ -2,10 +2,11 @@
 layout: layouts/page.njk
 permalink: /industries.html
 title: Industries
-description: Nevark Technologies builds AI, software and automation for manufacturing, logistics, smart homes, food, agriculture and technology teams. See our capabilities and case studies by industry.
+seoTitle: "Industries We Serve | Nevark Technologies"
+description: AI, software and automation for manufacturing, logistics, smart homes, food and technology teams. See Nevark's capabilities and case studies by industry.
 heroEyebrow: Industries
-heroTitle: Where our engineering makes a difference
-heroLead: We focus on sectors where real-time data and dependable software change outcomes on the ground, from the production line and the highway to the home, the canteen counter and the farm.
+heroTitle: Where Our Engineering Makes a Difference
+heroLead: We focus on sectors where real-time data and dependable software change outcomes on the ground, from the production line and the highway to the home and the canteen counter.
 breadcrumbs: [{ name: "Home", url: "/" }, { name: "Industries", url: "/industries" }]
 ---
 <nav aria-label="Industries on this page" class="px-6">
@@ -26,7 +27,7 @@ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Industries", url: "/industrie
         <h2 id="{{ ind.id }}-title" class="section-title mt-6">{{ ind.title }}</h2>
         <p class="mt-4 text-gray-300 leading-relaxed">{{ ind.lead }}</p>
 
-        <h3 class="mt-8 text-sm font-semibold uppercase tracking-[0.18em] text-gray-400">The problems we solve</h3>
+        <h3 class="mt-8 text-sm font-semibold uppercase tracking-[0.18em] text-gray-400">The Problems We Solve</h3>
         <ul class="mt-4 space-y-3">
           {%- for c in ind.challenges %}
           <li class="flex gap-3 text-gray-200">{% icon "target", "w-5 h-5 mt-0.5 shrink-0 text-red-400" %}<span>{{ c }}</span></li>
@@ -35,21 +36,21 @@ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Industries", url: "/industrie
       </div>
 
       <div class="card p-7 md:p-8 reveal from-right">
-        <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-gray-400">Our capabilities</h3>
+        <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-gray-400">Our Capabilities</h3>
         <ul class="mt-5 grid gap-3 sm:grid-cols-2">
           {%- for c in ind.capabilities %}
           <li class="flex gap-3 rounded-xl border border-white/10 bg-black/30 p-4 text-sm text-gray-200">{% icon "check", "w-5 h-5 shrink-0 text-emerald-400" %}<span>{{ c }}</span></li>
           {%- endfor %}
         </ul>
         {%- if ind.id == "technology" %}
-        <a href="/build-pc" class="mt-6 inline-flex items-center gap-2 text-sm text-brand-400 hover:text-white">Explore custom PC builds {% icon "arrow-right", "w-4 h-4" %}</a>
+        <a href="/build-pc" class="mt-6 inline-flex items-center gap-2 text-sm text-brand-400 hover:text-white">Explore Custom PC Builds {% icon "arrow-right", "w-4 h-4" %}</a>
         {%- endif %}
       </div>
     </div>
 
     {%- if work.length %}
     <div class="mt-10">
-      <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-gray-400">Case studies</h3>
+      <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-gray-400">Case Studies</h3>
       <div class="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {%- for p in work %}{% include "partials/project-card.njk" %}{% endfor %}
       </div>
@@ -59,6 +60,6 @@ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Industries", url: "/industrie
   {%- endfor %}
 </div>
 
-{%- set ctaTitle = "Don't see your industry?" %}
+{%- set ctaTitle = "Don't See Your Industry?" %}
 {%- set ctaText = "Our engineering travels well. Tell us about your operation and we'll tell you honestly whether we can help." %}
 {% include "partials/cta.njk" %}

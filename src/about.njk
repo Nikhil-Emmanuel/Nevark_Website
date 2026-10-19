@@ -2,7 +2,8 @@
 layout: layouts/base.njk
 permalink: /about.html
 title: About
-description: Nevark Technologies builds intelligent systems at the intersection of AI, machine learning and real-world industrial engineering. Meet the company, our principles and our journey.
+seoTitle: "About Nevark Technologies | AI & Industrial Engineering"
+description: Nevark Technologies builds intelligent systems where AI, machine learning and industrial engineering meet. Meet the company, its principles and its journey.
 breadcrumbs: [{ name: "Home", url: "/" }, { name: "About", url: "/about" }]
 background: none
 bodyClass: page-about
@@ -16,10 +17,10 @@ moduleScripts: ["/js/about-scene.js"]
   { title: "Vision<br>&amp; Purpose", text: "We envision intelligent manufacturing ecosystems powered by transparent data, continuous learning, and technology that scales responsibly with real operational needs.", quote: "Let intelligence lead the way forward.", quoteClass: "text-emerald-400" }
 ] -%}
 {%- set values = [
-  { icon: "target", title: "Solve real problems", text: "We start from the operation, not the technology. If it doesn't change an outcome on the ground, we don't build it." },
-  { icon: "brain-circuit", title: "Never stop learning", text: "Our systems and our people improve with every data point, every deployment and every honest review." },
-  { icon: "eye", title: "Operational clarity", text: "We turn raw signals into insight people can act on in seconds, on the screen in front of them." },
-  { icon: "users", title: "Trust smart people", text: "We hire people who tell us what to do, and we give them the room to do it." }
+  { icon: "target", title: "Solve Real Problems", text: "We start from the operation, not the technology. If it doesn't change an outcome on the ground, we don't build it." },
+  { icon: "brain-circuit", title: "Never Stop Learning", text: "Our systems and our people improve with every data point, every deployment and every honest review." },
+  { icon: "eye", title: "Operational Clarity", text: "We turn raw signals into insight people can act on in seconds, on the screen in front of them." },
+  { icon: "users", title: "Trust Smart People", text: "We hire people who tell us what to do, and we give them the room to do it." }
 ] -%}
 
 <canvas id="about-scene" class="about-scene" aria-hidden="true"></canvas>
@@ -60,7 +61,7 @@ moduleScripts: ["/js/about-scene.js"]
   <!-- Values -->
   <section class="px-6 md:px-8 py-24 md:py-32" data-fx aria-labelledby="values-title">
     <div class="max-w-7xl mx-auto">
-      <h2 id="values-title" class="fx text-backdrop inline-block text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white">What we<br>stand for</h2>
+      <h2 id="values-title" class="fx text-backdrop inline-block text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white">What We<br>Stand For</h2>
       <div class="fx fx-sub mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {%- for v in values %}
         <div class="about-card p-6">
@@ -76,7 +77,7 @@ moduleScripts: ["/js/about-scene.js"]
   <!-- Milestones -->
   <section class="px-6 md:px-8 py-24 md:py-32" data-fx aria-labelledby="journey-title">
     <div class="max-w-4xl mx-auto">
-      <h2 id="journey-title" class="fx text-backdrop inline-block text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white">Our journey</h2>
+      <h2 id="journey-title" class="fx text-backdrop inline-block text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white">Our Journey</h2>
       <ol class="fx fx-sub mt-12 about-card p-8 md:p-10 space-y-10">
         {%- for m in milestones | sort(false, false, "date") %}
         <li class="relative pl-8 border-l border-white/15">

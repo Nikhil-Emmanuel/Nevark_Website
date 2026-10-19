@@ -2,18 +2,19 @@
 layout: layouts/page.njk
 permalink: /careers.html
 title: Careers
-description: Careers at Nevark Technologies. Build AI, software and industrial systems that run on real factory floors and real fields. See open roles or send a general application.
+seoTitle: "Careers at Nevark Technologies | Open Roles"
+description: Careers at Nevark Technologies, Hosur. Build AI, software and industrial systems that run on real factory floors, fleets and homes. See open roles.
 heroEyebrow: Careers
-heroTitle: Build what runs the real world
+heroTitle: Build What Runs the Real World
 heroLead: We hire smart people so they can tell us what to do. Join a focused team engineering AI, software and hardware that ships to production.
 scripts: ["/js/forms.js"]
 breadcrumbs: [{ name: "Home", url: "/" }, { name: "Careers", url: "/careers" }]
 ---
 {%- set perks = [
-  { icon: "rocket", title: "Real-world impact", text: "Your work runs on production lines and in the field, not in a slide deck." },
-  { icon: "brain-circuit", title: "Learn continuously", text: "AI, embedded, full stack and hardware under one roof, with room to go deep." },
+  { icon: "rocket", title: "Real-World Impact", text: "Your work runs on production lines and in the field, not in a slide deck." },
+  { icon: "brain-circuit", title: "Learn Continuously", text: "AI, embedded, full stack and hardware under one roof, with room to go deep." },
   { icon: "users", title: "Ownership", text: "Small teams, direct access to leadership and decisions made by the people closest to the problem." },
-  { icon: "sparkles", title: "Startup India recognised", text: "Join a DPIIT-recognised company early and help shape how it grows." }
+  { icon: "sparkles", title: "Startup India Recognised", text: "Join a DPIIT-recognised company early and help shape how it grows." }
 ] -%}
 {%- set steps = ["Apply with your profile or CV link", "Intro call with our team (30 min)", "Technical conversation or practical task", "Meet the founders and receive an offer"] -%}
 
@@ -34,7 +35,7 @@ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Careers", url: "/careers" }]
 
 <section id="open-roles" class="px-6 py-16 border-t border-white/10" aria-labelledby="roles-title">
   <div class="max-w-6xl mx-auto">
-    <h2 id="roles-title" class="section-title">Open roles</h2>
+    <h2 id="roles-title" class="section-title">Open Roles</h2>
     {%- if collections.jobs.length %}
     <ul class="mt-8 divide-y divide-white/10 card">
       {%- for job in collections.jobs %}
@@ -59,7 +60,7 @@ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Careers", url: "/careers" }]
 
 <section class="px-6 py-16 border-t border-white/10" aria-labelledby="process-title">
   <div class="max-w-6xl mx-auto">
-    <h2 id="process-title" class="section-title">How we hire</h2>
+    <h2 id="process-title" class="section-title">How We Hire</h2>
     <ol class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {%- for s in steps %}
       <li class="card p-6 reveal"><span class="text-3xl font-semibold text-brand-400">0{{ loop.index }}</span><p class="mt-3 text-gray-200">{{ s }}</p></li>
@@ -70,7 +71,7 @@ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Careers", url: "/careers" }]
 
 <section id="apply" class="px-6 py-16 border-t border-white/10" aria-labelledby="apply-title">
   <div class="max-w-3xl mx-auto card p-6 md:p-10">
-    <h2 id="apply-title" class="text-2xl md:text-3xl font-semibold">{{ "Apply" if collections.jobs.length else "General application" }}</h2>
+    <h2 id="apply-title" class="text-2xl md:text-3xl font-semibold">{{ "Apply" if collections.jobs.length else "General Application" }}</h2>
     <p class="mt-2 text-gray-300">Share a link to your CV (Google Drive, Dropbox or similar) or your LinkedIn profile.</p>
     {% set roleOptions = collections.jobs %}{% include "partials/apply-form.njk" %}
   </div>

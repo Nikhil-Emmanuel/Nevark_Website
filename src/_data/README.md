@@ -4,7 +4,7 @@ Edit these JSON files to update content across the whole site. Empty values are 
 
 | File | What it controls |
 | --- | --- |
-| `site.json` | Company name, contact details, address, legal identifiers (LLPIN, GSTIN, DPIIT no.), Grievance Officer, form endpoints, social links, navigation |
+| `site.json` | Company name, contact details, address, office Google Maps link (`maps`), legal identifiers (LLPIN, GSTIN, DPIIT no.), Grievance Officer, form endpoints, social links, navigation |
 | `clients.json` | Logo strip on the home page ("Trusted by"). Add `{ "name", "logo", "kind", "url" }`; put logo files in `src/assets/img/` |
 | `metrics.json` | Impact numbers on the home page |
 | `testimonials.json` | Client quotes. Section appears only when this list is not empty. Shape: `{ "quote", "name", "role", "company", "photo" }` (get written consent first) |

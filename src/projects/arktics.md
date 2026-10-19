@@ -1,12 +1,13 @@
 ---
 title: "Arktics"
+seoTitle: "Arktics: Freight Marketplace & Live Tracking | Nevark"
 fullTitle: "A Freight Marketplace That Connects Every Load to the Right Truck"
-description: "Arktics is Nevark's logistics platform: shippers post loads, carriers win them by instant accept or reverse auction, and every trip is tracked live to an OTP-verified delivery."
+description: "Arktics is Nevark's freight marketplace: shippers post loads, carriers bid, and every trip is tracked live through to an OTP-verified delivery."
 summary: "Nevark's logistics marketplace: post a load, let carriers bid it down, assign a driver, track the truck live and confirm delivery with a one-time code."
 date: 2026-09-14
 order: 3
 industry: Logistics
-status: "Pilot-ready"
+status: "Pilot-Ready"
 release: v1.0.0
 kind: product
 client: ""

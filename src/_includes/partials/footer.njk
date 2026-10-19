@@ -9,6 +9,7 @@
         <a href="{{ mailto }}" data-gmail="{{ gmail }}" class="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-white/5 text-gray-300 hover:bg-red-600/80 hover:text-white transition" aria-label="Email {{ site.email }}" data-email-link>{% icon "mail", "w-4 h-4" %}</a>
         <a href="{{ site.social.linkedin }}" target="_blank" rel="noopener" class="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-white/5 text-gray-300 hover:bg-blue-600/80 hover:text-white transition" aria-label="Nevark on LinkedIn">{% icon "linkedin", "w-4 h-4" %}</a>
         <a href="{{ site.social.instagram }}" target="_blank" rel="noopener" class="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-white/5 text-gray-300 hover:bg-pink-600 hover:text-white transition" aria-label="Nevark on Instagram">{% icon "instagram", "w-4 h-4" %}</a>
+        <a href="{{ site.maps }}" target="_blank" rel="noopener" class="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-white/5 text-gray-300 hover:bg-emerald-600/80 hover:text-white transition" aria-label="Office location on Google Maps">{% icon "google-maps", "w-4 h-4" %}</a>
       </div>
     </div>
 
@@ -48,8 +49,9 @@
       {%- set ids = [("LLPIN " + site.legal.llpin) if site.legal.llpin, ("GSTIN " + site.legal.gstin) if site.legal.gstin, ("DPIIT Certificate " + site.legal.dpiitCertificate) if site.legal.dpiitCertificate] | select %}
       {%- if ids | length %}<p>{{ ids | join(" · ") }}</p>{% endif %}
       <p>
+        <a href="{{ site.maps }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 hover:text-gray-300 transition-colors">{% icon "google-maps", "w-3.5 h-3.5 shrink-0" %}<span>
         {%- if site.address.street %}Registered office: {{ site.address.street }}, {% endif -%}
-        {{ site.city }}, {{ site.region }}{% if site.address.postalCode %} {{ site.address.postalCode }}{% endif %}, {{ site.countryName }}
+        {{ site.city }}, {{ site.region }}{% if site.address.postalCode %} {{ site.address.postalCode }}{% endif %}, {{ site.countryName }}</span><span class="sr-only"> (opens Google Maps)</span></a>
       </p>
     </div>
     <a href="https://www.startupindia.gov.in/" target="_blank" rel="noopener" class="self-start md:self-auto opacity-75 hover:opacity-100 transition-opacity" aria-label="Recognised by DPIIT under Startup India">

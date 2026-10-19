@@ -1,7 +1,8 @@
 ---
 title: "F.L.A.M.E"
+seoTitle: "F.L.A.M.E: Industrial AI Predictive Maintenance | Nevark"
 fullTitle: "Factory Live Analytics for Monitoring Equipments"
-description: "F.L.A.M.E is a production-grade industrial AI monitoring system for real-time analytics and predictive maintenance of sensor-based equipment in automotive manufacturing."
+description: "F.L.A.M.E is a production-grade industrial AI system for real-time analytics and predictive maintenance of equipment in automotive manufacturing."
 summary: "A production-grade industrial AI monitoring system for real-time analytics and predictive maintenance of sensor-based equipment in an automotive manufacturing environment."
 date: 2025-08-30
 order: 1

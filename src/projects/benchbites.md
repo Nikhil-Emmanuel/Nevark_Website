@@ -1,5 +1,6 @@
 ---
 title: "BenchBites"
+seoTitle: "BenchBites: Campus Food Ordering App | Nevark"
 fullTitle: "Campus Food Ordering, Without the Queue"
 description: "BenchBites lets students order and pay from their phones and collect their food from the canteen stall when it's ready. Built by Nevark for KNS Eat 'N Treat."
 summary: "A queue-free campus food ordering platform for KNS Eat 'N Treat: students order and pay ahead, get a pickup token, and collect from the stall the moment their food is ready."

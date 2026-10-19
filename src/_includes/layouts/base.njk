@@ -1,6 +1,6 @@
 {%- set pagePath = (page.url or "/") | string | replace(".html", "") -%}
 {%- set canonical = (pagePath if pagePath != "/index" else "/") | absoluteUrl(site.url) -%}
-{%- set pageTitle = (title + " • " + site.shortName) if title and title != site.shortName else (site.shortName + " • " + site.tagline) -%}
+{%- set pageTitle = seoTitle or ((title + " | " + site.name) if title and title != site.shortName else site.name) -%}
 {%- set pageDescription = description or site.description -%}
 {%- set ogImage = (ogImage or "/assets/og/nevark-og.jpg") | absoluteUrl(site.url) -%}
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
   <title>{{ pageTitle }}</title>
   <meta name="description" content="{{ pageDescription }}">
   <link rel="canonical" href="{{ canonical }}">
-  {%- if noindex %}<meta name="robots" content="noindex">{% endif %}
+  <meta name="robots" content="{{ 'noindex, follow' if noindex else 'index, follow, max-image-preview:large, max-snippet:-1' }}">
   <meta name="theme-color" content="{{ site.themeColor }}">
   <meta name="color-scheme" content="dark">
   <meta name="format-detection" content="telephone=no">
@@ -47,8 +47,13 @@
     "name": site.name,
     "legalName": site.legalName,
     "url": site.url,
-    "logo": site.url + "/assets/icons/icon-512.png",
+    "logo": { "@type": "ImageObject", "url": site.url + "/assets/icons/icon-512.png", "width": 512, "height": 512 },
+    "image": site.url + "/assets/og/nevark-og.jpg",
+    "description": site.description,
+    "slogan": site.tagline,
     "email": site.email,
+    "areaServed": { "@type": "Country", "name": site.countryName },
+    "contactPoint": { "@type": "ContactPoint", "contactType": "customer service", "email": site.email, "areaServed": site.country, "availableLanguage": ["en"] },
     "telephone": site.phone or undefined,
     "address": {
       "@type": "PostalAddress",
@@ -58,6 +63,7 @@
       "addressRegion": site.region,
       "addressCountry": site.country
     },
+    "location": { "@type": "Place", "name": site.legalName, "hasMap": site.maps },
     "sameAs": [site.social.linkedin, site.social.instagram]
   } | json | safe }}</script>
   {%- if breadcrumbs %}
@@ -70,7 +76,7 @@
   {%- block schema %}{% endblock %}
 </head>
 <body class="bg-dark text-light font-sans antialiased {{ bodyClass }}">
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main">Skip to Content</a>
   {%- if background != "none" %}<div id="bg3d-container" aria-hidden="true"></div>{% endif %}
 
   {% include "partials/header.njk" %}

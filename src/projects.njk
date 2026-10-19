@@ -2,7 +2,8 @@
 layout: layouts/base.njk
 permalink: /projects.html
 title: Projects
-description: Case studies from Nevark Technologies — industrial AI monitoring, mobile plant visibility and agricultural robotics. Dreamt. Designed. Delivered.
+seoTitle: "Projects & Case Studies | Nevark Technologies"
+description: Case studies from Nevark Technologies — industrial AI monitoring, campus food ordering, logistics, smart homes and whole foods. Dreamt. Designed. Delivered.
 scripts: ["/js/projects-filter.js"]
 breadcrumbs: [{ name: "Home", url: "/" }, { name: "Projects", url: "/projects" }]
 ---
@@ -19,14 +20,14 @@ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Projects", url: "/projects" }
     <dl class="mt-10 grid grid-cols-3 max-w-xl gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 text-center">
       <div class="bg-black/60 p-4"><dt class="text-xs text-gray-400">Projects</dt><dd class="mt-1 text-2xl font-semibold">{{ collections.projects.length }}</dd></div>
       <div class="bg-black/60 p-4"><dt class="text-xs text-gray-400">Industries</dt><dd class="mt-1 text-2xl font-semibold">{{ industriesList.length }}</dd></div>
-      <div class="bg-black/60 p-4"><dt class="text-xs text-gray-400">In production</dt><dd class="mt-1 text-2xl font-semibold">{{ (collections.projects | statusIncludes("Deployed")).length }}</dd></div>
+      <div class="bg-black/60 p-4"><dt class="text-xs text-gray-400">In Production</dt><dd class="mt-1 text-2xl font-semibold">{{ (collections.projects | statusIncludes("Deployed")).length }}</dd></div>
     </dl>
   </div>
 </section>
 
 <section class="px-6 pb-8" aria-labelledby="work-list-title">
   <div class="max-w-6xl mx-auto">
-    <h2 id="work-list-title" class="sr-only">All projects</h2>
+    <h2 id="work-list-title" class="sr-only">All Projects</h2>
     <div class="flex flex-wrap items-center gap-2 mb-10" role="group" aria-label="Filter projects by industry" data-filter-group hidden>
       <button type="button" class="min-h-11 rounded-full border border-white/15 px-4 text-sm text-gray-300 hover:text-white aria-pressed:bg-white aria-pressed:text-black aria-pressed:border-white transition-colors" data-filter="all" aria-pressed="true">All</button>
       {%- for ind in industriesList %}
@@ -44,14 +45,14 @@ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Projects", url: "/projects" }
 <section class="px-6 py-16" aria-labelledby="by-industry">
   <div class="max-w-6xl mx-auto card p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
     <div>
-      <h2 id="by-industry" class="text-2xl font-semibold">Explore by industry</h2>
-      <p class="mt-2 text-gray-300">See how our capabilities map to manufacturing, logistics, smart homes, food, agriculture and technology services.</p>
+      <h2 id="by-industry" class="text-2xl font-semibold">Explore by Industry</h2>
+      <p class="mt-2 text-gray-300">See how our capabilities map to manufacturing, logistics, smart homes, food and technology services.</p>
     </div>
-    <a href="/industries" class="btn btn-ghost shrink-0">View industries {% icon "arrow-right", "w-4 h-4" %}</a>
+    <a href="/industries" class="btn btn-ghost shrink-0">View Industries {% icon "arrow-right", "w-4 h-4" %}</a>
   </div>
 </section>
 
-{%- set ctaTitle = "Have a project in mind?" %}
+{%- set ctaTitle = "Have a Project in Mind?" %}
 {%- set ctaText = "Bring us the problem. We'll design, build and deliver the system that solves it." %}
 {% include "partials/cta.njk" %}
 

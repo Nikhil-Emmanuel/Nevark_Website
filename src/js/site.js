@@ -31,7 +31,7 @@
     const setOpen = (open) => {
       menu.hidden = !open;
       toggle.setAttribute("aria-expanded", String(open));
-      if (label) label.textContent = open ? "Close menu" : "Open menu";
+      if (label) label.textContent = open ? "Close Menu" : "Open Menu";
       if (iconOpen) iconOpen.hidden = open;
       if (iconClose) iconClose.hidden = !open;
       if (open) menu.querySelector("a")?.focus({ preventScroll: true });

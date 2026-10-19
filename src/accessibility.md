@@ -7,18 +7,18 @@ description: Nevark Technologies aims for WCAG 2.2 AA on nevark.in. Read what we
 updated: 2026-10-19
 breadcrumbs: [{ name: "Home", url: "/" }, { name: "Accessibility", url: "/accessibility" }]
 ---
-We want everyone to be able to use nevark.in. We aim to meet the **Web Content Accessibility Guidelines (WCAG) 2.2, level AA**.
+We want everyone to be able to use nevark.in. We aim to meet the **Web Content Accessibility Guidelines (WCAG) 2.2, Level AA**.
 
-## What we've done
+## What We've Done
 
-- Semantic page structure with landmarks, headings and a "Skip to content" link.
+- Semantic page structure with landmarks, headings and a "Skip to Content" link.
 - Full keyboard navigation, including the mobile menu (Esc closes it) and visible focus indicators.
 - Text alternatives for meaningful images; decorative images and animations are hidden from screen readers.
 - Respect for your device's **reduced motion** setting: background animations stop and the Build Your PC intro video is replaced by a still image.
 - Form fields with visible labels, correct input types for autofill, and status messages announced to assistive technology.
 - Touch targets of at least 44×44 pixels and text that reflows on small screens without horizontal scrolling.
 
-## Known limitations
+## Known Limitations
 
 - The "Build Your PC" page uses a short decorative video with no spoken content; its information is also provided as text on the page.
 - Some project screenshots contain small interface text; the key information is described in the accompanying text.

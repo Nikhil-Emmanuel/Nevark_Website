@@ -1,5 +1,6 @@
 ---
 title: "F.L.A.M.E Mobile"
+seoTitle: "F.L.A.M.E Mobile: Real-Time Plant Alerts | Nevark"
 fullTitle: "Real-Time Industrial Visibility, From the Industrial Floor to the Palm of Your Hand"
 description: "F.L.A.M.E Mobile brings live plant conditions, alerts and equipment status from the F.L.A.M.E platform to engineers' and leaders' phones in real time."
 summary: "The mobile companion to F.L.A.M.E: live plant conditions, equipment status and anomaly alerts streamed straight to handheld devices."

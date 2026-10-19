@@ -76,25 +76,6 @@
     ]
   },
   {
-    "id": "agriculture",
-    "industry": "Agriculture",
-    "title": "Agriculture & AgriTech",
-    "icon": "sprout",
-    "iconClass": "text-emerald-400",
-    "lead": "Technology-driven agricultural platforms for monitoring, optimization, and data-led farming operations under one ecosystem.",
-    "challenges": [
-      "Fragmented tooling across sowing, irrigation, harvesting and reaping",
-      "Rising dependency on manual labour",
-      "Disconnected logistics, cold storage and distribution"
-    ],
-    "capabilities": [
-      "Multi-functional field robotics concepts",
-      "Soil, moisture and nutrient sensing",
-      "A central console linking farmers, vendors, storage and distributors",
-      "Data-led planning for yield and supply"
-    ]
-  },
-  {
     "id": "technology",
     "industry": "Technology",
     "title": "Technology & Engineering Services",
